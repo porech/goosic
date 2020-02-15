@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/porech/goosic/v2/pkg/storage"
 	log "github.com/sirupsen/logrus"
@@ -11,8 +12,14 @@ type HttpServer struct {
 	Store *storage.Storage
 }
 
-func (s *HttpServer) StartServer(host string, port int) error {
+func (s *HttpServer) StartServer(host string, port int, corsOrigin string) error {
 	r := gin.Default()
+
+	if corsOrigin != "" {
+		config := cors.DefaultConfig()
+		config.AllowOrigins = []string{corsOrigin}
+		r.Use(cors.New(config))
+	}
 
 	r.GET("/song-list", s.songList)
 	r.GET("/song/:id", s.song)

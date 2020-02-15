@@ -6,6 +6,7 @@ type GoosicConf struct {
 	HttpHost string
 	HttpPort int
 	MusicPath string
+	CorsOrigin string
 }
 
 func setDefaults() {
@@ -21,5 +22,6 @@ func getConfig() *GoosicConf {
 		HttpHost: viper.GetString("HTTP_HOST"),
 		HttpPort: viper.GetInt("HTTP_PORT"),
 		MusicPath: viper.GetString("MUSIC_PATH"),
+		CorsOrigin: viper.GetString("CORS_ORIGIN"),
 	}
 }

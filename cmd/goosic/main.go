@@ -17,5 +17,5 @@ func main() {
 	index.StartIndex(config.MusicPath, &store)
 
 	httpServer := server.HttpServer{&store}
-	log.Fatal(httpServer.StartServer(config.HttpHost, config.HttpPort))
+	log.Fatal(httpServer.StartServer(config.HttpHost, config.HttpPort, config.CorsOrigin))
 }
