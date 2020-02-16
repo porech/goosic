@@ -8,14 +8,14 @@ import (
 )
 
 type Storage struct {
-	SongList []*Song
+	SongList      []*Song
 	SongListMutex sync.RWMutex
-	Index int
+	Index         int
 }
 
 type Song struct {
-	Id int `json:"id"`
-	File string `json:"-"`
+	Id       int      `json:"id"`
+	File     string   `json:"-"`
 	Metadata Metadata `json:"metadata"`
 }
 

@@ -11,7 +11,6 @@ func main() {
 	log.Info("goosic is starting")
 	config := getConfig()
 
-
 	store := storage.Storage{}
 
 	index.StartIndex(config.MusicPath, &store)
