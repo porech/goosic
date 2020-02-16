@@ -2,12 +2,43 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/porech/goosic/v2/pkg/storage"
+	log "github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
 )
 
 func (s *HttpServer) songList(c *gin.Context) {
-	c.JSON(http.StatusOK, s.Store.GetAllSongs())
+	limitStr := c.Query("limit")
+	afterStr := c.Query("after")
+	limit := 0
+	after := -1
+	var err error
+	if limitStr != "" {
+		limit, err = strconv.Atoi(limitStr)
+		if err != nil {
+			log.Warnf("Cannot parse limit: %v", err)
+			c.String(http.StatusBadRequest, "cannot parse limit")
+			return
+		}
+	}
+	if afterStr != "" {
+		after, err = strconv.Atoi(afterStr)
+		if err != nil {
+			log.Warnf("Cannot parse after: %v", err)
+			c.String(http.StatusBadRequest, "cannot parse after")
+			return
+		}
+	}
+	var list []*storage.Song
+
+	if limit == 0 && after == -1 {
+		list = s.Store.GetAllSongs()
+	} else {
+		list = s.Store.GetSongs(after, limit)
+	}
+
+	c.JSON(http.StatusOK, list)
 }
 
 func (s *HttpServer) song(c *gin.Context) {

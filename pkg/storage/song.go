@@ -122,3 +122,18 @@ func (s *Storage) GetAllSongs() []*Song {
 	defer s.SongListMutex.RUnlock()
 	return s.SongList
 }
+
+func (s *Storage) GetSongs(after, limit int) []*Song {
+	var result []*Song
+	s.SongListMutex.RLock()
+	defer s.SongListMutex.RUnlock()
+	for _, song := range s.SongList {
+		if song.Id > after {
+			result = append(result, song)
+			if limit > 0 && len(result) >= limit {
+				return result
+			}
+		}
+	}
+	return result
+}
