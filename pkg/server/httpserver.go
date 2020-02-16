@@ -24,6 +24,7 @@ func (s *HttpServer) StartServer(host string, port int, corsOrigin string) error
 	r.GET("/song-list", s.songList)
 	r.GET("/song/:id", s.song)
 	r.GET("/song-stream/:id", s.streamSong)
+	r.GET("/metadata-test/:id", s.editMetadata)
 
 	listenAddr := fmt.Sprintf("%s:%d", host, port)
 	log.Infof("Listening on %s", listenAddr)
