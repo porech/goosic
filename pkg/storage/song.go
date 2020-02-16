@@ -5,6 +5,7 @@ import (
 	"github.com/dhowden/tag"
 	log "github.com/sirupsen/logrus"
 	"path/filepath"
+	"strings"
 	"sync"
 )
 
@@ -129,6 +130,31 @@ func (s *Storage) GetSongs(after, limit int) []*Song {
 	defer s.SongListMutex.RUnlock()
 	for _, song := range s.SongList {
 		if song.Id > after {
+			result = append(result, song)
+			if limit > 0 && len(result) >= limit {
+				return result
+			}
+		}
+	}
+	return result
+}
+
+func stringContains(str string, query string) bool {
+	return strings.Contains(strings.ToLower(str), strings.ToLower(query))
+}
+
+func search(song *Song, query string) bool {
+	return stringContains(song.Metadata.Artist, query) ||
+		stringContains(song.Metadata.Title, query) ||
+		stringContains(song.FileName, query)
+}
+
+func (s *Storage) SearchSongs(query string, after, limit int) []*Song {
+	var result []*Song
+	s.SongListMutex.RLock()
+	defer s.SongListMutex.RUnlock()
+	for _, song := range s.SongList {
+		if song.Id > after && search(song, query) {
 			result = append(result, song)
 			if limit > 0 && len(result) >= limit {
 				return result
