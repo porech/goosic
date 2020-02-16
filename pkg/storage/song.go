@@ -26,6 +26,7 @@ func ParseMetadata(meta tag.Metadata) Metadata {
 	disc, totalDiscs := meta.Disc()
 
 	metadata := Metadata{
+		FileType:    string(meta.FileType()),
 		Title:       meta.Title(),
 		Album:       meta.Album(),
 		Artist:      meta.Artist(),

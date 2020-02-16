@@ -1,6 +1,7 @@
 package storage
 
 type Metadata struct {
+	FileType    string `json:"file_type"`
 	Title       string `json:"title"`
 	Album       string `json:"album"`
 	Artist      string `json:"artist"`
