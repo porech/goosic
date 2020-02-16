@@ -1,6 +1,7 @@
 package index
 
 import (
+	"fmt"
 	"github.com/dhowden/tag"
 	"github.com/fsnotify/fsnotify"
 	"github.com/porech/goosic/v2/pkg/storage"
@@ -16,12 +17,13 @@ func ScanFile(path string, store *storage.Storage) error {
 	}
 	f, err := os.Open(path)
 	if err != nil {
-		return err
+		// Ignore the error opening file, since it could be still in write process
+		return nil
 	}
 	defer f.Close()
 	metadata, err := tag.ReadFrom(f)
 	if err != nil {
-		return err
+		return fmt.Errorf("File %s was not recognized", path)
 	}
 
 	store.AddSong(&storage.Song{
@@ -42,7 +44,10 @@ func ScanDirectory(basePath string, store *storage.Storage) {
 			return nil
 		}
 		err = ScanFile(path, store)
-		return err
+		if err != nil {
+			log.Warn(err)
+		}
+		return nil
 	})
 	if err != nil {
 		log.Errorf("Cannot scan %s: %v", basePath, err)
@@ -64,7 +69,10 @@ func StartWatcher(path string, store *storage.Storage) {
 				if !ok {
 					return
 				}
-				_ = ScanFile(event.Name, store)
+				err = ScanFile(event.Name, store)
+				if err != nil {
+					log.Warn(err)
+				}
 			case err, ok := <-watcher.Errors:
 				if !ok {
 					return
