@@ -26,10 +26,18 @@ func ScanFile(path string, store *storage.Storage) error {
 		return fmt.Errorf("File %s was not recognized", path)
 	}
 
-	store.AddSong(&storage.Song{
-		File: path,
-		Metadata: storage.ParseMetadata(metadata),
-	})
+	existingSong := store.GetSongByFile(path)
+	if existingSong == nil {
+		store.AddSong(&storage.Song{
+			File:     path,
+			Metadata: storage.ParseMetadata(metadata),
+		})
+	} else {
+		err = store.UpdateSongMetadata(existingSong.Id, storage.ParseMetadata(metadata))
+		if err != nil {
+			log.Warnf("Cannot update song metadata: %v", err)
+		}
+	}
 
 	return nil
 }

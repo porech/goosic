@@ -75,6 +75,17 @@ func (s *Storage) GetSongByFile(file string) *Song {
 	return nil
 }
 
+func (s *Storage) UpdateSongMetadata(id int, metadata Metadata) error {
+	song := s.GetSongById(id)
+	if song == nil {
+		return fmt.Errorf("song %d not found", id)
+	}
+	song.Metadata = metadata
+	log.Infof("Updated metadata of song %s (%s - %s). There are %d songs.", song.File, song.Metadata.Artist, song.Metadata.Title, len(s.SongList))
+
+	return nil
+}
+
 func (s *Storage) AddSong(song *Song) {
 	existingSong := s.GetSongByFile(song.File)
 	if existingSong == nil {
@@ -84,6 +95,8 @@ func (s *Storage) AddSong(song *Song) {
 		s.SongListMutex.Unlock()
 		s.Index++
 		log.Infof("Added song %s (%s - %s). There are %d songs.", song.File, song.Metadata.Artist, song.Metadata.Title, len(s.SongList))
+	} else {
+		log.Warnf("Song %s already exists!", song.File)
 	}
 }
 
