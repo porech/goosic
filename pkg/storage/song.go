@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/dhowden/tag"
 	log "github.com/sirupsen/logrus"
+	"path/filepath"
 	"sync"
 )
 
@@ -16,6 +17,7 @@ type Storage struct {
 type Song struct {
 	Id       int      `json:"id"`
 	File     string   `json:"-"`
+	FileName string   `json:"file_name"`
 	Metadata Metadata `json:"metadata"`
 }
 
@@ -90,6 +92,7 @@ func (s *Storage) AddSong(song *Song) {
 	existingSong := s.GetSongByFile(song.File)
 	if existingSong == nil {
 		song.Id = s.Index
+		song.FileName = filepath.Base(song.File)
 		s.SongListMutex.Lock()
 		s.SongList = append(s.SongList, song)
 		s.SongListMutex.Unlock()
