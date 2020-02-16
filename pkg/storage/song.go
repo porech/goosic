@@ -90,17 +90,18 @@ func (s *Storage) UpdateSongMetadata(id int, metadata Metadata) error {
 
 func (s *Storage) AddSong(song *Song) {
 	existingSong := s.GetSongByFile(song.File)
-	if existingSong == nil {
-		song.Id = s.Index
-		song.FileName = filepath.Base(song.File)
-		s.SongListMutex.Lock()
-		s.SongList = append(s.SongList, song)
-		s.SongListMutex.Unlock()
-		s.Index++
-		log.Infof("Added song %s (%s - %s). There are %d songs.", song.File, song.Metadata.Artist, song.Metadata.Title, len(s.SongList))
-	} else {
+	if existingSong != nil {
 		log.Warnf("Song %s already exists!", song.File)
+		return
+
 	}
+	song.Id = s.Index
+	song.FileName = filepath.Base(song.File)
+	s.SongListMutex.Lock()
+	s.SongList = append(s.SongList, song)
+	s.SongListMutex.Unlock()
+	s.Index++
+	log.Infof("Added song %s (%s - %s). There are %d songs.", song.File, song.Metadata.Artist, song.Metadata.Title, len(s.SongList))
 }
 
 func (s *Storage) RemoveSong(path string) error {
