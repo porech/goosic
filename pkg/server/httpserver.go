@@ -27,10 +27,12 @@ func PackrMiddleware(urlPrefix string, box *packr.Box) gin.HandlerFunc {
 			if err != nil {
 				fs.ServeHTTP(c.Writer, c.Request)
 				c.Abort()
+				return
 			}
 			c.Writer.WriteHeader(200)
 			c.Writer.Write(index)
 			c.Abort()
+			return
 		}
 		fs.ServeHTTP(c.Writer, c.Request)
 	}
