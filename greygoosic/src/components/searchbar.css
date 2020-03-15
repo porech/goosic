@@ -1,5 +1,33 @@
-.searchbar {
-  background-color: aliceblue;
-  color: #c2c2c2;
-  border: 1px solid rgba(200, 200, 200, 0.8);
+body {
+  background: url(https://images.unsplash.com/photo-1544306094-e2dcf9479da3)
+    no-repeat;
+  /* Keep the inherited background full size. */
+  background-attachment: fixed;
+  background-size: cover;
+  height: 100vh;
+}
+.searchpane {
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  padding: 10px;
+  margin: 5px;
+  width: 50%;
+  transition: width 1s;
+  animation-name: example;
+  animation-duration: 4s;
+}
+.searchbar,
+::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+  border: 0px;
+  outline: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+.searchpane-clicked {
+  width: 100%;
+}
+
+.search-icon {
+  color: rgba(255, 255, 255, 0.8);
 }

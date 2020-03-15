@@ -11,7 +11,11 @@ class App extends React.Component {
   };
   render() {
     return (
-      <div>
+      <div
+        onClick={() => {
+          this.setState({ clickedOutside: true });
+        }}
+      >
         <SearchBar onSearch={this.searchCallback}></SearchBar>
       </div>
     );
