@@ -3,21 +3,10 @@ import "./searchbar.css";
 class SearchBar extends React.Component {
   render() {
     return (
-      <div
-        className={
-          this.state && this.state.clicked
-            ? "searchpane searchpane-clicked"
-            : "searchpane"
-        }
-      >
+      <div className={this.getClasses()}>
         <i aria-hidden="true" className="search icon search-icon"></i>
         <input
           type="text"
-          onClick={() => {
-            this.setState({
-              clicked: true
-            });
-          }}
           className="searchbar"
           placeholder={this.props.label || "Search here..."}
           onChange={event => {
@@ -26,6 +15,13 @@ class SearchBar extends React.Component {
         />
       </div>
     );
+  }
+
+  getClasses() {
+    return "searchpane searchpane-clicked";
+    /* } else {
+      return "searchpane";
+    } */
   }
 }
 /*

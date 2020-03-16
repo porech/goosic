@@ -6,16 +6,13 @@ class App extends React.Component {
     super();
     this.state = { search: "" };
   }
+
   searchCallback = search => {
     this.setState({ search });
   };
   render() {
     return (
-      <div
-        onClick={() => {
-          this.setState({ clickedOutside: true });
-        }}
-      >
+      <div>
         <SearchBar onSearch={this.searchCallback}></SearchBar>
       </div>
     );
