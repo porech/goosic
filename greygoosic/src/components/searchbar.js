@@ -3,7 +3,7 @@ import "./searchbar.css";
 class SearchBar extends React.Component {
   constructor() {
     super();
-    this.state = { classes: "searchpane" };
+    this.state = { classes: "searchpane", search: "" };
   }
   render() {
     return (
@@ -16,6 +16,7 @@ class SearchBar extends React.Component {
           className="searchbar"
           placeholder={this.props.label || "Search here..."}
           onChange={event => {
+            this.setState({ search: event.target.value });
             this.props.onSearch(event.target.value);
           }}
         />
@@ -26,7 +27,9 @@ class SearchBar extends React.Component {
     this.setState({ classes: "searchpane searchpane-clicked" });
   };
   onblur = () => {
-    this.setState({ classes: "searchpane" });
+    if (this.state.search === "") {
+      this.setState({ classes: "searchpane" });
+    }
   };
 }
 
