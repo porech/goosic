@@ -15,6 +15,7 @@ const Song = ({ title, artist }) => {
           {artist} - {title}
         </div>
       </div>
+      <div class="divider"></div>
     </div>
   );
 };

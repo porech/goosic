@@ -3,10 +3,16 @@
 }
 
 .song {
-  background-color: white;
-  border-radius: 5px;
+  /*  background-color: white;
+  border-radius: 5px; */
   margin: 5px;
   padding: 10px;
+}
+.song > .divider {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  height: 1px;
+  margin: 2em 0px 0.5em;
+  width: 95%;
 }
 .song > .container {
   display: flex;
