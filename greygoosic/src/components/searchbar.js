@@ -1,12 +1,18 @@
 import React from "react";
 import "./searchbar.css";
 class SearchBar extends React.Component {
+  constructor() {
+    super();
+    this.state = { classes: "searchpane" };
+  }
   render() {
     return (
-      <div className={this.getClasses()}>
+      <div className={this.state.classes}>
         <i aria-hidden="true" className="search icon search-icon"></i>
         <input
           type="text"
+          onFocus={this.onfocus}
+          onBlur={this.onblur}
           className="searchbar"
           placeholder={this.props.label || "Search here..."}
           onChange={event => {
@@ -16,15 +22,12 @@ class SearchBar extends React.Component {
       </div>
     );
   }
-
-  getClasses() {
-    return "searchpane searchpane-clicked";
-    /* } else {
-      return "searchpane";
-    } */
-  }
+  onfocus = () => {
+    this.setState({ classes: "searchpane searchpane-clicked" });
+  };
+  onblur = () => {
+    this.setState({ classes: "searchpane" });
+  };
 }
-/*
- <div id="searchbar" className="ui icon input">
-          */
+
 export default SearchBar;

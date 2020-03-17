@@ -1,0 +1,14 @@
+.avatar {
+  margin-right: 2vw;
+}
+
+.song {
+  background-color: white;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 10px;
+}
+.song > .container {
+  display: flex;
+  flex-flow: "row";
+}
