@@ -1,17 +1,18 @@
 import React from "react";
 import "./songlist.css";
 import Song from "./song";
-
+import goosic from "../goosic";
 class SongList extends React.Component {
   constructor() {
     super();
     this.state = { songs: [] };
   }
-  componentDidMount() {
+  async componentDidMount() {
     //ottengo la lista canzoni
+    let songList = await goosic.get("/song-list");
     //setto lo state di conseguenza
     this.setState({
-      songs: [
+      songs: songList || [
         {
           id: 1,
           title: "Back Home",

@@ -15,7 +15,7 @@
     "react-transition-group": "^4.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "REACT_APP_GOOSIC_URL='http://localhost:8080' react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
