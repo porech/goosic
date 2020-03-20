@@ -8,6 +8,12 @@
   margin: 5px;
   padding: 10px;
 }
+.container:hover {
+  background-color: lightblue;
+  border-radius: 20px;
+  animation: slidein 0.5s, fadein 0.5s;
+  transform: translateX(-5px);
+}
 .song > .divider {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   height: 1px;
@@ -17,4 +23,21 @@
 .song > .container {
   display: flex;
   flex-flow: "row";
+  padding: 10px;
+}
+@keyframes slidein {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-5px);
+  }
+}
+@keyframes fadein {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
 }

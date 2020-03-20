@@ -1,9 +1,14 @@
-import React from "react";
-
+import React, { useState } from "react";
 import "./song.css";
-const Song = ({ title, artist }) => {
+var getAudioState, setAudioState;
+
+const Song = ({ id, title, artist }) => {
+  [getAudioState, setAudioState] = useState({
+    audio: new Audio(),
+    clicked: false
+  });
   return (
-    <div className="song">
+    <div onClick={() => playSong(id)} className="song">
       <div className="container">
         <img
           alt="avatar"
@@ -15,9 +20,16 @@ const Song = ({ title, artist }) => {
           {artist} - {title}
         </div>
       </div>
-      <div class="divider"></div>
+      <div className="divider"></div>
     </div>
   );
+};
+
+const playSong = id => {
+  let audio = getAudioState.audio;
+  audio.src = `/song-stream/${id}`;
+  setAudioState({ audio });
+  audio.play();
 };
 
 export default Song;

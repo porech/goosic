@@ -9,30 +9,17 @@ class SongList extends React.Component {
   }
   async componentDidMount() {
     //ottengo la lista canzoni
-    let songList = await goosic.get("/song-list");
+    let result = await goosic.get("/song-list");
+    let songList = result.data;
     //setto lo state di conseguenza
     this.setState({
-      songs: songList || [
-        {
-          id: 1,
-          title: "Back Home",
-          artist: "Ale&Ale'x",
-          album: "The very best of Ale&Ale'x - Youth",
-          filePath: "/Users/xela92/Music/back home.mp3"
-        },
-        {
-          id: 2,
-          title: "Bambino",
-          artist: "Ale&Ale'x",
-          album: "The very best of Ale&Ale'x - Youth",
-          filePath: "/Users/xela92/Music/bambino.mp3"
-        }
-      ]
+      songs: songList
     });
   }
   getFileNameFromPath(filePath) {
-    return filePath.split("/")[filePath.split("/").length - 1];
+    return filePath ? filePath.split("/")[filePath.split("/").length - 1] : "";
   }
+
   render() {
     return (
       <div className="song-list">
@@ -40,12 +27,13 @@ class SongList extends React.Component {
           return (
             <Song
               key={song.id}
+              id={song.id}
               title={
-                song.title ||
-                this.getFileNameFromPath(song.filePath) ||
+                song.metadata.title ||
+                this.getFileNameFromPath(song.file_name) ||
                 "Unknown"
               }
-              artist={song.artist || "Unknown Artist"}
+              artist={song.metadata.artist || "Unknown Artist"}
             ></Song>
           );
         })}

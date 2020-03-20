@@ -15,11 +15,13 @@
     "react-transition-group": "^4.3.0"
   },
   "scripts": {
-    "start": "REACT_APP_GOOSIC_URL='http://localhost:8080' react-scripts start",
+    "start": "react-scripts start",
+    "net": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://192.168.1.2:8080",
   "eslintConfig": {
     "extends": "react-app"
   },
