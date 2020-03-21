@@ -1,26 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import SearchBar from "./components/searchbar";
-import SongList from "./components/songlist";
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = { search: "" };
-  }
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import App from "./components/App";
+import reducers from "./reducers";
 
-  searchCallback = search => {
-    this.setState({ search });
-  };
-  render() {
-    return (
-      <div>
-        <SearchBar state={this.state} onSearch={this.searchCallback} />
-        <SongList></SongList>
-      </div>
-    );
-  }
-}
-
-ReactDOM.render(<App />, document.querySelector("#root"));
-
-export default App;
+ReactDOM.render(
+  <Provider store={createStore(reducers, applyMiddleware(thunk))}>
+    <App />
+  </Provider>,
+  document.querySelector("#root")
+);

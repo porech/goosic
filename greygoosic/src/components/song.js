@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./song.css";
+import "./Song.css";
 var getAudioState, setAudioState;
 
-const Song = ({ id, title, artist }) => {
+const Song = ({ id, title, artist, fileName }) => {
   [getAudioState, setAudioState] = useState({
     audio: new Audio(),
     clicked: false

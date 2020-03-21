@@ -5,4 +5,4 @@
 // and any other packr generated files.
 package server
 
-import _ "Users/xela92/mysoftware/goosic/pkg/server/packrd"
+import _ "github.com/porech/goosic/v2/pkg/server/packrd"
