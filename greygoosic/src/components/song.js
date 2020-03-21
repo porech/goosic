@@ -14,6 +14,7 @@ const Song = ({ id, title, artist, fileName }) => {
           alt="avatar"
           src="https://www.mh-corp.com/img/icons/avatar.png"
           width="25"
+          height="25"
           className="avatar"
         ></img>
         <div className="text">

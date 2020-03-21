@@ -25,6 +25,9 @@
   flex-flow: "row";
   padding: 10px;
 }
+.song > .container > .avatar {
+  flex-shrink: none;
+}
 @keyframes slidein {
   from {
     transform: translateX(0);
