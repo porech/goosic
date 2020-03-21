@@ -1,12 +1,17 @@
 import React from "react";
 import "./Searchbar.css";
 import { connect } from "react-redux";
-import { search } from "../actions";
+import { search, expandCollapseSearchBar } from "../actions";
 class SearchBar extends React.Component {
-  classes = "searchpane";
   render() {
     return (
-      <div className={this.classes}>
+      <div
+        className={
+          this.props.searchbarStatus.status === "expand"
+            ? "searchpane searchpane-clicked"
+            : "searchpane"
+        }
+      >
         <i aria-hidden="true" className="search icon search-icon"></i>
         <input
           type="text"
@@ -23,17 +28,27 @@ class SearchBar extends React.Component {
   }
 
   onfocus = () => {
-    this.classes = "searchpane searchpane-clicked";
+    this.props.expandCollapseSearchBar({
+      status: "expand"
+    });
   };
   onblur = () => {
     if (this.props.searchedText === "") {
-      this.classes = "searchpane";
+      this.props.expandCollapseSearchBar({
+        status: "collapse"
+      });
     } else {
       console.log(this.props.searchedText);
     }
   };
 }
 const mapStateToProps = state => {
-  return { searchedText: state.searchedText, label: state.label };
+  return {
+    searchedText: state.searchedText,
+    label: state.label,
+    searchbarStatus: state.searchbarStatus
+  };
 };
-export default connect(mapStateToProps, { search })(SearchBar);
+export default connect(mapStateToProps, { search, expandCollapseSearchBar })(
+  SearchBar
+);

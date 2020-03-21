@@ -1,5 +1,10 @@
 import { combineReducers } from "redux";
-import { SEARCH_SONG, SELECT_SONG, GET_SONGS } from "../constants";
+import {
+  SEARCH_SONG,
+  SELECT_SONG,
+  GET_SONGS,
+  EXPAND_COLLAPSE_SEARCH_BAR
+} from "../constants";
 const songsReducer = (songs = [], action) => {
   switch (action.type) {
     case GET_SONGS:
@@ -21,8 +26,19 @@ const selectedSongReducer = (selectedSong = null, action) => {
   return selectedSong;
 };
 
+const searchbarStatusReducer = (
+  expandCollapseSearchBar = "collapse",
+  action
+) => {
+  if (action.type === EXPAND_COLLAPSE_SEARCH_BAR) {
+    return action.payload;
+  }
+  return expandCollapseSearchBar;
+};
+
 export default combineReducers({
   songs: songsReducer,
   selectedSong: selectedSongReducer,
-  searchedText: searchSongReducer
+  searchedText: searchSongReducer,
+  searchbarStatus: searchbarStatusReducer
 });

@@ -1,4 +1,8 @@
-import { SEARCH_SONG, GET_SONGS } from "../constants";
+import {
+  SEARCH_SONG,
+  GET_SONGS,
+  EXPAND_COLLAPSE_SEARCH_BAR
+} from "../constants";
 import goosic from "../goosic";
 export const getSongs = () => async dispatch => {
   const response = await goosic.get("song-list");
@@ -7,4 +11,8 @@ export const getSongs = () => async dispatch => {
 
 export const search = payload => {
   return { type: SEARCH_SONG, payload };
+};
+
+export const expandCollapseSearchBar = payload => {
+  return { type: EXPAND_COLLAPSE_SEARCH_BAR, payload };
 };
