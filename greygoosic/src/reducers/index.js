@@ -30,7 +30,6 @@ const nowPlayingReducer = (nowPlayingInfo = null, action) => {
     case PAUSE_SONG:
       return { ...nowPlayingInfo, isPlaying: false };
     case NEXT_SONG:
-      console.log(action.payload);
       return {
         song: action.payload,
         url: action.payload.id ? `/song-stream/${action.payload.id} ` : "",
