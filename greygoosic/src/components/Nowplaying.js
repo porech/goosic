@@ -4,6 +4,7 @@ import "./Nowplaying.css";
 import { nextSong, playSong, pauseSong } from "../actions";
 class NowPlaying extends React.Component {
   audio;
+  currentTime = 0;
   componentDidMount() {
     this.audio = document.getElementById("audioPlayer");
   }
@@ -12,7 +13,7 @@ class NowPlaying extends React.Component {
     if (
       this.props.nowPlaying &&
       this.props.nowPlaying.song &&
-      previousPlayingId != this.props.nowPlaying.song.id.toString()
+      previousPlayingId !== this.props.nowPlaying.song.id.toString()
     ) {
       this.play(this.props.nowPlaying.song);
     }
@@ -22,10 +23,26 @@ class NowPlaying extends React.Component {
       ? true
       : false;
   }
-
+  onTimeUpdate() {
+    /*     console.log(
+      "currentTime:",
+      this.audio.currentTime,
+      "duration:",
+      this.audio.duration
+    ); */
+    if (this.audio.currentTime - this.audio.duration === 0) {
+      this.next();
+    }
+  }
   render() {
     return (
       <div className="panel">
+        <audio
+          id="audioPlayer"
+          onTimeUpdate={() => {
+            this.onTimeUpdate();
+          }}
+        ></audio>
         <div className="action-icons">
           <div className="action-icons-secondary">
             <i

@@ -8,7 +8,6 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <audio id="audioPlayer"></audio>
         <SearchBar />
         <SongList></SongList>
         <NowPlaying></NowPlaying>
