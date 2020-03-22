@@ -1,0 +1,10 @@
+:root {
+  --app-background: url("https://source.unsplash.com/random") no-repeat;
+}
+body {
+  background: var(--app-background);
+  /* Keep the inherited background full size. */
+  background-attachment: fixed;
+  background-size: cover;
+  height: 100vh;
+}

@@ -1,0 +1,18 @@
+.panel {
+  border: 1px solid white;
+  position: fixed;
+  z-index: 1000;
+  bottom: 2px;
+  width: 100%;
+  height: 70px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  text-align: center;
+}
+
+.action-icons {
+  font-size: 4em;
+  transform: translateY(25px);
+  opacity: 0.9;
+}
