@@ -15,10 +15,10 @@ class SongList extends React.Component {
       this.loading = false;
     }, 1000);
   }
-  render() {
+  renderSongs = () => {
     return (
-      <div className="song-list">
-        {this.props.songs.length === 0 ? (
+      <div>
+        {this.props.songs && this.props.songs.length === 0 ? (
           <div className="ui info icon message">
             <i className="info icon"></i>
             <div className="header">
@@ -83,6 +83,9 @@ class SongList extends React.Component {
         )}
       </div>
     );
+  };
+  render() {
+    return <div className="song-list">{this.renderSongs()}</div>;
   }
 }
 const mapStateToProps = state => {

@@ -1,12 +1,3 @@
-body {
-  background: url(https://images.unsplash.com/photo-1544306094-e2dcf9479da3)
-    no-repeat;
-  /* Keep the inherited background full size. */
-  background-attachment: fixed;
-  background-size: cover;
-  height: 100vh;
-}
-
 .searchbar,
 ::placeholder {
   color: rgba(255, 255, 255, 0.8);
@@ -20,15 +11,16 @@ body {
   border-radius: 20px;
   padding: 10px;
   margin: 5px;
+  cursor: text;
   margin-top: 15px;
-  width: 75vw;
+  width: 98%;
   transition: width 1s;
   animation-name: example;
   animation-duration: 4s;
 }
-.searchpane-clicked {
+/* .searchpane-clicked {
   width: 98%;
-}
+} */
 .search-icon {
   color: rgba(255, 255, 255, 0.8);
 }

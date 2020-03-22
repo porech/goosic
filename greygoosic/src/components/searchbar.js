@@ -11,9 +11,14 @@ class SearchBar extends React.Component {
             ? "searchpane searchpane-clicked"
             : "searchpane"
         }
+        onClick={() => {
+          document.querySelector("#search").focus();
+        }}
       >
         <i aria-hidden="true" className="search icon search-icon"></i>
         <input
+          id="search"
+          key="search"
           type="text"
           onFocus={this.onfocus}
           onBlur={this.onblur}
