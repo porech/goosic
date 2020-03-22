@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import "./Nowplaying.css";
-import { playSong, pauseSong } from "../actions";
+import { nextSong, playSong, pauseSong } from "../actions";
 class NowPlaying extends React.Component {
   audio;
   componentDidMount() {
@@ -17,7 +17,12 @@ class NowPlaying extends React.Component {
       <div className="panel">
         <div className="action-icons">
           <div className="action-icons-secondary">
-            <i onClick={() => {}} className="backward icon"></i>
+            <i
+              onClick={() => {
+                this.previous();
+              }}
+              className="backward icon"
+            ></i>
           </div>
           <div className="action-icons-primary">
             <i
@@ -26,12 +31,9 @@ class NowPlaying extends React.Component {
                   this.pause();
                 } else {
                   this.play(
-                    this.getSongIdFromIndex(
-                      this.props.nowPlaying &&
-                        this.props.nowPlaying.playingIndex
-                        ? this.props.nowPlaying.playingIndex
-                        : 0
-                    )
+                    this.props.nowPlaying
+                      ? this.props.nowPlaying.song
+                      : this.getSongFromIndex(0)
                   );
                 }
               }}
@@ -41,45 +43,60 @@ class NowPlaying extends React.Component {
             ></i>
           </div>
           <div className="action-icons-secondary">
-            <i onClick={() => {}} className="forward icon"></i>
+            <i
+              onClick={() => {
+                this.next();
+              }}
+              className="forward icon"
+            ></i>
           </div>
         </div>
       </div>
     );
   }
-  getSongIdFromIndex = index => {
-    return this.props.songs[index] ? this.props.songs[index].id : null;
-  };
-  play = id => {
-    let nowPlaying = `/song-stream/${id}`;
-    this.props.playSong({
-      url: nowPlaying,
-      playingIndex:
-        this.props.nowPlaying && this.props.nowPlaying.playingIndex
-          ? this.props.nowPlaying.playingIndex
-          : 0
-    });
-    let previousPlayingId = this.audio.src.split("/song-stream/")[1];
-    let previousPlaying = `/song-stream/${previousPlayingId}`;
-    if (
-      !this.props.nowPlaying ||
-      previousPlaying !== this.props.nowPlaying.url
-    ) {
-      this.audio.src = nowPlaying;
-      console.log(
-        "src changed - before:",
-        previousPlaying,
-        "after:",
-        this.audio.src
-      );
 
-      if (!id) {
-        id = this.getSongIdFromIndex(
-          this.props.nowPlaying && this.props.nowPlaying.playingIndex
-            ? this.props.nowPlaying.playingIndex
-            : 0
-        );
+  getSongFromIndex = index => {
+    return this.props.queue[index] ? this.props.queue[index] : null;
+  };
+  next = () => {
+    if (this.props.nowPlaying) {
+      let nextIndex = this.props.queue.indexOf(this.props.nowPlaying.song) + 1;
+      if (nextIndex > this.props.queue.length - 1) {
+        nextIndex = 0;
       }
+      let nextSong = this.getSongFromIndex(nextIndex);
+      //console.log("nextSong:", nextSong, "nextIndex:", nextIndex);
+      this.play(nextSong);
+    } else {
+      this.play(this.getSongFromIndex(0));
+    }
+  };
+  previous = () => {
+    if (this.props.nowPlaying) {
+      let previousIndex =
+        this.props.queue.indexOf(this.props.nowPlaying.song) - 1;
+      if (previousIndex < 0) {
+        previousIndex = this.props.queue.length - 1;
+      }
+
+      let previousSong = this.getSongFromIndex(previousIndex);
+      //console.log("previousId:", previousSong, "previousIndex:", previousIndex);
+      this.play(previousSong);
+    } else {
+      this.play(this.getSongFromIndex(0));
+    }
+  };
+
+  play = song => {
+    if (!song) {
+      song = this.getSongFromIndex(0);
+    }
+    let previousPlayingId = this.audio.src.split("/song-stream/")[1];
+    if (!this.props.nowPlaying || song.id.toString() !== previousPlayingId) {
+      this.props.nextSong(song);
+      this.audio.src = `/song-stream/${song.id}`;
+    } else {
+      this.props.playSong(song);
     }
     this.audio.play();
   };
@@ -90,8 +107,8 @@ class NowPlaying extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
-
-  return { songs: state.songs, nowPlaying: state.nowPlaying };
+  return { queue: state.songs, nowPlaying: state.nowPlaying };
 };
-export default connect(mapStateToProps, { playSong, pauseSong })(NowPlaying);
+export default connect(mapStateToProps, { nextSong, playSong, pauseSong })(
+  NowPlaying
+);
