@@ -7,11 +7,22 @@ class NowPlaying extends React.Component {
   componentDidMount() {
     this.audio = document.getElementById("audioPlayer");
   }
+  componentDidUpdate() {
+    let previousPlayingId = this.audio.src.split("/song-stream/")[1];
+    if (
+      this.props.nowPlaying &&
+      this.props.nowPlaying.song &&
+      previousPlayingId != this.props.nowPlaying.song.id.toString()
+    ) {
+      this.play(this.props.nowPlaying.song);
+    }
+  }
   checkIsPlaying() {
     return this.props.nowPlaying && this.props.nowPlaying.isPlaying
       ? true
       : false;
   }
+
   render() {
     return (
       <div className="panel">
@@ -60,7 +71,10 @@ class NowPlaying extends React.Component {
   };
   next = () => {
     if (this.props.nowPlaying) {
-      let nextIndex = this.props.queue.indexOf(this.props.nowPlaying.song) + 1;
+      let nextIndex =
+        this.props.queue
+          .map(song => song.id)
+          .indexOf(this.props.nowPlaying.song.id) + 1;
       if (nextIndex > this.props.queue.length - 1) {
         nextIndex = 0;
       }
@@ -74,7 +88,9 @@ class NowPlaying extends React.Component {
   previous = () => {
     if (this.props.nowPlaying) {
       let previousIndex =
-        this.props.queue.indexOf(this.props.nowPlaying.song) - 1;
+        this.props.queue
+          .map(song => song.id)
+          .indexOf(this.props.nowPlaying.song.id) - 1;
       if (previousIndex < 0) {
         previousIndex = this.props.queue.length - 1;
       }
@@ -98,6 +114,7 @@ class NowPlaying extends React.Component {
     } else {
       this.props.playSong(song);
     }
+    console.log(this.props);
     this.audio.play();
   };
   pause = () => {

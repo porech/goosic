@@ -1,15 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import { playSong } from "../actions";
+import { nextSong } from "../actions";
 import "./Song.css";
 
 class Song extends React.Component {
   render = () => {
     let { title, artist } = this.props.song;
-    //console.log("song", this.props.song);
     return (
       <div
-        onClick={() => this.props.playSong(this.props.song)}
+        onClick={() => {
+          this.props.nextSong(this.props.song);
+        }}
         className="song"
       >
         <div className="container">
@@ -30,13 +31,4 @@ class Song extends React.Component {
   };
 }
 
-/* const playSong = id => {
-  let audio = getAudioState.audio;
-  audio.src = `/song-stream/${id}`;
-  setAudioState({ audio });
-  audio.play();
-}; */
-/* const mapStateToProps = state => {
-  return {};
-}; */
-export default connect(null, { playSong })(Song);
+export default connect(null, { nextSong })(Song);

@@ -64,8 +64,8 @@ class SongList extends React.Component {
               return (
                 <Song
                   key={song.id}
-                  id={song.id}
                   song={{
+                    id: song.id,
                     fileName: song.file_name,
                     title:
                       song.metadata.title ||

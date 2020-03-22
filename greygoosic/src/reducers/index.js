@@ -24,11 +24,13 @@ const searchSongReducer = (search = "", action) => {
 
 const nowPlayingReducer = (nowPlayingInfo = null, action) => {
   switch (action.type) {
+    //#TODO verificare se utile
     case PLAY_SONG:
       return { song: action.payload, isPlaying: true };
     case PAUSE_SONG:
       return { ...nowPlayingInfo, isPlaying: false };
     case NEXT_SONG:
+      console.log(action.payload);
       return {
         song: action.payload,
         url: action.payload.id ? `/song-stream/${action.payload.id} ` : "",
