@@ -1,9 +1,10 @@
 import { combineReducers } from "redux";
 import {
   SEARCH_SONG,
-  SELECT_SONG,
   GET_SONGS,
-  EXPAND_COLLAPSE_SEARCH_BAR
+  EXPAND_COLLAPSE_SEARCH_BAR,
+  PLAY_SONG,
+  PAUSE_SONG
 } from "../constants";
 const songsReducer = (songs = [], action) => {
   switch (action.type) {
@@ -19,13 +20,15 @@ const searchSongReducer = (search = "", action) => {
   }
   return search;
 };
-const selectedSongReducer = (selectedSong = null, action) => {
-  if (action.type === SELECT_SONG) {
-    return action.payload;
-  }
-  return selectedSong;
-};
 
+const playSongReducer = (song = null, action) => {
+  if (action.type === PLAY_SONG) {
+    return { ...action.payload, isPlaying: true };
+  } else if (action.type === PAUSE_SONG) {
+    return { ...song, ...action.payload, isPlaying: false };
+  }
+  return song;
+};
 const searchbarStatusReducer = (
   expandCollapseSearchBar = "collapse",
   action
@@ -38,7 +41,7 @@ const searchbarStatusReducer = (
 
 export default combineReducers({
   songs: songsReducer,
-  selectedSong: selectedSongReducer,
   searchedText: searchSongReducer,
-  searchbarStatus: searchbarStatusReducer
+  searchbarStatus: searchbarStatusReducer,
+  nowPlaying: playSongReducer
 });
