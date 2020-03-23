@@ -33,10 +33,12 @@ const nowPlayingReducer = (nowPlayingInfo = null, action) => {
       return { ...nowPlayingInfo, isPlaying: false };
     case NEXT_SONG:
       return {
+        ...nowPlayingInfo,
         song: action.payload,
         url: action.payload.id ? `/song-stream/${action.payload.id} ` : "",
         isPlaying: true
       };
+
     case UPDATE_CURRENT_TIME:
       return {
         ...nowPlayingInfo,

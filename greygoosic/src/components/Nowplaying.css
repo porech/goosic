@@ -32,11 +32,11 @@
 
 .time-info {
   position: absolute;
-  left: 23vw;
+  left: 19vw;
 }
 .duration-info {
   position: absolute;
-  right: 23vw;
+  right: 19vw;
 }
 .rc-slider {
   height: 20px;
