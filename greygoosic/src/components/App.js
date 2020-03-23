@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import SearchBar from "./Searchbar";
-import SongList from "./Songlist";
+import SongList from "./SongList";
 import NowPlaying from "./Nowplaying";
 import "./App.css";
 class App extends React.Component {
