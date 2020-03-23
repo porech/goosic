@@ -87,7 +87,15 @@ class SongList extends React.Component {
     );
   };
   render() {
-    return <div className="song-list">{this.renderSongs()}</div>;
+    return (
+      <div
+        className={
+          this.props.searchedText ? "song-list song-list-longer" : "song-list"
+        }
+      >
+        {this.renderSongs()}
+      </div>
+    );
   }
 }
 const mapStateToProps = state => {
