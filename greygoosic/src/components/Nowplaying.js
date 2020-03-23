@@ -211,7 +211,6 @@ class NowPlaying extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return { queue: state.songs, nowPlaying: state.nowPlaying };
 };
 export default connect(mapStateToProps, {
