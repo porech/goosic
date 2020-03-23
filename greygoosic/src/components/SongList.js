@@ -1,5 +1,5 @@
 import React from "react";
-import "./Songlist.css";
+import "./SongList.css";
 import Song from "./Song";
 import { connect } from "react-redux";
 import { getSongs } from "../actions";
