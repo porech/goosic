@@ -1,6 +1,7 @@
 .panel {
   border-top: 1px solid white;
   position: fixed;
+  padding-top: 5px;
   z-index: 10;
   bottom: 0px;
   width: 100%;
@@ -27,12 +28,17 @@
 }
 
 .rc-slider {
-  height: 1px;
+  height: 2px;
   padding: 0;
 }
 .rc-slider-handle {
   margin-left: 9px;
-  height: 16px;
-  width: 16px;
-  transition: transform 1s;
+  height: 25px;
+  width: 25px;
+  margin-top: -10px;
+  transition: left 0.3s;
+}
+.rc-slider-rail {
+  background-color: rgba(0, 0, 0, 0.24);
+  transform: translateX(10px);
 }
