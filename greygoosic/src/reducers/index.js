@@ -5,7 +5,9 @@ import {
   EXPAND_COLLAPSE_SEARCH_BAR,
   PLAY_SONG,
   PAUSE_SONG,
-  NEXT_SONG
+  NEXT_SONG,
+  UPDATE_DURATION,
+  UPDATE_CURRENT_TIME
 } from "../constants";
 const songsReducer = (songs = [], action) => {
   switch (action.type) {
@@ -34,6 +36,16 @@ const nowPlayingReducer = (nowPlayingInfo = null, action) => {
         song: action.payload,
         url: action.payload.id ? `/song-stream/${action.payload.id} ` : "",
         isPlaying: true
+      };
+    case UPDATE_CURRENT_TIME:
+      return {
+        ...nowPlayingInfo,
+        currentTime: action.payload
+      };
+    case UPDATE_DURATION:
+      return {
+        ...nowPlayingInfo,
+        duration: action.payload
       };
     default:
       return nowPlayingInfo;

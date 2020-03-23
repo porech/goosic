@@ -1,0 +1,14 @@
+.slider {
+  background-color: greenyellow;
+  height: 5px;
+  z-index: 20;
+}
+
+.pointer {
+  border-radius: 100px;
+  background-color: black;
+  width: 15px;
+  height: 15px;
+  transform: translateY(-5px);
+  float: left;
+}

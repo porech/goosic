@@ -4,7 +4,9 @@ import {
   EXPAND_COLLAPSE_SEARCH_BAR,
   PLAY_SONG,
   PAUSE_SONG,
-  NEXT_SONG
+  NEXT_SONG,
+  UPDATE_DURATION,
+  UPDATE_CURRENT_TIME
 } from "../constants";
 import goosic from "../goosic";
 export const getSongs = () => async dispatch => {
@@ -23,6 +25,14 @@ export const pauseSong = () => {
 };
 export const search = payload => {
   return { type: SEARCH_SONG, payload };
+};
+
+export const updateDuration = payload => {
+  return { type: UPDATE_DURATION, payload };
+};
+
+export const updateCurrentTime = payload => {
+  return { type: UPDATE_CURRENT_TIME, payload };
 };
 
 export const expandCollapseSearchBar = payload => {

@@ -1,19 +1,36 @@
 import React from "react";
 import { connect } from "react-redux";
+import "rc-slider/assets/index.css";
 import "./Nowplaying.css";
-import { nextSong, playSong, pauseSong } from "../actions";
+import Slider from "rc-slider";
+import {
+  nextSong,
+  playSong,
+  pauseSong,
+  updateDuration,
+  updateCurrentTime
+} from "../actions";
+
 class NowPlaying extends React.Component {
   audio;
-  currentTime = 0;
   componentDidMount() {
     this.audio = document.getElementById("audioPlayer");
   }
+
   componentDidUpdate() {
-    let previousPlayingId = this.audio.src.split("/song-stream/")[1];
-    if (
+    if (this.audio && this.audio.src) {
+      let previousPlayingId = this.audio.src.split("/song-stream/")[1];
+      if (
+        this.props.nowPlaying &&
+        this.props.nowPlaying.song &&
+        previousPlayingId !== this.props.nowPlaying.song.id.toString()
+      ) {
+        this.play(this.props.nowPlaying.song);
+      }
+    } else if (
+      this.audio &&
       this.props.nowPlaying &&
-      this.props.nowPlaying.song &&
-      previousPlayingId !== this.props.nowPlaying.song.id.toString()
+      this.props.nowPlaying.song
     ) {
       this.play(this.props.nowPlaying.song);
     }
@@ -24,59 +41,76 @@ class NowPlaying extends React.Component {
       : false;
   }
   onTimeUpdate() {
-    /*     console.log(
-      "currentTime:",
-      this.audio.currentTime,
-      "duration:",
-      this.audio.duration
-    ); */
+    this.props.updateCurrentTime(this.audio.currentTime);
     if (this.audio.currentTime - this.audio.duration === 0) {
       this.next();
     }
   }
   render() {
     return (
-      <div className="panel">
+      <div>
         <audio
           id="audioPlayer"
           onTimeUpdate={() => {
             this.onTimeUpdate();
           }}
+          onDurationChange={() => {
+            this.props.updateDuration(Math.round(this.audio.duration));
+          }}
         ></audio>
-        <div className="action-icons">
-          <div className="action-icons-secondary">
-            <i
-              onClick={() => {
-                this.previous();
-              }}
-              className="backward icon"
-            ></i>
-          </div>
-          <div className="action-icons-primary">
-            <i
-              onClick={() => {
-                if (this.checkIsPlaying()) {
-                  this.pause();
-                } else {
-                  this.play(
-                    this.props.nowPlaying
-                      ? this.props.nowPlaying.song
-                      : this.getSongFromIndex(0)
-                  );
-                }
-              }}
-              className={`${
-                this.checkIsPlaying() ? "pause" : "play"
-              } circle icon`}
-            ></i>
-          </div>
-          <div className="action-icons-secondary">
-            <i
-              onClick={() => {
+
+        <div className="panel">
+          <Slider
+            min={0}
+            max={this.props.nowPlaying ? this.props.nowPlaying.duration : 0}
+            value={
+              this.props.nowPlaying ? this.props.nowPlaying.currentTime : 0
+            }
+            defaultValue={0}
+            onChange={event => {
+              console.log(event);
+              if (this.audio.currentTime < this.audio.duration) {
+                this.audio.currentTime = event;
+              } else {
                 this.next();
-              }}
-              className="forward icon"
-            ></i>
+              }
+            }}
+          ></Slider>
+          <div className="action-icons">
+            <div className="action-icons-secondary">
+              <i
+                onClick={() => {
+                  this.previous();
+                }}
+                className="backward icon"
+              ></i>
+            </div>
+            <div className="action-icons-primary">
+              <i
+                onClick={() => {
+                  if (this.checkIsPlaying()) {
+                    this.pause();
+                  } else {
+                    this.play(
+                      this.props.nowPlaying
+                        ? this.props.nowPlaying.song
+                        : this.getSongFromIndex(0)
+                    );
+                  }
+                }}
+                className={`${
+                  this.checkIsPlaying() ? "pause" : "play"
+                } circle icon`}
+              ></i>
+            </div>
+            <div className="action-icons-secondary">
+              <i
+                onClick={() => {
+                  this.next();
+                }}
+                className="forward icon"
+              ></i>
+            </div>
           </div>
         </div>
       </div>
@@ -143,6 +177,10 @@ class NowPlaying extends React.Component {
 const mapStateToProps = state => {
   return { queue: state.songs, nowPlaying: state.nowPlaying };
 };
-export default connect(mapStateToProps, { nextSong, playSong, pauseSong })(
-  NowPlaying
-);
+export default connect(mapStateToProps, {
+  nextSong,
+  playSong,
+  pauseSong,
+  updateDuration,
+  updateCurrentTime
+})(NowPlaying);

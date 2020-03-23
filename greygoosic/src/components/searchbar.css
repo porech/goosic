@@ -15,8 +15,8 @@
   margin-top: 15px;
   width: 98%;
   transition: width 1s;
-  animation-name: example;
-  animation-duration: 4s;
+  /*   animation-name: search;
+  animation-duration: 4s; */
 }
 /* .searchpane-clicked {
   width: 98%;
