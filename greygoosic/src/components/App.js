@@ -8,8 +8,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <SearchBar />
-        <SongList></SongList>
+        <div style={{ display: "flex", flexFlow: "column" }}>
+          <SearchBar />
+          <SongList></SongList>
+        </div>
         <NowPlaying></NowPlaying>
       </div>
     );
