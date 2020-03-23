@@ -66,12 +66,6 @@ class SongList extends React.Component {
                   key={song.id}
                   song={{
                     id: song.id,
-                    fileName: song.file_name,
-                    title:
-                      song.metadata.title ||
-                      this.getFileNameFromPath(song.file_name) ||
-                      "Unknown",
-                    artist: song.metadata.artist || "Unknown Artist",
                     metadata: song.metadata
                   }}
                 ></Song>

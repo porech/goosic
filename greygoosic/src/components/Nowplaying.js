@@ -89,7 +89,8 @@ class NowPlaying extends React.Component {
               {`${this.props.nowPlaying.song.metadata.artist ||
                 "Unknown Artist"} -
               ${this.props.nowPlaying.song.metadata.title ||
-                this.props.nowPlaying.song.file_name}`}
+                this.props.nowPlaying.song.file_name ||
+                this.props.nowPlaying.song.fileName}`}
             </div>
           ) : (
             ""
@@ -194,15 +195,19 @@ class NowPlaying extends React.Component {
     if (!song) {
       song = this.getSongFromIndex(0);
     }
-    let previousPlayingId = this.audio.src.split("/song-stream/")[1];
-    if (!this.props.nowPlaying || song.id.toString() !== previousPlayingId) {
-      this.props.nextSong(song);
-      this.audio.src = `/song-stream/${song.id}`;
+    if (song) {
+      let previousPlayingId = this.audio.src.split("/song-stream/")[1];
+      if (!this.props.nowPlaying || song.id.toString() !== previousPlayingId) {
+        this.props.nextSong(song);
+        this.audio.src = `/song-stream/${song.id}`;
+      } else {
+        this.props.playSong(song);
+      }
+      this.audio.play();
+      this.props.updateDuration(Math.round(this.audio.duration));
     } else {
-      this.props.playSong(song);
+      console.log("ERR_NO_SONG");
     }
-    this.audio.play();
-    this.props.updateDuration(Math.round(this.audio.duration));
   };
   pause = () => {
     this.props.pauseSong();
@@ -211,6 +216,7 @@ class NowPlaying extends React.Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return { queue: state.songs, nowPlaying: state.nowPlaying };
 };
 export default connect(mapStateToProps, {

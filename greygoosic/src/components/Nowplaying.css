@@ -28,6 +28,7 @@
 }
 
 .song-info {
+  overflow: hidden;
 }
 
 .time-info {
@@ -49,12 +50,12 @@
   margin-top: -8px;
 }
 .rc-slider-track {
-  height: 10px;
+  height: 12px;
 }
 .rc-slider-rail {
   background-color: rgba(0, 0, 0, 0.24);
   transform: translateX(10px);
-  height: 10px;
+  height: 12px;
 }
 .rc-slider-tooltip {
   z-index: 25;

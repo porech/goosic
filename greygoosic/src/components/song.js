@@ -5,7 +5,7 @@ import "./Song.css";
 
 class Song extends React.Component {
   render = () => {
-    let { title, artist } = this.props.song;
+    let { title, artist } = this.props.song.metadata;
     return (
       <div
         onClick={() => {
@@ -22,7 +22,8 @@ class Song extends React.Component {
             className="avatar"
           ></img>
           <div className="text">
-            {artist} - {title}
+            {artist || "Unknown Artist"} -{" "}
+            {title || this.props.song.file_name || "Unknown"}
           </div>
         </div>
         <div className="divider"></div>
