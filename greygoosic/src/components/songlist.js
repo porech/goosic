@@ -61,15 +61,7 @@ class SongList extends React.Component {
               }
             })
             .map(song => {
-              return (
-                <Song
-                  key={song.id}
-                  song={{
-                    id: song.id,
-                    metadata: song.metadata
-                  }}
-                ></Song>
-              );
+              return <Song key={song.id} song={song}></Song>;
             }))
         )}
         {this.searchResults.length === 0 && this.props.searchedText !== "" ? (

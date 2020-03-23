@@ -22,8 +22,9 @@ class Song extends React.Component {
             className="avatar"
           ></img>
           <div className="text">
-            {artist || "Unknown Artist"} -{" "}
-            {title || this.props.song.file_name || "Unknown"}
+            {`${artist || "Unknown Artist"} - ${title ||
+              this.props.song.file_name ||
+              "Unknown"}`}
           </div>
         </div>
         <div className="divider"></div>
