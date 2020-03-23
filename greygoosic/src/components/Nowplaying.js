@@ -86,8 +86,10 @@ class NowPlaying extends React.Component {
           ></Slider>
           {this.props.nowPlaying ? (
             <div className="song-info">
-              {`${this.props.nowPlaying.song.metadata.artist} -
-              ${this.props.nowPlaying.song.metadata.title}`}
+              {`${this.props.nowPlaying.song.metadata.artist ||
+                "Unknown Artist"} -
+              ${this.props.nowPlaying.song.metadata.title ||
+                this.props.nowPlaying.song.file_name}`}
             </div>
           ) : (
             ""
