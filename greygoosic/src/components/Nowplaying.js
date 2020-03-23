@@ -70,6 +70,7 @@ class NowPlaying extends React.Component {
 
         <div className="panel">
           <Slider
+            id="slider"
             min={0}
             max={this.props.nowPlaying ? this.props.nowPlaying.duration : 0}
             value={

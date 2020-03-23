@@ -28,7 +28,12 @@
 }
 
 .song-info {
-  overflow: hidden;
+  overflow-x: scroll;
+  height: 20px;
+}
+
+.song-info::-webkit-scrollbar {
+  display: none;
 }
 
 .time-info {
@@ -45,12 +50,17 @@
 }
 .rc-slider-handle {
   margin-left: 9px;
-  height: 25px;
-  width: 25px;
+  height: 30px;
+  width: 30px;
   margin-top: -8px;
+}
+.rc-slider-handle-touch {
+  height: 50px;
+  width: 50px;
 }
 .rc-slider-track {
   height: 12px;
+  border-radius: 0px;
 }
 .rc-slider-rail {
   background-color: rgba(0, 0, 0, 0.24);
