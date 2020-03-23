@@ -40,8 +40,17 @@ class NowPlaying extends React.Component {
       ? true
       : false;
   }
+  parseTimeToString(time) {
+    let minutes = Math.trunc(time / 60);
+    let seconds = time - 60 * minutes;
+    let trailingZeroForMinutes = minutes < 10 ? true : false;
+    let trailingZeroForSeconds = seconds < 10 ? true : false;
+    return `${trailingZeroForMinutes ? "0" : ""}${minutes}:${
+      trailingZeroForSeconds ? "0" : ""
+    }${seconds}`;
+  }
   onTimeUpdate() {
-    this.props.updateCurrentTime(this.audio.currentTime);
+    this.props.updateCurrentTime(Math.round(this.audio.currentTime));
     if (this.audio.currentTime - this.audio.duration === 0) {
       this.next();
     }
@@ -68,7 +77,6 @@ class NowPlaying extends React.Component {
             }
             defaultValue={0}
             onChange={event => {
-              console.log(event);
               if (this.audio.currentTime < this.audio.duration) {
                 this.audio.currentTime = event;
               } else {
@@ -76,7 +84,22 @@ class NowPlaying extends React.Component {
               }
             }}
           ></Slider>
+          {this.props.nowPlaying ? (
+            <div className="song-info">
+              {`${this.props.nowPlaying.song.metadata.artist} -
+              ${this.props.nowPlaying.song.metadata.title}`}
+            </div>
+          ) : (
+            ""
+          )}
           <div className="action-icons">
+            {this.props.nowPlaying ? (
+              <div className="time-info">
+                {this.parseTimeToString(this.props.nowPlaying.currentTime)}
+              </div>
+            ) : (
+              ""
+            )}
             <div className="action-icons-secondary">
               <i
                 onClick={() => {
@@ -111,6 +134,17 @@ class NowPlaying extends React.Component {
                 className="forward icon"
               ></i>
             </div>
+            {this.props.nowPlaying ? (
+              <div className="duration-info">
+                -
+                {this.parseTimeToString(
+                  this.props.nowPlaying.duration -
+                    this.props.nowPlaying.currentTime
+                )}
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>
@@ -165,7 +199,6 @@ class NowPlaying extends React.Component {
     } else {
       this.props.playSong(song);
     }
-    console.log(this.props);
     this.audio.play();
     this.props.updateDuration(Math.round(this.audio.duration));
   };
@@ -176,6 +209,7 @@ class NowPlaying extends React.Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return { queue: state.songs, nowPlaying: state.nowPlaying };
 };
 export default connect(mapStateToProps, {

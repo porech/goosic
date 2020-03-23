@@ -71,7 +71,8 @@ class SongList extends React.Component {
                       song.metadata.title ||
                       this.getFileNameFromPath(song.file_name) ||
                       "Unknown",
-                    artist: song.metadata.artist || "Unknown Artist"
+                    artist: song.metadata.artist || "Unknown Artist",
+                    metadata: song.metadata
                   }}
                 ></Song>
               );

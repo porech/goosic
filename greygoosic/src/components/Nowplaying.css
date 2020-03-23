@@ -27,6 +27,17 @@
   font-size: 2em;
 }
 
+.song-info {
+}
+
+.time-info {
+  position: absolute;
+  left: 200px;
+}
+.duration-info {
+  position: absolute;
+  right: 200px;
+}
 .rc-slider {
   height: 20px;
   padding: 0;
@@ -44,4 +55,7 @@
   background-color: rgba(0, 0, 0, 0.24);
   transform: translateX(10px);
   height: 10px;
+}
+.rc-slider-tooltip {
+  z-index: 25;
 }
