@@ -167,6 +167,7 @@ class NowPlaying extends React.Component {
     }
     console.log(this.props);
     this.audio.play();
+    this.props.updateDuration(Math.round(this.audio.duration));
   };
   pause = () => {
     this.props.pauseSong();
