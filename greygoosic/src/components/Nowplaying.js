@@ -45,9 +45,15 @@ class NowPlaying extends React.Component {
     let seconds = time - 60 * minutes;
     let trailingZeroForMinutes = minutes < 10 ? true : false;
     let trailingZeroForSeconds = seconds < 10 ? true : false;
-    return `${trailingZeroForMinutes ? "0" : ""}${minutes}:${
-      trailingZeroForSeconds ? "0" : ""
-    }${seconds}`;
+    return `${
+      time
+        ? (trailingZeroForMinutes ? "0" : "") +
+          minutes +
+          ":" +
+          (trailingZeroForSeconds ? "0" : "") +
+          seconds
+        : ""
+    }`;
   }
   onTimeUpdate() {
     this.props.updateCurrentTime(Math.round(this.audio.currentTime));
