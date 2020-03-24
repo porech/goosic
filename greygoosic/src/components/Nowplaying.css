@@ -28,8 +28,12 @@
 }
 
 .song-info {
-  overflow-x: scroll;
-  height: 20px;
+  clear: both;
+  display: inline-block;
+  width: fit-content;
+  height: 18px;
+  white-space: nowrap;
+  text-overflow: initial;
 }
 
 .song-info::-webkit-scrollbar {
@@ -69,4 +73,26 @@
 }
 .rc-slider-tooltip {
   z-index: 25;
+}
+.sliding-text {
+  animation: slidingText 10s linear infinite alternate;
+}
+
+@keyframes slidingText {
+  0% {
+    -moz-transform: translateX(0); /* Firefox bug fix */
+    -webkit-transform: translateX(0); /* Firefox bug fix */
+    transform: translateX(0);
+  }
+  50% {
+    -moz-transform: translateX(0%); /* Firefox bug fix */
+    -webkit-transform: translateX(0%); /* Firefox bug fix */
+    transform: translateX(0%);
+  }
+
+  100% {
+    -moz-transform: translateX(-20%); /* Firefox bug fix */
+    -webkit-transform: translateX(-20%); /* Firefox bug fix */
+    transform: translateX(-20%);
+  }
 }

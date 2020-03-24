@@ -9,7 +9,7 @@
   padding: 10px;
 }
 .container:hover {
-  background-color: lightblue;
+  background-color: rgba(173, 225, 250, 0.7);
   border-radius: 20px;
   animation: slidein 0.5s, fadein 0.5s;
   transform: translateX(-5px);

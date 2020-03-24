@@ -22,7 +22,7 @@ class Song extends React.Component {
             className="avatar"
           ></img>
           <div className="text">
-            {`${artist || "Unknown Artist"} - ${title ||
+            {`${artist} ${artist ? " - " : ""} ${title ||
               this.props.song.file_name ||
               "Unknown"}`}
           </div>
