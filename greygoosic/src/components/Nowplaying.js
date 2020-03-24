@@ -52,7 +52,7 @@ class NowPlaying extends React.Component {
           ":" +
           (trailingZeroForSeconds ? "0" : "") +
           seconds
-        : ""
+        : "--:--"
     }`;
   }
   onTimeUpdate() {
