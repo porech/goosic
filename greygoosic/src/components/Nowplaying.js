@@ -35,6 +35,25 @@ class NowPlaying extends React.Component {
       this.play(this.props.nowPlaying.song);
     }
   }
+  buildTitleString() {
+    if (this.props.nowPlaying && this.props.nowPlaying.song) {
+      let { song } = this.props.nowPlaying;
+      let title = "";
+      if (song.metadata.artist) {
+        title = title.concat(song.metadata.artist).concat(" - ");
+      }
+      if (song.metadata.title) {
+        title = title.concat(song.metadata.title);
+      } else if (song.file_name) {
+        title = title.concat(song.file_name);
+      } else {
+        title = title.concat("Unknown Song");
+      }
+      return title;
+    } else {
+      return "";
+    }
+  }
   checkIsPlaying() {
     return this.props.nowPlaying && this.props.nowPlaying.isPlaying
       ? true
@@ -62,6 +81,8 @@ class NowPlaying extends React.Component {
     }
   }
   render() {
+    let title = this.buildTitleString();
+    console.log("title length:", title.length);
     return (
       <div>
         <audio
@@ -92,12 +113,12 @@ class NowPlaying extends React.Component {
             }}
           ></Slider>
           {this.props.nowPlaying ? (
-            <div className="song-info sliding-text">
-              {`${this.props.nowPlaying.song.metadata.artist || ""}
-              ${this.props.nowPlaying.song.metadata.artist ? " - " : ""}
-              ${this.props.nowPlaying.song.metadata.title ||
-                this.props.nowPlaying.song.file_name ||
-                this.props.nowPlaying.song.fileName}`}
+            <div
+              className={
+                title.length > 50 ? "song-info sliding-text" : "song-info"
+              }
+            >
+              {title}
             </div>
           ) : (
             ""
