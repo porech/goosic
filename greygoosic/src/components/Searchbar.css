@@ -1,18 +1,17 @@
 .searchbar,
 ::placeholder {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(0, 0, 0, 0.8);
   border: 0px;
   outline: none;
   background-color: rgba(0, 0, 0, 0);
 }
 .searchpane {
   position: fixed;
-
-  background-color: rgba(50, 50, 50, 0.5);
-
-  backdrop-filter: blur(5px);
+  background-color: rgba(192, 202, 211, 0.6);
   border-radius: 20px;
-  padding: 10px;
+  backdrop-filter: blur(5px);
+  padding: 2vh;
+  font-size: 1.2em;
   margin: 5px;
   cursor: text;
   width: 98%;
@@ -23,6 +22,14 @@
 /* .searchpane-clicked {
   width: 98%;
 } */
+/* 
 .search-icon {
-  color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.8);
+}
+*/
+
+@media (max-width: 400px) {
+  .searchpane {
+    font-size: 1.5em;
+  }
 }
