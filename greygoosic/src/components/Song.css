@@ -13,6 +13,7 @@
   border-radius: 20px;
   animation: slidein 0.5s, fadein 0.5s;
   transform: translateX(-5px);
+  z-index: 5;
 }
 .song > .divider {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);

@@ -1,16 +1,12 @@
 import React from "react";
 import "./Searchbar.css";
 import { connect } from "react-redux";
-import { search, expandCollapseSearchBar } from "../actions";
+import { search } from "../actions";
 class SearchBar extends React.Component {
   render() {
     return (
       <div
-        className={
-          this.props.searchbarStatus.status === "expand"
-            ? "searchpane searchpane-clicked"
-            : "searchpane"
-        }
+        className="searchpane"
         onClick={() => {
           document.querySelector("#search").focus();
         }}
@@ -20,8 +16,6 @@ class SearchBar extends React.Component {
           id="search"
           key="search"
           type="text"
-          onFocus={this.onfocus}
-          onBlur={this.onblur}
           className="searchbar"
           placeholder={this.props.label || "Search here..."}
           onChange={event => {
@@ -32,7 +26,7 @@ class SearchBar extends React.Component {
     );
   }
 
-  onfocus = () => {
+  /*   onfocus = () => {
     this.props.expandCollapseSearchBar({
       status: "expand"
     });
@@ -45,15 +39,12 @@ class SearchBar extends React.Component {
     } else {
       console.log(this.props.searchedText);
     }
-  };
+  };*/
 }
 const mapStateToProps = state => {
   return {
     searchedText: state.searchedText,
-    label: state.label,
-    searchbarStatus: state.searchbarStatus
+    label: state.label
   };
 };
-export default connect(mapStateToProps, { search, expandCollapseSearchBar })(
-  SearchBar
-);
+export default connect(mapStateToProps, { search })(SearchBar);

@@ -16,6 +16,7 @@
   cursor: text;
   width: 99%;
   transition: width 1s;
+  z-index: 20;
   /*   animation-name: search;
   animation-duration: 4s; */
 }
