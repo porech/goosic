@@ -14,13 +14,9 @@ class Song extends React.Component {
         className="song"
       >
         <div className="container">
-          <img
-            alt="avatar"
-            src="https://www.mh-corp.com/img/icons/avatar.png"
-            width="25"
-            height="25"
-            className="avatar"
-          ></img>
+          <div className="avatar">
+            <i className="music icon"></i>
+          </div>
           <div className="text">
             {`${artist} ${artist ? " - " : ""} ${title ||
               this.props.song.file_name ||

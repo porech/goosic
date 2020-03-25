@@ -82,7 +82,6 @@ class NowPlaying extends React.Component {
   }
   render() {
     let title = this.buildTitleString();
-    console.log("title length:", title.length);
     return (
       <div>
         <audio
@@ -244,7 +243,7 @@ class NowPlaying extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
+  //console.log(state);
   return { queue: state.songs, nowPlaying: state.nowPlaying };
 };
 export default connect(mapStateToProps, {
