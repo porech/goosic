@@ -1,6 +1,6 @@
 .searchbar,
 ::placeholder {
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(0, 0, 0, 0.6);
   border: 0px;
   outline: none;
   background-color: rgba(0, 0, 0, 0);
@@ -22,11 +22,10 @@
 /* .searchpane-clicked {
   width: 98%;
 } */
-/* 
+
 .search-icon {
-    color: rgba(255, 255, 255, 0.8);
+  color: rgba(0, 0, 0, 0.6);
 }
-*/
 
 @media (max-width: 400px) {
   .searchpane {
