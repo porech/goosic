@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import _ from "lodash";
 import "rc-slider/assets/index.css";
 import "./Nowplaying.css";
 import Slider from "rc-slider";
@@ -246,12 +247,33 @@ class NowPlaying extends React.Component {
             .map(song => song.id)
             .indexOf(this.props.nowPlaying.song.id) + increment;
       }
-
+      if (nextIndex > this.props.queue.length - 1) {
+        if (this.props.options && this.props.options.repeat) {
+          nextIndex = 0;
+        } else {
+          nextIndex = this.props.queue.length - 1;
+        }
+      }
       if (nextIndex > this.props.queue.length - 1) {
         nextIndex = 0;
       }
       this.previousSongList.push(this.props.nowPlaying.song);
+
       let nextSong = this.getSongFromIndex(nextIndex);
+      if (this.props.options && !this.props.options.repeat) {
+        this.previousSongList = _.uniq(this.previousSongList);
+        //console.log(nextSong.file_name);
+        if (this.previousSongList.includes(nextSong)) {
+          //console.log("found duplicate, skipping");
+          nextSong = this.props.queue.find(
+            el => !this.previousSongList.includes(el)
+          );
+          if (!nextSong) {
+            return;
+          }
+          //console.log(nextSong.file_name);
+        }
+      }
       //console.log("nextSong:", nextSong, "nextIndex:", nextIndex);
       this.play(nextSong);
     } else {
@@ -264,12 +286,16 @@ class NowPlaying extends React.Component {
       if (this.props.options && this.props.options.shuffle) {
         previousSong = this.previousSongList.pop();
         if (!previousSong) {
-          let increment = Math.abs(
-            Math.round(Math.random() * this.props.queue.length) - 3
-          );
-          previousSong = this.getSongFromIndex(
-            this.props.queue.length - increment
-          );
+          if (this.props.options.repeat) {
+            let increment = Math.abs(
+              Math.round(Math.random() * this.props.queue.length) - 3
+            );
+            previousSong = this.getSongFromIndex(
+              this.props.queue.length - increment
+            );
+          } else {
+            return;
+          }
         }
       } else {
         let previousIndex =
@@ -277,7 +303,11 @@ class NowPlaying extends React.Component {
             .map(song => song.id)
             .indexOf(this.props.nowPlaying.song.id) - 1;
         if (previousIndex < 0) {
-          previousIndex = this.props.queue.length - 1;
+          if (this.props.options && this.props.options.repeat) {
+            previousIndex = this.props.queue.length - 1;
+          } else {
+            previousIndex = 0;
+          }
         }
         previousSong = this.getSongFromIndex(previousIndex);
       }
