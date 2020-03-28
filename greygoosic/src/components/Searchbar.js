@@ -15,7 +15,7 @@ class SearchBar extends React.Component {
         <input
           id="search"
           key="search"
-          type="text"
+          type="search"
           className="searchbar"
           placeholder={this.props.label || "Search here..."}
           onChange={event => {
