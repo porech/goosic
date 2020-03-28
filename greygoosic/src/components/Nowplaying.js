@@ -8,11 +8,14 @@ import {
   playSong,
   pauseSong,
   updateDuration,
-  updateCurrentTime
+  updateCurrentTime,
+  toggleRepeatSongs,
+  toggleShuffleSongs
 } from "../actions";
 
 class NowPlaying extends React.Component {
   audio;
+  previousSongList = [];
   componentDidMount() {
     this.audio = document.getElementById("audioPlayer");
   }
@@ -59,6 +62,7 @@ class NowPlaying extends React.Component {
       ? true
       : false;
   }
+
   parseTimeToString(time) {
     let minutes = Math.trunc(time / 60);
     let seconds = time - 60 * minutes;
@@ -123,6 +127,24 @@ class NowPlaying extends React.Component {
             ""
           )}
           <div className="action-icons">
+            <div
+              className={`action-icons-extra-left ${
+                this.props.options && this.props.options.repeat
+                  ? "toggle-enabled"
+                  : "toggle-disabled"
+              } `}
+            >
+              <i
+                onClick={() => {
+                  this.props.toggleRepeatSongs(
+                    this.props.options && this.props.options.repeat
+                      ? this.props.options.repeat
+                      : false
+                  );
+                }}
+                className="retweet icon"
+              ></i>
+            </div>
             {this.props.nowPlaying ? (
               <div className="time-info">
                 {this.parseTimeToString(this.props.nowPlaying.currentTime)}
@@ -175,6 +197,24 @@ class NowPlaying extends React.Component {
             ) : (
               ""
             )}
+            <div
+              className={`action-icons-extra-right ${
+                this.props.options && this.props.options.shuffle
+                  ? "toggle-enabled"
+                  : "toggle-disabled"
+              } `}
+            >
+              <i
+                onClick={() => {
+                  this.props.toggleShuffleSongs(
+                    this.props.options && this.props.options.shuffle
+                      ? this.props.options.shuffle
+                      : false
+                  );
+                }}
+                className="random icon"
+              ></i>
+            </div>
           </div>
         </div>
       </div>
@@ -186,13 +226,31 @@ class NowPlaying extends React.Component {
   };
   next = () => {
     if (this.props.nowPlaying) {
-      let nextIndex =
-        this.props.queue
-          .map(song => song.id)
-          .indexOf(this.props.nowPlaying.song.id) + 1;
+      let nextIndex;
+      //#TODO will be server-side
+      if (this.props.options && this.props.options.shuffle) {
+        nextIndex = Math.round(
+          Math.random() * this.props.queue.length +
+            Math.abs(
+              Math.round(
+                this.props.queue
+                  .map(song => song.id)
+                  .indexOf(this.props.nowPlaying.song.id) / 3
+              )
+            )
+        );
+      } else {
+        let increment = 1;
+        nextIndex =
+          this.props.queue
+            .map(song => song.id)
+            .indexOf(this.props.nowPlaying.song.id) + increment;
+      }
+
       if (nextIndex > this.props.queue.length - 1) {
         nextIndex = 0;
       }
+      this.previousSongList.push(this.props.nowPlaying.song);
       let nextSong = this.getSongFromIndex(nextIndex);
       //console.log("nextSong:", nextSong, "nextIndex:", nextIndex);
       this.play(nextSong);
@@ -202,16 +260,27 @@ class NowPlaying extends React.Component {
   };
   previous = () => {
     if (this.props.nowPlaying) {
-      let previousIndex =
-        this.props.queue
-          .map(song => song.id)
-          .indexOf(this.props.nowPlaying.song.id) - 1;
-      if (previousIndex < 0) {
-        previousIndex = this.props.queue.length - 1;
+      let previousSong;
+      if (this.props.options && this.props.options.shuffle) {
+        previousSong = this.previousSongList.pop();
+        if (!previousSong) {
+          let increment = Math.abs(
+            Math.round(Math.random() * this.props.queue.length) - 3
+          );
+          previousSong = this.getSongFromIndex(
+            this.props.queue.length - increment
+          );
+        }
+      } else {
+        let previousIndex =
+          this.props.queue
+            .map(song => song.id)
+            .indexOf(this.props.nowPlaying.song.id) - 1;
+        if (previousIndex < 0) {
+          previousIndex = this.props.queue.length - 1;
+        }
+        previousSong = this.getSongFromIndex(previousIndex);
       }
-
-      let previousSong = this.getSongFromIndex(previousIndex);
-      //console.log("previousId:", previousSong, "previousIndex:", previousIndex);
       this.play(previousSong);
     } else {
       this.play(this.getSongFromIndex(0));
@@ -243,13 +312,18 @@ class NowPlaying extends React.Component {
 }
 
 const mapStateToProps = state => {
-  //console.log(state);
-  return { queue: state.songs, nowPlaying: state.nowPlaying };
+  return {
+    queue: state.songs,
+    nowPlaying: state.nowPlaying,
+    options: state.options
+  };
 };
 export default connect(mapStateToProps, {
   nextSong,
   playSong,
   pauseSong,
   updateDuration,
-  updateCurrentTime
+  updateCurrentTime,
+  toggleShuffleSongs,
+  toggleRepeatSongs
 })(NowPlaying);

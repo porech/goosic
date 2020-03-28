@@ -6,3 +6,5 @@ export const PAUSE_SONG = "PAUSE_SONG";
 export const NEXT_SONG = "NEXT_SONG";
 export const UPDATE_DURATION = "UPDATE_DURATION";
 export const UPDATE_CURRENT_TIME = "UPDATE_CURRENT_TIME";
+export const SHUFFLE_SONGS = "SHUFFLE_SONGS";
+export const REPEAT_SONGS = "REPEAT_SONGS";

@@ -24,9 +24,16 @@
 }
 
 .action-icons-secondary {
-  font-size: 2em;
+  font-size: 2.5em;
 }
-
+.action-icons-extra-right {
+  font-size: 1.5em;
+  margin-left: 25vw;
+}
+.action-icons-extra-left {
+  font-size: 1.5em;
+  margin-right: 25vw;
+}
 .song-info {
   clear: both;
   display: inline-block;
@@ -77,7 +84,12 @@
 .sliding-text {
   animation: slidingText 10s linear infinite alternate;
 }
-
+.toggle-enabled {
+  color: blueviolet;
+}
+.toggle-disabled {
+  color: black;
+}
 @keyframes slidingText {
   0% {
     -moz-transform: translateX(0); /* Firefox bug fix */
@@ -94,5 +106,16 @@
     -moz-transform: translateX(-20%); /* Firefox bug fix */
     -webkit-transform: translateX(-20%); /* Firefox bug fix */
     transform: translateX(-20%);
+  }
+}
+
+@media (max-width: 500px) {
+  .action-icons-extra-right {
+    font-size: 1.5em;
+    margin-left: 100px;
+  }
+  .action-icons-extra-left {
+    font-size: 1.5em;
+    margin-right: 100px;
   }
 }

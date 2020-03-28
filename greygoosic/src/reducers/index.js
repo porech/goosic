@@ -7,7 +7,9 @@ import {
   PAUSE_SONG,
   NEXT_SONG,
   UPDATE_DURATION,
-  UPDATE_CURRENT_TIME
+  UPDATE_CURRENT_TIME,
+  SHUFFLE_SONGS,
+  REPEAT_SONGS
 } from "../constants";
 const songsReducer = (songs = [], action) => {
   switch (action.type) {
@@ -49,8 +51,25 @@ const nowPlayingReducer = (nowPlayingInfo = null, action) => {
         ...nowPlayingInfo,
         duration: action.payload
       };
+
     default:
       return nowPlayingInfo;
+  }
+};
+const optionsReducer = (options = [], action) => {
+  switch (action.type) {
+    case SHUFFLE_SONGS:
+      return {
+        ...options,
+        shuffle: !action.payload
+      };
+    case REPEAT_SONGS:
+      return {
+        ...options,
+        repeat: !action.payload
+      };
+    default:
+      return options;
   }
 };
 const searchbarStatusReducer = (
@@ -67,5 +86,6 @@ export default combineReducers({
   songs: songsReducer,
   searchedText: searchSongReducer,
   searchbarStatus: searchbarStatusReducer,
-  nowPlaying: nowPlayingReducer
+  nowPlaying: nowPlayingReducer,
+  options: optionsReducer
 });
