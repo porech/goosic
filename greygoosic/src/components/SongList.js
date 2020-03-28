@@ -4,32 +4,32 @@ import Song from "./Song";
 import { connect } from "react-redux";
 import { getSongs } from "../actions";
 class SongList extends React.Component {
-  loading = true;
+  loading = false;
   searchResults = [];
   getFileNameFromPath(filePath) {
     return filePath ? filePath.split("/")[filePath.split("/").length - 1] : "";
   }
-  componentDidMount() {
+  componentDidMount = () => {
     this.props.getSongs();
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
-  }
+  };
+  showSongsOrLoading = () => {
+    this.loading = !this.loading;
+    return this.loading === true ? (
+      <div>Loading...</div>
+    ) : (
+      <div>
+        No songs in list, or backend unavailable. In case, please add music
+        folder on Goosic to see it here :)
+      </div>
+    );
+  };
   renderSongs = () => {
     return (
       <div>
-        {this.props.songs && this.props.songs.length === 0 ? (
+        {!this.props.songs || this.props.songs.length === 0 ? (
           <div className="ui info icon message">
             <i className="info icon"></i>
-            <div className="header">
-              {this.loading ? (
-                <div>Loading...</div>
-              ) : (
-                <div>
-                  No songs in list, please add music folder on Goosic :)
-                </div>
-              )}
-            </div>
+            <div className="header">{this.showSongsOrLoading()}</div>
           </div>
         ) : (
           (this.searchResults = this.props.songs

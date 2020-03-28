@@ -3,6 +3,7 @@
 }
 body {
   background: var(--app-background);
+  background-color: black;
   /* Keep the inherited background full size. */
   background-attachment: fixed;
   background-size: cover;
