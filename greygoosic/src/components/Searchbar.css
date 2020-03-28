@@ -5,6 +5,7 @@
   outline: none;
   background-color: rgba(0, 0, 0, 0);
   width: 94%;
+  min-height: 20px;
 }
 .searchpane {
   position: fixed;
@@ -16,6 +17,7 @@
   margin: 5px;
   cursor: text;
   width: 98%;
+  min-height: 20px;
   transition: width 1s;
   z-index: 20;
   /*   animation-name: search;
@@ -51,6 +53,6 @@ input[type="search"]::-webkit-search-cancel-button {
     border: 0px;
     outline: none;
     background-color: rgba(0, 0, 0, 0);
-    width: 94%;
+    width: 92%;
   }
 }

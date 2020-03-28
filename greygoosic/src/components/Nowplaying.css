@@ -25,6 +25,8 @@
 
 .action-icons-secondary {
   font-size: 2.5em;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 .action-icons-extra-right {
   font-size: 1.5em;
@@ -112,10 +114,14 @@
 @media (max-width: 500px) {
   .action-icons-extra-right {
     font-size: 1.5em;
-    margin-left: 100px;
+    margin-left: 80px;
   }
   .action-icons-extra-left {
     font-size: 1.5em;
-    margin-right: 100px;
+    margin-right: 80px;
+  }
+  .action-icons-secondary {
+    font-size: 2.5em;
+    margin: 0;
   }
 }
