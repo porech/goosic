@@ -2,7 +2,6 @@ package index
 
 import (
 	"fmt"
-	"github.com/dhowden/tag"
 	"github.com/fsnotify/fsnotify"
 	"github.com/porech/goosic/v2/pkg/storage"
 	log "github.com/sirupsen/logrus"
@@ -15,25 +14,27 @@ func ScanFile(path string, store *storage.Storage) error {
 	if os.IsNotExist(err) {
 		return store.RemoveSong(path)
 	}
+
 	f, err := os.Open(path)
 	if err != nil {
 		// Ignore the error opening file, since it could be still in write process
 		return nil
 	}
 	defer f.Close()
-	metadata, err := tag.ReadFrom(f)
+
+	metadata, err := storage.ParseMetadata(path, f)
 	if err != nil {
-		return fmt.Errorf("File %s was not recognized", path)
+		return fmt.Errorf("File %s was not recognized: %v", path, err)
 	}
 
 	existingSong := store.GetSongByFile(path)
 	if existingSong == nil {
 		store.AddSong(&storage.Song{
 			File:     path,
-			Metadata: storage.ParseMetadata(metadata),
+			Metadata: *metadata,
 		})
 	} else {
-		err = store.UpdateSongMetadata(existingSong.Id, storage.ParseMetadata(metadata))
+		err = store.UpdateSongMetadata(existingSong.Id, *metadata)
 		if err != nil {
 			log.Warnf("Cannot update song metadata: %v", err)
 		}

@@ -2,7 +2,6 @@ package storage
 
 import (
 	"fmt"
-	"github.com/dhowden/tag"
 	log "github.com/sirupsen/logrus"
 	"path/filepath"
 	"strings"
@@ -20,30 +19,6 @@ type Song struct {
 	File     string   `json:"-"`
 	FileName string   `json:"file_name"`
 	Metadata Metadata `json:"metadata"`
-}
-
-func ParseMetadata(meta tag.Metadata) Metadata {
-	track, totalTracks := meta.Track()
-	disc, totalDiscs := meta.Disc()
-
-	metadata := Metadata{
-		FileType:    string(meta.FileType()),
-		Title:       meta.Title(),
-		Album:       meta.Album(),
-		Artist:      meta.Artist(),
-		AlbumArtist: meta.AlbumArtist(),
-		Composer:    meta.Composer(),
-		Genre:       meta.Genre(),
-		Year:        meta.Year(),
-		Track:       track,
-		TotalTracks: totalTracks,
-		Disc:        disc,
-		TotalDiscs:  totalDiscs,
-		Lyrics:      meta.Lyrics(),
-		Comment:     meta.Comment(),
-	}
-
-	return metadata
 }
 
 func (s *Storage) GetSongById(id int) *Song {
