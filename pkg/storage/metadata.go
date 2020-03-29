@@ -38,6 +38,7 @@ func ParseMetadata(filePath string, file *os.File) (*Metadata, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer tagLibMeta.Close()
 	metadata := parseTaglibMetadata(tagLibMeta)
 
 	// Then, if the file is supported by dhowden, add his info
