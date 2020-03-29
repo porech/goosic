@@ -14,7 +14,6 @@ import goosic from "../goosic";
 export const getSongs = () => async dispatch => {
   try {
     const response = await goosic.get("song-list");
-    console.log(response);
     dispatch({ type: GET_SONGS, payload: response.data });
   } catch (err) {
     console.log("Error fetching songs", err);

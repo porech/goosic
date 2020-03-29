@@ -63,6 +63,12 @@ class NowPlaying extends React.Component {
       ? true
       : false;
   }
+  getArtist = song => {
+    return song.metadata.artist || "";
+  };
+  getTitle = song => {
+    return song.metadata.title || song.file_name;
+  };
 
   parseTimeToString(time) {
     let minutes = Math.trunc(time / 60);
@@ -85,11 +91,19 @@ class NowPlaying extends React.Component {
       this.next();
     }
   }
+  seekTo(time) {
+    if (this.audio.currentTime < this.audio.duration) {
+      this.audio.currentTime = time;
+    } else {
+      this.next();
+    }
+  }
   render() {
     let title = this.buildTitleString();
     return (
       <div>
         <audio
+          controls
           id="audioPlayer"
           onTimeUpdate={() => {
             this.onTimeUpdate();
@@ -109,11 +123,7 @@ class NowPlaying extends React.Component {
             }
             defaultValue={0}
             onChange={event => {
-              if (this.audio.currentTime < this.audio.duration) {
-                this.audio.currentTime = event;
-              } else {
-                this.next();
-              }
+              this.seekTo(event);
             }}
           ></Slider>
           {this.props.nowPlaying ? (
@@ -316,10 +326,20 @@ class NowPlaying extends React.Component {
       this.play(this.getSongFromIndex(0));
     }
   };
-
+  updateMediaSessionPositionState = () => {
+    console.log(navigator.mediaSession);
+    /*    navigator.mediaSession.setPositionState({
+      duration: this.audio.duration,
+      playbackRate: this.audio.playbackRate,
+      position: this.audio.currentTime
+    }); */
+  };
   play = song => {
     if (!song) {
-      song = this.getSongFromIndex(0);
+      song =
+        this.props.nowPlaying && this.props.nowPlaying.song
+          ? this.props.nowPlaying.song
+          : this.getSongFromIndex(0);
     }
     if (song) {
       let previousPlayingId = this.audio.src.split("/song-stream/")[1];
@@ -330,12 +350,11 @@ class NowPlaying extends React.Component {
         this.props.playSong(song);
       }
       if ("mediaSession" in navigator) {
+        console.log(navigator.mediaSession);
         /* eslint-disable-next-line */
         navigator.mediaSession.metadata = new MediaMetadata({
-          title:
-            this.props.nowPlaying.song.metadata.title ||
-            this.props.nowPlaying.song.file_name,
-          artist: this.props.nowPlaying.song.metadata.artist || "",
+          title: this.getTitle(song),
+          artist: this.getArtist(song),
           artwork: [
             {
               src:
@@ -345,11 +364,25 @@ class NowPlaying extends React.Component {
             }
           ]
         });
+
+        navigator.mediaSession.setActionHandler("play", () => {
+          navigator.mediaSession.playbackState = "playing";
+          this.play();
+          this.updateMediaSessionPositionState();
+        });
+        navigator.mediaSession.setActionHandler("pause", () => {
+          navigator.mediaSession.playbackState = "paused";
+          this.pause();
+        });
         navigator.mediaSession.setActionHandler("nexttrack", () => {
           this.next();
         });
         navigator.mediaSession.setActionHandler("previoustrack", () => {
           this.previous();
+        });
+        navigator.mediaSession.setActionHandler("seekto", details => {
+          this.seekTo(details.seekTime);
+          this.updateMediaSessionPositionState();
         });
       }
       this.audio.play();
