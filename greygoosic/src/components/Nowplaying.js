@@ -329,6 +329,29 @@ class NowPlaying extends React.Component {
       } else {
         this.props.playSong(song);
       }
+      if ("mediaSession" in navigator) {
+        /* eslint-disable-next-line */
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title:
+            this.props.nowPlaying.song.metadata.title ||
+            this.props.nowPlaying.song.file_name,
+          artist: this.props.nowPlaying.song.metadata.artist || "",
+          artwork: [
+            {
+              src:
+                "https://images.unsplash.com/photo-1446057032654-9d8885db76c6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2560&q=80",
+              sizes: "128x128",
+              type: "image/jpeg"
+            }
+          ]
+        });
+        navigator.mediaSession.setActionHandler("nexttrack", () => {
+          this.next();
+        });
+        navigator.mediaSession.setActionHandler("previoustrack", () => {
+          this.previous();
+        });
+      }
       this.audio.play();
       this.props.updateDuration(Math.round(this.audio.duration));
     } else {
