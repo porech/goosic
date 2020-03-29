@@ -103,7 +103,6 @@ class NowPlaying extends React.Component {
     return (
       <div>
         <audio
-          controls
           id="audioPlayer"
           onTimeUpdate={() => {
             this.onTimeUpdate();

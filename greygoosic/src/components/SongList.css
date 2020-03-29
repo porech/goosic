@@ -7,11 +7,7 @@
   padding-bottom: 130px;
   background-color: rgba(255, 255, 255, 0.9);
 }
-/*   
- */
-.song-list-longer {
-  padding-bottom: 900px;
-}
+
 @media (max-width: 500px) {
   .song-list {
     font-size: 1.2em;
