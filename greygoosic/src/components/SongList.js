@@ -3,6 +3,7 @@ import "./SongList.css";
 import Song from "./cards/Song";
 import { connect } from "react-redux";
 import { getSongs } from "../actions";
+
 class SongList extends React.Component {
   loading = false;
   searchResults = [];
@@ -33,7 +34,7 @@ class SongList extends React.Component {
           </div>
         ) : (
           (this.searchResults = this.props.songs
-            .filter(song => {
+            .filter((song) => {
               if (this.props.searchedText === "") {
                 return song;
               } else {
@@ -60,7 +61,7 @@ class SongList extends React.Component {
                 }
               }
             })
-            .map(song => {
+            .map((song) => {
               return <Song key={song.id} song={song}></Song>;
             }))
         )}
@@ -76,7 +77,8 @@ class SongList extends React.Component {
     return <div className="song-list">{this.renderSongs()}</div>;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
+  console.log("state: ", state);
   return { searchedText: state.searchedText, songs: state.songs };
 };
 export default connect(mapStateToProps, { getSongs })(SongList);
