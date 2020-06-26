@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import Ink from "react-ink";
 
 import { nextSong } from "../../actions";
 import "./Song.css";
@@ -42,7 +41,7 @@ let Song = ({ song, nextSong }) => {
         )}
       </div>
       <div className="actions">
-        <div className="star-button">☆</div>
+        <div className="star-button"><div className="star-icon">☆</div></div>
       </div>
     </div>
   );

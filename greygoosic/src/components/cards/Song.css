@@ -24,23 +24,31 @@
   height: 20vh;
   padding: 10px;
   display: flex;
+  align-items: center;
   text-align: justify;
+}
+
+.container div:last-child {
+  margin-left: auto;
 }
 
 .info {
 }
+.star-icon {
+  padding-top: 8vh;  
+  align-items: center;
+}
 .star-button {
-  position: absolute;
   right: 30px;
-  width: 90px;
-  height: 90px;
+  height: 18vh;
+  width: 20vw;
   text-align: center;
-  padding-top: 35px;
   font-size: 2em;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
 .star-button:hover {
-  border-radius: 60px;
+  border-radius: 120px;
+  overflow: hidden;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
   transition: all 0.9s;
 }
@@ -55,6 +63,18 @@
   .container {
     height: 130px;
   }
+  .star-icon {
+    padding-top: 8vh;  
+    padding-right: 3vh;
+    align-items: center;
+  }
+  .star-button:hover {
+    border-radius: 0px;
+    overflow: hidden;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.9s;
+  }
+
   .info {
     font-size: 0.98em;
   }
@@ -65,10 +85,13 @@
   }
   .title {
     width: 50vw;
+    margin-right: 5px;
   }
 
   .title-large {
     width: 50vw;
     padding-top: 15px;
+    margin-right: 5px;
+
   }
 }
