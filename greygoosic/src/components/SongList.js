@@ -61,8 +61,8 @@ class SongList extends React.Component {
                 }
               }
             })
-            .map((song) => {
-              return <Song key={song.id} song={song}></Song>;
+            .map((song, index) => {
+              return <Song nowPlaying={(this.props.nowPlaying && this.props.nowPlaying.song == song) ? true: false} tabIndex={index} key={song.id} song={song}></Song>;
             }))
         )}
         {this.searchResults.length === 0 && this.props.searchedText !== "" ? (
@@ -79,6 +79,6 @@ class SongList extends React.Component {
 }
 const mapStateToProps = (state) => {
   console.log("state: ", state);
-  return { searchedText: state.searchedText, songs: state.songs };
+  return { searchedText: state.searchedText, songs: state.songs, nowPlaying: state.nowPlaying };
 };
 export default connect(mapStateToProps, { getSongs })(SongList);

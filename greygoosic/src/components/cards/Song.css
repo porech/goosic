@@ -17,6 +17,7 @@
 }
 /* container principale della song card */
 .container {
+  min-width: 400px;
   border-radius: 3px;
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1), 0 2px 2px rgba(0, 0, 0, 0.1);
@@ -32,6 +33,16 @@
   margin-left: auto;
 }
 
+.container:hover {
+    transform: translateX(10px);
+}
+
+
+.nowPlaying {
+  background-color: rgba(66, 78, 241, 0.644);
+  transition: all 0.9s;
+  color: white;
+}
 .info {
 }
 .star-icon {
@@ -50,7 +61,7 @@
   border-radius: 120px;
   overflow: hidden;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
-  transition: all 0.9s;
+  transition: all 2s;
 }
 .title {
 }

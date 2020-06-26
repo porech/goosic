@@ -12,5 +12,6 @@
   .song-list {
     font-size: 1.2em;
     margin-top: 10vh;
+    min-width: 450px;
   }
 }
