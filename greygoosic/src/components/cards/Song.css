@@ -35,12 +35,14 @@
 
 .container:hover {
     transform: translateX(10px);
+    transition: transform 0.3s;
+
 }
 
 
 .nowPlaying {
   background-color: rgba(66, 78, 241, 0.644);
-  transition: all 0.9s;
+  transition: background-color 0.9s;
   color: white;
 }
 .info {
@@ -93,6 +95,11 @@
     margin-right: 60px;
     width: 30px;
     height: 30px;
+  }
+  .avatar .icon {
+    font-size: 2em;
+    margin-top: 20px;
+    margin-left: 15px;
   }
   .title {
     width: 50vw;

@@ -152,7 +152,7 @@ class NowPlaying extends React.Component {
                       : false
                   );
                 }}
-                className="retweet icon"
+                className="action-icons-extra-left-icon retweet icon"
               ></i>
             </div>
             {this.props.nowPlaying ? (
@@ -222,7 +222,7 @@ class NowPlaying extends React.Component {
                       : false
                   );
                 }}
-                className="random icon"
+                className="action-icons-extra-right-icon random icon"
               ></i>
             </div>
           </div>
