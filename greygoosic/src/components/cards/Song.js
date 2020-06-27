@@ -1,13 +1,11 @@
-import React, {useState }  from "react";
+import React from "react";
 import { connect } from "react-redux";
-
 import { nextSong } from "../../actions";
 import "./Song.css";
 let Song = ({ nowPlaying, tabIndex, song, nextSong }) => {
   //contenitore di avatar e informazioni song: title, artist, album
   //ha uno spazio per delle actions (attualmente la stella per lo starring)
   let { title, artist, album, avatar } = song.metadata;
-  let [clicked, setClicked] = useState(false);
   /* avatar =
     "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/4bb82b72535211.5bead62fe26d5.jpg";*/
   let noMetadata = false;
@@ -15,11 +13,13 @@ let Song = ({ nowPlaying, tabIndex, song, nextSong }) => {
     title = song.file_name;
     noMetadata = true;
   }
+  if (title.includes("Thai")) {
+    avatar = "https://m.media-amazon.com/images/I/61qsJqzdpfL._SS500_.jpg"
+  }
   return (
     <div
-      className={`${ nowPlaying == true ? "nowPlaying": ""} container`}
+      className={`${ nowPlaying === true ? "nowPlaying": ""} container`}
       onClick={() => {
-        setClicked(!clicked);
         nextSong(song);
       }}
     >

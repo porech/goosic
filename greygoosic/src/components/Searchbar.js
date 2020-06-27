@@ -17,6 +17,7 @@ class SearchBar extends React.Component {
           key="search"
           type="search"
           className="searchbar"
+          autoComplete="off"
           placeholder={this.props.label || "Search here..."}
           onChange={event => {
             this.props.search(event.target.value);
