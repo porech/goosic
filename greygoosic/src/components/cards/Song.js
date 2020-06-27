@@ -13,9 +13,6 @@ let Song = ({ nowPlaying, tabIndex, song, nextSong }) => {
     title = song.file_name;
     noMetadata = true;
   }
-  if (title.includes("Thai")) {
-    avatar = "https://m.media-amazon.com/images/I/61qsJqzdpfL._SS500_.jpg"
-  }
   return (
     <div
       className={`${ nowPlaying === true ? "nowPlaying": ""} container`}
