@@ -8,10 +8,10 @@
   background-color: rgba(255, 255, 255, 0.5);
 }
 
-@media (max-width: 500px) {
+@media (max-width: 1000px) {
   .song-list {
     font-size: 1.2em;
     margin-top: 10vh;
-    min-width: 450px;
+    min-width: 430px;
   }
 }

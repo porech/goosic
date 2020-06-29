@@ -51,7 +51,6 @@
   align-items: center;
 }
 .star-button {
-  right: 30px;
   height: 18vh;
   width: 20vw;
   text-align: center;
@@ -76,11 +75,18 @@
 @media (max-width: 1000px) {
   .container {
     height: 130px;
+    padding: 0;
   }
   .star-icon {
-    padding-top: 8vh;  
-    padding-right: 3vh;
+    padding-top: 4vh;  
     align-items: center;
+  }
+  .star-button {
+    height: 10vh;
+    width: 10vw;
+    text-align: center;
+    font-size: 1em;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
   }
   .star-button:hover {
     border-radius: 0px;
@@ -103,13 +109,9 @@
     margin-top: 20px;
     margin-left: 15px;
   }
-  .title {
-    width: 50vw;
-    margin-right: 5px;
-  }
+
 
   .title-large {
-    width: 50vw;
     padding-top: 15px;
     margin-right: 5px;
 
