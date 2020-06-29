@@ -16,8 +16,9 @@
     font-size: 1.2em;
     margin-top: 10vh;
     min-width: 400px;
-    overflow: hidden;
-  }
+    overflow-x: hidden;
+    min-height: 160vh;
+ }
 }
 @media (max-width: 500px) {
   .song-list {
