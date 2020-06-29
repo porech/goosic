@@ -1,6 +1,6 @@
 .searchbar,
 ::placeholder {
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 1);
   border: 0px;
   outline: none;
   background-color: rgba(0, 0, 0, 0);
@@ -9,7 +9,7 @@
 }
 .searchpane {
   position: fixed;
-  background-color: rgba(192, 202, 211, 0.6);
+  background-color: rgba(192, 202, 211, .9);
   border-radius: 10px;
   backdrop-filter: blur(5px);
   padding: 2vh;
@@ -20,12 +20,19 @@
   min-height: 20px;
   transition: width 1s;
   z-index: 20;
-  /*   animation-name: search;
-  animation-duration: 4s; */
 }
-/* .searchpane-clicked {
-  width: 98%;
-} */
+
+@supports ((-webkit-backdrop-filter: blur(5px)) or (backdrop-filter: blur(5px))) {
+  .searchpane {
+    background-color: rgba(192, 202, 211, 0.6);
+    backdrop-filter: blur(5px);
+  }
+  .searchbar::placeholder {
+    color: rgba(0, 0, 0, 0.6);
+    
+  }
+  
+}
 input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
   height: 22px;
