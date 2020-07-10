@@ -1,38 +1,41 @@
-import React, {useSelector} from "react";
-import { connect } from "react-redux";
-import _ from "lodash";
+import React from "react";
+import { useDispatch, useSelector} from "react-redux";
 import "rc-slider/assets/index.css";
 import "./Nowplaying.css";
 import Time from "./Time";
 import Slider from "rc-slider";
 import {
-  nextSong,
-  playSong,
-  pauseSong,
-  updateDuration,
-  updateCurrentTime
+  pauseSong, seekTo, resumeSong
 } from "../actions";
-import { getCurrentTitle, getCurrentArtist, getCurrentFileName, getCurrentPosition, getDuration } from "../state/player";
+import {
+  getCurrentTitle,
+  getCurrentArtist,
+  getCurrentFileName,
+  getCurrentPosition,
+  getDuration,
+  getIsPlaying
+} from "../state/player";
 
 let buildTitleString = (title, artist, fileName) => {
-    if(!title) return fileName
+    if(!title) return fileName || ""
     if(!artist) return title
     return `${artist} - ${title}`
-} 
+}
 
-let seekTo = (time, song) => {
-  if (this.audio.currentTime < this.audio.duration) {
-    song.currentTime = time;
-  } else {
-    nextSong();
-  }
-} 
 const NowPlaying = (nextSong) => {
     const title = useSelector(getCurrentTitle)
     const artist = useSelector(getCurrentArtist)
     const fileName = useSelector(getCurrentFileName)
     const position = useSelector(getCurrentPosition)
     const duration = useSelector(getDuration)
+    const isPlaying = useSelector(getIsPlaying)
+
+    const dispatch = useDispatch()
+
+    const togglePlay = () => dispatch(isPlaying ? pauseSong() : resumeSong())
+
+    const onSliderSeek = (event) => dispatch(seekTo(event))
+
     const formattedTitle = buildTitleString(title, artist, fileName);
     return (
         <div className="panel">
@@ -44,11 +47,8 @@ const NowPlaying = (nextSong) => {
               position || 0
             }
             defaultValue={0}
-            onChange={event => {
-              //Dispatch SEEK_TO
-              seekTo(event)
-            }}
-          ></Slider>
+            onChange={onSliderSeek}
+          />
 
             <div
               className={
@@ -72,11 +72,11 @@ const NowPlaying = (nextSong) => {
                     //TOGGLE REPEAT SONGS
                 }}
                 className="action-icons-extra-left-icon retweet icon"
-              ></i>
+              />
             </div>
-            {duration && (
+            {duration > 0 && (
               <div className="time-info">
-                <Time>{position}</Time>
+                <Time>{Math.round(position)}</Time>
               </div>
             )}
             <div className="action-icons-secondary">
@@ -85,18 +85,15 @@ const NowPlaying = (nextSong) => {
                   nextSong();
                 }}
                 className="backward icon"
-              ></i>
+              />
             </div>
             <div className="action-icons-primary">
               <i
-                onClick={() => {
-                 //#TODO
-                }}                 
-                //#TODO
+                onClick={togglePlay}
                 className={`${
-                  false ? "pause" : "play"
+                  isPlaying ? "pause" : "play"
                 } circle icon`}
-              ></i>
+              />
             </div>
             <div className="action-icons-secondary">
               <i
@@ -104,13 +101,13 @@ const NowPlaying = (nextSong) => {
                   nextSong();
                 }}
                 className="forward icon"
-              ></i>
+              />
             </div>
-              {duration && (
+              {duration > 0 && (
               <div className="duration-info">
                 -
                   <Time>
-                    {duration - position}
+                    {Math.round(duration) - Math.round(position)}
                   </Time>
                 </div>
               )}
@@ -127,28 +124,10 @@ const NowPlaying = (nextSong) => {
                   //TOGGLE SHUFFLE SONGS
                 }}
                 className="action-icons-extra-right-icon random icon"
-              ></i>
+              />
             </div>
           </div>
         </div>
     )}
 
-
-/*   onTimeUpdate() {
-    this.props.updateCurrentTime(Math.round(this.audio.currentTime));
-    if (this.audio.currentTime - this.audio.duration === 0) {
-      this.next();
-    }
-  }
-  */
-
-export default connect(null, {
-  nextSong,
-  playSong,
-  pauseSong,
-  updateDuration,
-  updateCurrentTime,
-  /*
-  toggleShuffleSongs,
-  toggleRepeatSongs */
-})(NowPlaying);
+export default NowPlaying

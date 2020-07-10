@@ -1,10 +1,11 @@
 const Time = ({children}) => {
-        let minutes = Math.trunc(children / 60);
-        let seconds = children - 60 * minutes;
+        const time = Math.round(children)
+        let minutes = Math.trunc(time / 60);
+        let seconds = time - 60 * minutes;
         let trailingZeroForMinutes = minutes < 10 ? true : false;
         let trailingZeroForSeconds = seconds < 10 ? true : false;
         return `${
-          children
+            time
             ? (trailingZeroForMinutes ? "0" : "") +
               minutes +
               ":" +
@@ -12,7 +13,6 @@ const Time = ({children}) => {
               seconds
             : "--:--"
         }`;
-
 }
 
 export default Time;

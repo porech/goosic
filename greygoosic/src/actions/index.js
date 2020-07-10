@@ -11,7 +11,7 @@ import {
   REPEAT_SONGS
 } from "../constants";
 import goosic from "../goosic";
-import {PLAYER_PLAY_SONG} from "../state/player"
+import {PLAYER_PAUSE, PLAYER_PLAY_SONG, PLAYER_RESUME, PLAYER_SEEK} from "../state/player"
 export const getSongs = () => async dispatch => {
   try {
     const response = await goosic.get("song-list");
@@ -31,8 +31,13 @@ export const playSong = payload => {
 };
 
 export const pauseSong = () => {
-  return { type: PAUSE_SONG };
+  return { type: PLAYER_PAUSE };
 };
+
+export const resumeSong = () => ({
+  type: PLAYER_RESUME
+})
+
 export const search = payload => {
   return { type: SEARCH_SONG, payload };
 };
@@ -54,3 +59,8 @@ export const updateCurrentTime = payload => {
 export const expandCollapseSearchBar = payload => {
   return { type: EXPAND_COLLAPSE_SEARCH_BAR, payload };
 };
+
+export const seekTo = position => ({
+  type: PLAYER_SEEK,
+  payload: position
+})

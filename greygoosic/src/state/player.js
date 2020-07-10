@@ -19,10 +19,11 @@ const defaultState = {
   currentPosition: 0,
   duration: 0,
 }
-export const getCurrentTitle = (state) => get(state.player.nowPlaying, "title")
-export const getCurrentArtist = (state) => get(state.player.nowPlaying, "artist")
+export const getCurrentTitle = (state) => get(state.player.nowPlaying, "metadata.title")
+export const getCurrentArtist = (state) => get(state.player.nowPlaying, "metadata.artist")
 export const getCurrentFileName = (state) => get(state.player.nowPlaying, "file_name")
 export const getCurrentPosition = (state) => state.player.currentPosition
+export const getIsPlaying = (state) => state.player.isPlaying
 
 export const getDuration = (state) => state.player.duration
 
