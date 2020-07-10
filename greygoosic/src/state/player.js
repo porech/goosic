@@ -1,5 +1,6 @@
 import { eventChannel, END } from 'redux-saga'
 import { put, takeEvery } from 'redux-saga/effects'
+import { get } from "lodash";
 
 export const PLAYER_PLAY_SONG = 'PLAYER_PLAY_SONG'
 export const PLAYER_PLAYBACK_STARTED = 'PLAYER_PLAYBACK_STARTED'
@@ -18,6 +19,12 @@ const defaultState = {
   currentPosition: 0,
   duration: 0,
 }
+export const getCurrentTitle = (state) => get(state.player.nowPlaying, "title")
+export const getCurrentArtist = (state) => get(state.player.nowPlaying, "artist")
+export const getCurrentFileName = (state) => get(state.player.nowPlaying, "file_name")
+export const getCurrentPosition = (state) => state.player.currentPosition
+
+export const getDuration = (state) => state.player.duration
 
 export const reducer = (state = defaultState, action) => {
   switch(action.type) {
