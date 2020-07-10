@@ -11,6 +11,7 @@ import {
   REPEAT_SONGS
 } from "../constants";
 import goosic from "../goosic";
+import {PLAYER_PLAY_SONG} from "../state/player"
 export const getSongs = () => async dispatch => {
   try {
     const response = await goosic.get("song-list");
@@ -22,10 +23,11 @@ export const getSongs = () => async dispatch => {
 };
 
 export const nextSong = payload => {
-  return { type: NEXT_SONG, payload };
+  return { type: PLAYER_PLAY_SONG, payload };
 };
+
 export const playSong = payload => {
-  return { type: PLAY_SONG, payload };
+  return { type: PLAYER_PLAY_SONG, payload };
 };
 
 export const pauseSong = () => {

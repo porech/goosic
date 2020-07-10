@@ -326,7 +326,6 @@ class NowPlaying extends React.Component {
     }
   };
   updateMediaSessionPositionState = () => {
-    console.log(navigator.mediaSession);
     /*    navigator.mediaSession.setPositionState({
       duration: this.audio.duration,
       playbackRate: this.audio.playbackRate,
@@ -349,7 +348,6 @@ class NowPlaying extends React.Component {
         this.props.playSong(song);
       }
       if ("mediaSession" in navigator) {
-        console.log(navigator.mediaSession);
         /* eslint-disable-next-line */
         navigator.mediaSession.metadata = new MediaMetadata({
           title: this.getTitle(song),
@@ -386,8 +384,6 @@ class NowPlaying extends React.Component {
       }
       this.audio.play();
       this.props.updateDuration(Math.round(this.audio.duration));
-    } else {
-      console.log("ERR_NO_SONG");
     }
   };
   pause = () => {

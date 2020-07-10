@@ -78,7 +78,6 @@ class SongList extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log("state: ", state);
   return { searchedText: state.searchedText, songs: state.songs, nowPlaying: state.nowPlaying };
 };
 export default connect(mapStateToProps, { getSongs })(SongList);
