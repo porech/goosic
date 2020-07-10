@@ -8,6 +8,8 @@ export const PLAYER_PAUSE = 'PLAYER_PAUSE'
 export const PLAYER_RESUME = 'PLAYER_RESUME'
 export const PLAYER_POS_CHANGE = 'PLAYER_POS_CHANGE'
 export const PLAYER_DURATION_CHANGE = 'PLAYER_DURATION_CHANGE'
+export const PLAYER_ENDED = 'PLAYER_ENDED'
+export const PLAYER_SEEK = 'PLAYER_SEEK'
 
 const defaultState = {
   isPlaying: false,
@@ -63,6 +65,12 @@ export const reducer = (state = defaultState, action) => {
         duration: action.payload || 0
       }
 
+    case PLAYER_ENDED:
+      return {
+        ...state,
+        isPlaying: false
+      }
+
     default:
       return state
   }
@@ -80,6 +88,12 @@ const playerDurationChannel = eventChannel(emitter => {
   const onDurationUpdate = () => emitter(playerObj.duration)
   playerObj.addEventListener("durationchange", onDurationUpdate);
   return () => { playerObj.removeEventListener("durationchange", onDurationUpdate) }
+})
+
+const playerEndedChannel = eventChannel(emitter => {
+  const onEnded = () => emitter()
+  playerObj.addEventListener("ended", onEnded);
+  return () => { playerObj.removeEventListener("ended", onEnded) }
 })
 
 function* playSong(action) {
@@ -111,10 +125,23 @@ function* durationUpdated(duration) {
   yield put({type: PLAYER_DURATION_CHANGE, payload: duration})
 }
 
+function* playEnded() {
+  yield put({type: PLAYER_ENDED})
+}
+
+function* seek(action) {
+  if(playerObj.duration < action.payload) {
+    return
+  }
+  yield playerObj.currentTime = action.payload
+}
+
 export function* saga() {
   yield takeEvery(playerPosChannel, posUpdated)
   yield takeEvery(playerDurationChannel, durationUpdated)
+  yield takeEvery(playerEndedChannel, playEnded)
   yield takeEvery(PLAYER_PLAY_SONG, playSong)
   yield takeEvery(PLAYER_PAUSE, pause)
   yield takeEvery(PLAYER_RESUME, resume)
+  yield takeEvery(PLAYER_SEEK, seek)
 }
