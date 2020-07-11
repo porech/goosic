@@ -66,10 +66,11 @@ export const seekTo = position => ({
   payload: position
 })
 
-export const enqueueSongs = (songs, playNow) => ({
+export const enqueueSongs = (songs, index, playNow) => ({
   type: QUEUE_ADD_SONGS,
   payload: {
     songs,
+    index,
     playNow
   }
 })

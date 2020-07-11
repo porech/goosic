@@ -3,7 +3,6 @@ import createSagaMiddleware from 'redux-saga'
 import { fork } from 'redux-saga/effects'
 
 import * as mediaSession from './mediaSession'
-import * as nowPlaying from './nowPlaying'
 import * as options from './options'
 import * as player from './player'
 import * as queue from './queue'
@@ -16,7 +15,6 @@ import thunk from "redux-thunk"
 // List of the imported states
 const APPS = {
     mediaSession,
-    nowPlaying,
     options,
     player,
     queue,

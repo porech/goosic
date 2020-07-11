@@ -7,9 +7,7 @@ import {enqueueSongs, getSongs} from "../actions";
 class SongList extends React.Component {
   loading = false;
   searchResults = [];
-  getFileNameFromPath(filePath) {
-    return filePath ? filePath.split("/")[filePath.split("/").length - 1] : "";
-  }
+
   componentDidMount = () => {
     this.props.getSongs();
   };
@@ -29,7 +27,7 @@ class SongList extends React.Component {
       <div>
         {!this.props.songs || this.props.songs.length === 0 ? (
           <div className="ui info icon message">
-            <i className="info icon"></i>
+            <i className="info icon" />
             <div className="header">{this.showSongsOrLoading()}</div>
           </div>
         ) : (
@@ -67,7 +65,7 @@ class SongList extends React.Component {
                   tabIndex={index}
                   key={song.id}
                   song={song}
-                  onClick={() => this.props.enqueueSongs(this.props.songs.slice(index), true)}
+                  onClick={() => this.props.enqueueSongs(this.props.songs, index, true)}
               />
             }))
         )}

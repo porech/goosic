@@ -37,6 +37,7 @@ const NowPlaying = () => {
     const onSliderSeek = (event) => dispatch(seekTo(event))
 
     const formattedTitle = buildTitleString(title, artist, fileName);
+
     return (
         <div className="panel">
           <Slider
