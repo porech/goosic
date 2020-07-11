@@ -5,7 +5,7 @@ import "./Nowplaying.css";
 import Time from "./Time";
 import Slider from "rc-slider";
 import {
-  pauseSong, seekTo, resumeSong
+  pauseSong, seekTo, resumeSong, previousSong, nextSong
 } from "../actions";
 import {
   getCurrentTitle,
@@ -22,7 +22,7 @@ let buildTitleString = (title, artist, fileName) => {
     return `${artist} - ${title}`
 }
 
-const NowPlaying = (nextSong) => {
+const NowPlaying = () => {
     const title = useSelector(getCurrentTitle)
     const artist = useSelector(getCurrentArtist)
     const fileName = useSelector(getCurrentFileName)
@@ -82,7 +82,7 @@ const NowPlaying = (nextSong) => {
             <div className="action-icons-secondary">
               <i
                 onClick={() => {
-                  nextSong();
+                  dispatch(previousSong());
                 }}
                 className="backward icon"
               />
@@ -98,7 +98,7 @@ const NowPlaying = (nextSong) => {
             <div className="action-icons-secondary">
               <i
                 onClick={() => {
-                  nextSong();
+                  dispatch(nextSong());
                 }}
                 className="forward icon"
               />

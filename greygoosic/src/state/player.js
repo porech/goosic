@@ -99,7 +99,7 @@ const playerDurationChannel = eventChannel(emitter => {
 })
 
 const playerEndedChannel = eventChannel(emitter => {
-  const onEnded = () => emitter()
+  const onEnded = () => emitter({})
   playerObj.addEventListener("ended", onEnded);
   return () => { playerObj.removeEventListener("ended", onEnded) }
 })

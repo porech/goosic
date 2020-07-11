@@ -1,6 +1,7 @@
 import { takeEvery, put } from "redux-saga/effects"
 import {PLAYER_PAUSE, PLAYER_PLAY_SONG, PLAYER_RESUME, PLAYER_SEEK} from "./player"
 import { eventChannel } from "redux-saga"
+import {nextSong, pauseSong, previousSong, resumeSong, seekTo} from "../actions"
 
 const setMetadata = (action) => {
   const song = action.payload
@@ -20,22 +21,23 @@ const setMetadata = (action) => {
 }
 
 function* onPlay() {
-  yield put({
-    type: PLAYER_RESUME
-  })
+  yield put(resumeSong())
 }
 
 function* onPause() {
-  yield put({
-    type: PLAYER_PAUSE
-  })
+  yield put(pauseSong())
 }
 
 function* onSeek(time) {
-  yield put({
-    type: PLAYER_SEEK,
-    payload: time
-  })
+  yield put(seekTo(time))
+}
+
+function* onPrevious() {
+  yield put(previousSong())
+}
+
+function* onNext() {
+  yield put(nextSong())
 }
 
 export function* saga() {
@@ -44,22 +46,22 @@ export function* saga() {
   }
 
   const playChannel = eventChannel(emitter => {
-    navigator.mediaSession.setActionHandler("play", emitter);
+    navigator.mediaSession.setActionHandler("play", () => emitter({}));
     return () => { navigator.mediaSession.setActionHandler("play", null) }
   })
 
   const pauseChannel = eventChannel(emitter => {
-    navigator.mediaSession.setActionHandler("pause", emitter);
+    navigator.mediaSession.setActionHandler("pause", () => emitter({}));
     return () => { navigator.mediaSession.setActionHandler("pause", null) }
   })
 
   const nextTrackChannel = eventChannel(emitter => {
-    navigator.mediaSession.setActionHandler("nexttrack", emitter);
+    navigator.mediaSession.setActionHandler("nexttrack", () => emitter({}));
     return () => { navigator.mediaSession.setActionHandler("nexttrack", null) }
   })
 
   const previousTrackChannel = eventChannel(emitter => {
-    navigator.mediaSession.setActionHandler("previoustrack", emitter);
+    navigator.mediaSession.setActionHandler("previoustrack", () => emitter({}));
     return () => { navigator.mediaSession.setActionHandler("previoustrack", null) }
   })
 
@@ -72,4 +74,6 @@ export function* saga() {
   yield takeEvery(playChannel, onPlay)
   yield takeEvery(pauseChannel, onPause)
   yield takeEvery(seekToChannel, onSeek)
+  yield takeEvery(previousTrackChannel, onPrevious)
+  yield takeEvery(nextTrackChannel, onNext)
 }

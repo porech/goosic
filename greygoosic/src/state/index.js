@@ -6,6 +6,7 @@ import * as mediaSession from './mediaSession'
 import * as nowPlaying from './nowPlaying'
 import * as options from './options'
 import * as player from './player'
+import * as queue from './queue'
 import * as searchbarStatus from './searchbarStatus'
 import * as searchedText from './searchedText'
 import * as songs from './songs'
@@ -18,6 +19,7 @@ const APPS = {
     nowPlaying,
     options,
     player,
+    queue,
     searchbarStatus,
     searchedText,
     songs,

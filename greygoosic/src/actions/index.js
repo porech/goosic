@@ -12,6 +12,7 @@ import {
 } from "../constants";
 import goosic from "../goosic";
 import {PLAYER_PAUSE, PLAYER_PLAY_SONG, PLAYER_RESUME, PLAYER_SEEK} from "../state/player"
+import {QUEUE_ADD_SONGS, QUEUE_NEXT, QUEUE_PREVIOUS} from "../state/queue"
 export const getSongs = () => async dispatch => {
   try {
     const response = await goosic.get("song-list");
@@ -22,13 +23,13 @@ export const getSongs = () => async dispatch => {
   }
 };
 
-export const nextSong = payload => {
-  return { type: PLAYER_PLAY_SONG, payload };
+export const nextSong = () => {
+  return { type: QUEUE_NEXT };
 };
 
-export const playSong = payload => {
-  return { type: PLAYER_PLAY_SONG, payload };
-};
+export const previousSong = () => {
+  return { type: QUEUE_PREVIOUS };
+}
 
 export const pauseSong = () => {
   return { type: PLAYER_PAUSE };
@@ -63,4 +64,12 @@ export const expandCollapseSearchBar = payload => {
 export const seekTo = position => ({
   type: PLAYER_SEEK,
   payload: position
+})
+
+export const enqueueSongs = (songs, playNow) => ({
+  type: QUEUE_ADD_SONGS,
+  payload: {
+    songs,
+    playNow
+  }
 })

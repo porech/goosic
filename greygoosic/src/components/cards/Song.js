@@ -1,8 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
-import { nextSong } from "../../actions";
 import "./Song.css";
-let Song = ({ nowPlaying, tabIndex, song, nextSong }) => {
+let Song = ({ nowPlaying, song, onClick }) => {
   //contenitore di avatar e informazioni song: title, artist, album
   //ha uno spazio per delle actions (attualmente la stella per lo starring)
   let { title, artist, album, avatar } = song.metadata;
@@ -16,9 +14,7 @@ let Song = ({ nowPlaying, tabIndex, song, nextSong }) => {
   return (
     <div
       className={`${ nowPlaying === true ? "nowPlaying": ""} container`}
-      onClick={() => {
-        nextSong(song);
-      }}
+      onClick={onClick}
     >
       <div className="avatar">
         {/* mostro un'icona generica se non è disponibile un avatar */}
@@ -46,4 +42,4 @@ let Song = ({ nowPlaying, tabIndex, song, nextSong }) => {
   );
 };
 
-export default connect(null, { nextSong })(Song);
+export default Song;

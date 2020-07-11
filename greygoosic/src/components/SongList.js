@@ -2,7 +2,7 @@ import React from "react";
 import "./SongList.css";
 import Song from "./cards/Song";
 import { connect } from "react-redux";
-import { getSongs } from "../actions";
+import {enqueueSongs, getSongs} from "../actions";
 
 class SongList extends React.Component {
   loading = false;
@@ -62,7 +62,13 @@ class SongList extends React.Component {
               }
             })
             .map((song, index) => {
-              return <Song nowPlaying={(this.props.nowPlaying && this.props.nowPlaying.id === song.id) ? true: false} tabIndex={index} key={song.id} song={song}></Song>;
+              return <Song
+                  nowPlaying={!!(this.props.nowPlaying && this.props.nowPlaying.id === song.id)}
+                  tabIndex={index}
+                  key={song.id}
+                  song={song}
+                  onClick={() => this.props.enqueueSongs(this.props.songs.slice(index), true)}
+              />
             }))
         )}
         {this.searchResults.length === 0 && this.props.searchedText !== "" ? (
@@ -80,4 +86,4 @@ class SongList extends React.Component {
 const mapStateToProps = (state) => {
   return { searchedText: state.searchedText, songs: state.songs, nowPlaying: state.player.nowPlaying };
 };
-export default connect(mapStateToProps, { getSongs })(SongList);
+export default connect(mapStateToProps, { getSongs, enqueueSongs })(SongList);
