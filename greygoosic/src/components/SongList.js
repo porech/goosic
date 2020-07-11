@@ -62,7 +62,7 @@ class SongList extends React.Component {
               }
             })
             .map((song, index) => {
-              return <Song nowPlaying={(this.props.nowPlaying && this.props.nowPlaying.song === song) ? true: false} tabIndex={index} key={song.id} song={song}></Song>;
+              return <Song nowPlaying={(this.props.nowPlaying && this.props.nowPlaying.id === song.id) ? true: false} tabIndex={index} key={song.id} song={song}></Song>;
             }))
         )}
         {this.searchResults.length === 0 && this.props.searchedText !== "" ? (
@@ -78,6 +78,6 @@ class SongList extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  return { searchedText: state.searchedText, songs: state.songs, nowPlaying: state.nowPlaying };
+  return { searchedText: state.searchedText, songs: state.songs, nowPlaying: state.player.nowPlaying };
 };
 export default connect(mapStateToProps, { getSongs })(SongList);
