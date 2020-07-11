@@ -5,7 +5,7 @@ import "./Nowplaying.css";
 import Time from "./Time";
 import Slider from "rc-slider";
 import {
-  pauseSong, seekTo, resumeSong, previousSong, nextSong
+  pauseSong, seekTo, resumeSong, previousSong, nextSong, toggleShuffle, toggleRepeatSong
 } from "../actions";
 import {
   getCurrentTitle,
@@ -15,6 +15,7 @@ import {
   getDuration,
   getIsPlaying
 } from "../state/player";
+import {getRepeatSongEnabled, getShuffleEnabled} from "../state/queue"
 
 let buildTitleString = (title, artist, fileName) => {
     if(!title) return fileName || ""
@@ -29,8 +30,10 @@ const NowPlaying = () => {
     const position = useSelector(getCurrentPosition)
     const duration = useSelector(getDuration)
     const isPlaying = useSelector(getIsPlaying)
+    const shuffleEnabled = useSelector(getShuffleEnabled)
+    const repeatSongEnabled = useSelector(getRepeatSongEnabled)
 
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
     const togglePlay = () => dispatch(isPlaying ? pauseSong() : resumeSong())
 
@@ -63,14 +66,14 @@ const NowPlaying = () => {
             <div
               //#TODO #FIXME selector to be exposed in the queue
               className={`action-icons-extra-left ${
-                false
+                repeatSongEnabled
                   ? "toggle-enabled"
                   : "toggle-disabled"
               } `}
             >
               <i
                 onClick={() => {
-                    //TOGGLE REPEAT SONGS
+                    dispatch(toggleRepeatSong())
                 }}
                 className="action-icons-extra-left-icon retweet icon"
               />
@@ -115,14 +118,14 @@ const NowPlaying = () => {
             <div
               //#TODO #FIXME selector to be exposed in the queue
               className={`action-icons-extra-right ${
-                false
+                shuffleEnabled
                   ? "toggle-enabled"
                   : "toggle-disabled"
               } `}
             >
               <i
                 onClick={() => {
-                  //TOGGLE SHUFFLE SONGS
+                  dispatch(toggleShuffle())
                 }}
                 className="action-icons-extra-right-icon random icon"
               />

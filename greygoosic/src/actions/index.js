@@ -12,7 +12,13 @@ import {
 } from "../constants";
 import goosic from "../goosic";
 import {PLAYER_PAUSE, PLAYER_PLAY_SONG, PLAYER_RESUME, PLAYER_SEEK} from "../state/player"
-import {QUEUE_ADD_SONGS, QUEUE_NEXT, QUEUE_PREVIOUS} from "../state/queue"
+import {
+  QUEUE_ADD_SONGS,
+  QUEUE_NEXT,
+  QUEUE_PREVIOUS,
+  QUEUE_TOGGLE_REPEAT_SONG,
+  QUEUE_TOGGLE_SHUFFLE
+} from "../state/queue"
 export const getSongs = () => async dispatch => {
   try {
     const response = await goosic.get("song-list");
@@ -74,3 +80,11 @@ export const enqueueSongs = (songs, index, playNow) => ({
     playNow
   }
 })
+
+export const toggleShuffle = () => {
+  return { type: QUEUE_TOGGLE_SHUFFLE };
+};
+
+export const toggleRepeatSong = () => {
+  return { type: QUEUE_TOGGLE_REPEAT_SONG };
+};
