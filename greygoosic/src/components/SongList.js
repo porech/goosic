@@ -1,15 +1,15 @@
 import React from "react";
 import "./SongList.css";
 import Song from "./cards/Song";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { enqueueSongs } from "../actions";
 import { getSongs, getLoadingSongs } from "../state/songs";
 import { getNowPlaying } from "../state/player";
 import { getSearchedText } from "../state/searchedText";
-
 var searchResults = [];
 
 const SongList = () => {
+  const dispatch = useDispatch();
   const nowPlaying = useSelector(getNowPlaying);
   const songs = useSelector(getSongs);
   const searchedText = useSelector(getSearchedText);
@@ -71,7 +71,7 @@ const SongList = () => {
                   tabIndex={index}
                   key={song.id}
                   song={song}
-                  onClick={() => enqueueSongs(songs, index, true)}
+                  onClick={() => dispatch(enqueueSongs(songs, index, true))}
                 />
               );
             }))
