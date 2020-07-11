@@ -2,15 +2,12 @@ import React from "react";
 import "./SongList.css";
 import Song from "./cards/Song";
 import { connect } from "react-redux";
-import {enqueueSongs, getSongs} from "../actions";
+import { enqueueSongs } from "../actions";
 
 class SongList extends React.Component {
   loading = false;
   searchResults = [];
 
-  componentDidMount = () => {
-    this.props.getSongs();
-  };
   showSongsOrLoading = () => {
     this.loading = !this.loading;
     return this.loading === true ? (
@@ -82,6 +79,6 @@ class SongList extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  return { searchedText: state.searchedText, songs: state.songs, nowPlaying: state.player.nowPlaying };
+  return { searchedText: state.searchedText, songs: state.songs.songs, nowPlaying: state.player.nowPlaying };
 };
-export default connect(mapStateToProps, { getSongs, enqueueSongs })(SongList);
+export default connect(mapStateToProps, { enqueueSongs })(SongList);

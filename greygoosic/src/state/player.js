@@ -1,4 +1,4 @@
-import { eventChannel, END } from 'redux-saga'
+import { eventChannel } from 'redux-saga'
 import { put, takeEvery } from 'redux-saga/effects'
 import { get } from "lodash";
 

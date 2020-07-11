@@ -34,7 +34,7 @@ export const reducer = (state = defaultState, action) => {
     case QUEUE_INTERNAL_ENQUEUE_SONGS:
       const songs = [
         ...state.songs.slice(0, state.currentIndex + 1),
-        ...action.payload.songs
+        ...action.payload.songs,
       ];
 
       let shuffledSongs = state.shuffledSongs.slice(0, state.currentIndex + 1);

@@ -1,5 +1,5 @@
 import { takeEvery, put } from "redux-saga/effects"
-import {PLAYER_PAUSE, PLAYER_PLAY_SONG, PLAYER_RESUME, PLAYER_SEEK} from "./player"
+import { PLAYER_PLAY_SONG } from "./player"
 import { eventChannel } from "redux-saga"
 import {nextSong, pauseSong, previousSong, resumeSong, seekTo} from "../actions"
 
