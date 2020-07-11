@@ -1,55 +1,63 @@
 import React from "react";
 import "./SongList.css";
 import Song from "./cards/Song";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { enqueueSongs } from "../actions";
+import { getSongs, getLoadingSongs } from "../state/songs";
+import { getNowPlaying } from "../state/player";
+import { getSearchedText } from "../state/searchedText";
 
-class SongList extends React.Component {
-  loading = false;
-  searchResults = [];
+var searchResults = [];
 
-  showSongsOrLoading = () => {
-    this.loading = !this.loading;
-    return this.loading === true ? (
-      <div>Loading...</div>
-    ) : (
+const SongList = () => {
+  const nowPlaying = useSelector(getNowPlaying);
+  const songs = useSelector(getSongs);
+  const searchedText = useSelector(getSearchedText);
+  const isLoading = useSelector(getLoadingSongs);
+  console.log(songs, nowPlaying, searchedText, isLoading);
+  //shows a loading message
+  const showLoadingMessage = () => {
+    return <div>Loading...</div>;
+  };
+  //shows a message to inform the user that songs array in state is empty
+  const showNoSongsMessage = () => {
+    return (
       <div>
         No songs in list, or backend unavailable. In case, please add music
         folder on Goosic to see it here :)
       </div>
     );
   };
-  renderSongs = () => {
-    return (
+  return (
+    <div className="song-list">
       <div>
-        {!this.props.songs || this.props.songs.length === 0 ? (
+        {!songs || songs.length === 0 ? (
           <div className="ui info icon message">
             <i className="info icon" />
-            <div className="header">{this.showSongsOrLoading()}</div>
+            <div className="header">
+              {isLoading && showLoadingMessage()}
+              {!isLoading && showNoSongsMessage()}
+            </div>
           </div>
         ) : (
-          (this.searchResults = this.props.songs
+          (searchResults = songs
             .filter((song) => {
-              if (this.props.searchedText === "") {
+              if (searchedText === "") {
                 return song;
               } else {
                 let { title, artist } = song.metadata;
                 let fileName = song.file_name;
                 if (
                   (title &&
-                    title
-                      .toLowerCase()
-                      .includes(this.props.searchedText.toLowerCase())) ||
+                    title.toLowerCase().includes(searchedText.toLowerCase())) ||
                   (artist &&
                     artist
                       .toLowerCase()
-                      .includes(this.props.searchedText.toLowerCase())) ||
+                      .includes(searchedText.toLowerCase())) ||
                   (fileName &&
-                    fileName
-                      .toLowerCase()
-                      .includes(this.props.searchedText.toLowerCase()))
+                    fileName.toLowerCase().includes(searchedText.toLowerCase()))
                 ) {
-                  this.searchResults.push(song);
+                  searchResults.push(song);
                   return song;
                 } else {
                   return "";
@@ -57,28 +65,26 @@ class SongList extends React.Component {
               }
             })
             .map((song, index) => {
-              return <Song
-                  nowPlaying={!!(this.props.nowPlaying && this.props.nowPlaying.id === song.id)}
+              return (
+                <Song
+                  nowPlaying={!!(nowPlaying && nowPlaying.id === song.id)}
                   tabIndex={index}
                   key={song.id}
                   song={song}
-                  onClick={() => this.props.enqueueSongs(this.props.songs, index, true)}
-              />
+                  onClick={() => enqueueSongs(songs, index, true)}
+                />
+              );
             }))
         )}
-        {this.searchResults.length === 0 && this.props.searchedText !== "" ? (
+        {searchResults.length === 0 && searchedText !== "" ? (
           <div>Nothing found!</div>
         ) : (
           ""
         )}
       </div>
-    );
-  };
-  render() {
-    return <div className="song-list">{this.renderSongs()}</div>;
-  }
-}
-const mapStateToProps = (state) => {
-  return { searchedText: state.searchedText, songs: state.songs.songs, nowPlaying: state.player.nowPlaying };
+    </div>
+  );
 };
-export default connect(mapStateToProps, { enqueueSongs })(SongList);
+//searchedText - songs - nowPlaying - loadingSongs
+
+export default SongList;
