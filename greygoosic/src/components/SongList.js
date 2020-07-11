@@ -85,6 +85,4 @@ const SongList = () => {
     </div>
   );
 };
-//searchedText - songs - nowPlaying - loadingSongs
-
 export default SongList;
