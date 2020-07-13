@@ -14,7 +14,7 @@ const SongList = () => {
   const songs = useSelector(getSongs);
   const searchedText = useSelector(getSearchedText);
   const isLoading = useSelector(getLoadingSongs);
-  console.log(songs, nowPlaying, searchedText, isLoading);
+
   //shows a loading message
   const showLoadingMessage = () => {
     return <div>Loading...</div>;
