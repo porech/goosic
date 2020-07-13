@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { enqueueSongs } from "../actions";
 import { getSongs, getLoadingSongs, getFilteredSongs } from "../state/songs";
 import { getNowPlaying } from "../state/player";
-import { getSearchedText } from "../state/searchedText";
 
 const Warning = ({ children }) => (
   <div className="song-list">
