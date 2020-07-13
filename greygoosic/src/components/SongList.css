@@ -18,7 +18,8 @@
     min-width: 400px;
     overflow-x: hidden;
     min-height: 160vh;
- }
+    padding-bottom: 130px;
+  }
 }
 @media (max-width: 500px) {
   .song-list {
