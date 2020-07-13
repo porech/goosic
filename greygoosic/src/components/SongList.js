@@ -7,6 +7,15 @@ import { getSongs, getLoadingSongs, getFilteredSongs } from "../state/songs";
 import { getNowPlaying } from "../state/player";
 import { getSearchedText } from "../state/searchedText";
 
+const Warning = ({ children }) => (
+  <div className="song-list">
+    <div className="ui info icon message">
+      <i className="info icon" />
+      <div className="header">{children}</div>
+    </div>
+  </div>
+);
+
 const SongList = () => {
   const dispatch = useDispatch();
   const nowPlaying = useSelector(getNowPlaying);
@@ -16,35 +25,22 @@ const SongList = () => {
 
   //shows a loading message
   if (isLoading) {
-    return (
-      <div className="ui info icon message">
-        <i className="info icon" />
-        <div className="header">Loading...</div>
-      </div>
-    );
+    return <Warning>Loading...</Warning>;
   }
 
   //shows a message to inform the user that songs array in state is empty
   if (!allSongs || allSongs.length === 0) {
     return (
-      <div className="ui info icon message">
-        <i className="info icon" />
-        <div className="header">
-          No songs in list, or backend unavailable. In case, please add music
-          folder on Goosic to see it here :)
-        </div>
-      </div>
+      <Warning>
+        No songs in list, or backend unavailable. In case, please add music
+        folder on Goosic to see it here :)
+      </Warning>
     );
   }
 
   // no results in search
   if (songs.length === 0) {
-    return (
-      <div className="ui info icon message">
-        <i className="info icon" />
-        <div className="header">No results found</div>
-      </div>
-    );
+    return <Warning>No results found</Warning>;
   }
 
   return (
