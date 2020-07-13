@@ -38,7 +38,7 @@ There are no built binaries at the moment, so you'll need Golang installed to ru
 First of all, start the Goosic backend from the root of the project:
 
 ```sh
-MUSIC_PATH=/path/to/your/music/folder go run ./cmd/goosic`
+MUSIC_PATH=/path/to/your/music/folder go run ./cmd/goosic
 ```
 
 Goosic will start and scan the provided directory.
