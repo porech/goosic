@@ -1,4 +1,15 @@
-.artist-image {
-  height: 100%;
-  width: 100%;
+.artist-name {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 15px;
+  margin: 20px;
+  margin-bottom: 0;
+  margin-left: 2vw;
+  padding: 30px;
+  padding-top: 15px;
+  height: 50px;
+  font-size: 1.5em;
+  text-align: center;
+}
+.song-list {
+  margin: 20px;
 }
