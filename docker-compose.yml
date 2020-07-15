@@ -1,0 +1,28 @@
+---
+version: "3"
+
+services:
+  backend:
+    build:
+      context: "docker/backend"
+    volumes:
+      - ./backend:/backend
+      - ${MUSIC_FOLDER}:/music
+    working_dir: /backend
+    environment:
+      HTTP_HOST: "0.0.0.0"
+      MUSIC_PATH: "/music"
+    command: go run ./cmd/goosic
+    ports:
+      - 8080:8080
+
+  frontend:
+    image: node:alpine
+    volumes:
+      - ./greygoosic:/app
+    working_dir: /app
+    environment:
+      PROXY: http://backend/api
+    command: npm start
+    ports:
+      - 3000:3000
