@@ -2,7 +2,7 @@ import React from "react";
 import "./SongList.css";
 import Song from "./cards/Song";
 import { useDispatch, useSelector } from "react-redux";
-import { enqueueSongs } from "../actions";
+import { addSongToQueue } from "../actions";
 import { getSongs, getLoadingSongs, getFilteredSongs } from "../state/songs";
 import { getNowPlaying } from "../state/player";
 
@@ -51,7 +51,7 @@ const SongList = () => {
             tabIndex={index}
             key={song.id}
             song={song}
-            onClick={() => dispatch(enqueueSongs(songs, index, true))}
+            onClick={() => dispatch(addSongToQueue(song))}
           />
         );
       })}

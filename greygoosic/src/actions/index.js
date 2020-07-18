@@ -1,19 +1,26 @@
 import { SEARCH_SONG } from "../constants";
 import { PLAYER_PAUSE, PLAYER_RESUME, PLAYER_SEEK } from "../state/player";
 import {
-  QUEUE_ADD_SONGS,
-  QUEUE_NEXT,
-  QUEUE_PREVIOUS,
-  QUEUE_TOGGLE_REPEAT_SONG,
-  QUEUE_TOGGLE_SHUFFLE,
-} from "../state/queue";
+  QUEUE_ADD_SONG,
+  QUEUE_NEXT_SONG,
+  QUEUE_PREVIOUS_SONG
+} from "../state/queue-next"
 
+export const addSongToQueue = (song) => {
+  return {
+    type: QUEUE_ADD_SONG,
+    payload: {
+      song
+    }
+
+  }
+}
 export const nextSong = () => {
-  return { type: QUEUE_NEXT };
+  return { type: QUEUE_NEXT_SONG };
 };
 
 export const previousSong = () => {
-  return { type: QUEUE_PREVIOUS };
+  return { type: QUEUE_PREVIOUS_SONG };
 };
 
 export const pauseSong = () => {
@@ -34,7 +41,7 @@ export const seekTo = (position) => ({
 });
 
 export const enqueueSongs = (songs, index, playNow) => ({
-  type: QUEUE_ADD_SONGS,
+  type: QUEUE_ADD_SONG,
   payload: {
     songs,
     index,
@@ -43,9 +50,9 @@ export const enqueueSongs = (songs, index, playNow) => ({
 });
 
 export const toggleShuffle = () => {
-  return { type: QUEUE_TOGGLE_SHUFFLE };
+  return { type: "QUEUE_TOGGLE_SHUFFLE" };
 };
 
 export const toggleRepeatSong = () => {
-  return { type: QUEUE_TOGGLE_REPEAT_SONG };
+  return { type: "QUEUE_TOGGLE_REPEAT_SONG" };
 };
