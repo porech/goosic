@@ -1,6 +1,7 @@
 import { put, select, takeEvery } from "redux-saga/effects"
 import { shuffle } from "lodash";
 import {PLAYER_PLAY_SONG} from './player';
+import {getSongs} from './songs';
 import { NEXT_SONG } from "../constants";
 export const SHUFFLE = {
     NONE:-1,
@@ -19,6 +20,8 @@ export const QUEUE_PREVIOUS_SONG = "QUEUE_PREVIOUS_SONG"
 export const PLAY_LATEST_QUEUE = "PLAY_LATEST_QUEUE"
 export const QUEUE_ADD_SONG = "QUEUE_ADD_SONG"
 export const NEXT_QUEUE = "NEXT_QUEUE"
+export const UPDATE_QUEUE_OFFSET = "UPDATE_QUEUE_OFFSET"
+export const UPDATE_QUEUE_SKIP = "UPDATE_QUEUE_SKIP"
 
 //export const REMOVE_QUEUE = "REMOVE_QUEUE"
 const getQueuedSong = state => {
@@ -26,6 +29,13 @@ const getQueuedSong = state => {
     //if shuffle is enabled, use the shuffled queue, else use the normal queue
     return shuffle !== SHUFFLE.NONE ? queuesShuffled[currentQueueIndex][currentIndex] : queues[currentQueueIndex][currentIndex]
   }
+
+const getQueueSkip = state => {
+    return state.queue.skip;
+}
+const getQueueOffset = state => {
+    return state.queue.offset;
+}
 
 //#TODO should return songs based on the context we're on; for instance, if the context is an artist view, should return songs made by this artist
 const getContextSongs = state => {
@@ -38,14 +48,17 @@ let defaultState = {
     currentIndex: -1,
     currentQueueIndex: 0,
     shuffle: SHUFFLE.NONE,
-    repeat: REPEAT.NONE
+    repeat: REPEAT.NONE,
+    offset: 0,
+    skip: 0
 }
 export const reducer = (state = defaultState, action) => {
     let { currentIndex, currentQueueIndex, queues, repeat} = state;
     switch(action.type) {
         case ADD_QUEUE:
             if (queues.length === 5) put({type: REMOVE_FIRST_QUEUE})
-            queues.push(action.payload)
+                queues.push(action.payload)
+                //console.log("new queue pushed", queues[queues.length-1])
             return {
                 ...state,
                 queues: queues
@@ -56,7 +69,7 @@ export const reducer = (state = defaultState, action) => {
             return {
                 ...state,
                 queues,
-                currentIndex: queues[currentQueueIndex].length
+                currentIndex: queues[currentQueueIndex].length - 1
             }
         case REMOVE_FIRST_QUEUE:
             return {
@@ -119,6 +132,10 @@ export const reducer = (state = defaultState, action) => {
                 ...state,
                 currentIndex: currentIndex-1
             }
+        case UPDATE_QUEUE_SKIP:
+            return {...state, skip: action.payload}
+        case UPDATE_QUEUE_OFFSET:
+            return {...state, offset: action.payload}
         default:
             return state;
 
@@ -133,14 +150,34 @@ function* addQueue(action) {
 }
 function* playSong() {
     const song = yield select(getQueuedSong)
+    //#TODO better naming
+    let skip = yield select(getQueueSkip)
+    let offset = yield select(getQueueOffset)
+    const allSongs = yield select(getSongs)
+    //if I don't have a queued song
     if (song === undefined) {
-        //get some songs and add them to queue
+        //get some songs *related to the queue* and add them to queue
         let songs = yield select(getContextSongs)
-        //#TODO take x different songs to each call
+        //#TODO implement skip / offset in a meaningful way
+/*         if (offset === 0) {
+            offset = songs.length / 2;
+        } */
         yield put({
             type: ADD_QUEUE,
-            payload: songs.slice(0,15),
+            //payload: songs.slice(skip,offset),
+            payload: songs.slice(0, songs.length),
             playNow: true
+        })
+/*         if (skip === 0) {
+            yield put({
+                type: UPDATE_QUEUE_SKIP,
+                payload: offset
+            })
+        } */
+        yield put({
+            type: UPDATE_QUEUE_OFFSET,
+            payload: offset+skip
+
         })
     } else {
         console.log("song", song)
