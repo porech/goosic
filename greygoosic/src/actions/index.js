@@ -1,26 +1,12 @@
 import { SEARCH_SONG } from "../constants";
 import { PLAYER_PAUSE, PLAYER_RESUME, PLAYER_SEEK } from "../state/player";
-import {
-  QUEUE_ADD_SONG,
-  QUEUE_NEXT_SONG,
-  QUEUE_PREVIOUS_SONG
-} from "../state/queue-next"
-
-export const addSongToQueue = (song) => {
-  return {
-    type: QUEUE_ADD_SONG,
-    payload: {
-      song
-    }
-
-  }
-}
+import { QUEUE_NEXT_SONG, SONG_FROM_VIEW } from "../state/queue-next";
 export const nextSong = () => {
   return { type: QUEUE_NEXT_SONG };
 };
 
 export const previousSong = () => {
-  return { type: QUEUE_PREVIOUS_SONG };
+  return { type: "QUEUE_PREVIOUS_SONG" };
 };
 
 export const pauseSong = () => {
@@ -40,12 +26,11 @@ export const seekTo = (position) => ({
   payload: position,
 });
 
-export const enqueueSongs = (songs, index, playNow) => ({
-  type: QUEUE_ADD_SONG,
+export const songFromView = (view, viewIndex) => ({
+  type: SONG_FROM_VIEW,
   payload: {
-    songs,
-    index,
-    playNow,
+    view,
+    viewIndex,
   },
 });
 
