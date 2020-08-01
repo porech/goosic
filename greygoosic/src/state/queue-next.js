@@ -3,6 +3,7 @@ import { shuffle } from "lodash";
 import { PLAYER_PLAY_SONG, PLAYER_ENDED } from "./player";
 import { getSongs } from "./songs";
 import { NEXT_SONG } from "../constants";
+import  _ from 'lodash'
 
 export const REPEAT = {
   NONE: -1,
@@ -24,14 +25,10 @@ const getQueuedSong = (state) => {
   return queues[queueIndex][songIndex];
 };
 
-//#TODO should return songs based on the context we're on; for instance, if the context is an artist view, should return songs made by this artist
-const getContextSongs = (state) => {
-  return state.songs.songs;
-};
 
 let defaultState = {
   //array of queue arrays
-  queues: [[]],
+  queues: [],
   //current play index in the queue
   songIndex: -1,
   //current queue index
@@ -43,24 +40,38 @@ let defaultState = {
   repeat: REPEAT.NONE,
 };
 export const reducer = (state = defaultState, action) => {
-  const { queueIndex, queues, songIndex, view, viewIndex } = state;
+  const { queues } = state;
+  let { queueIndex, songIndex } = state
 
   switch (action.type) {
     case SONG_FROM_VIEW:
-      //index in the view
-      const queue = [view[viewIndex]];
-      if (queueIndex === queues.length - 1) {
-        queues.push(queue);
+      console.log(action)
+      const { view, viewIndex } = action.payload
+      // if I changed view, I should push a new queue with a song
+      if (! _.isEqual(view, state.view)) {
+          //index in the view
+        const queue = [view[viewIndex]];
+        if (queueIndex === queues.length - 1) {
+          queues.push(queue);
+        } else {
+          queues.splice(queueIndex, 0, queue);
+        }
+        queueIndex = queueIndex+1;
+        //updating songIndex to 0 to be ready to play the next song
+        songIndex = 0;
       } else {
-        queues.splice(queueIndex, 0, queue);
+        //instead, if the view is the same, I should push the song at the end of the current queue and the change the songIndex
+        queues[queueIndex].push(view[viewIndex])
+        songIndex = songIndex+1;
       }
-      //updating songIndex to 0 to be ready to play the next song
+
+      
       return {
         ...state,
         view,
         queues,
-        songIndex: 0,
-        queueIndex: queueIndex + 1,
+        songIndex,
+        queueIndex,
         viewIndex,
       };
     case NEXT_SONG_INDEX:
@@ -81,25 +92,44 @@ export const reducer = (state = defaultState, action) => {
 };
 function* nextSong() {
   //evaluates queue status and gets new songs if needed
-  const { queues, queueIndex, songIndex } = yield select(
+  const { queues, queueIndex, songIndex, view, viewIndex } = yield select(
     (state) => state.queue
   );
   const currentQueue = queues[queueIndex];
   //if there are songs left in the queue
-  if (currentQueue.length > songIndex + 1) {
+  if (currentQueue.length > songIndex + 1 && currentQueue[songIndex+1]) {
     yield put({ type: NEXT_SONG_INDEX });
     yield put({ type: QUEUE_PLAY_SONG });
     return;
   }
-  if (queues.length > queueIndex + 1) {
+  //if there is a next queue available
+  if (queues.length > queueIndex + 1 && queues[queueIndex+1]) {
     yield put({ type: NEXT_QUEUE_INDEX });
     yield put({ type: QUEUE_PLAY_SONG });
     return;
   }
+
+  //if I have nothing in queue, I refer to the view 
+ if (view && view[viewIndex+1]) {
+
+  yield put({type: SONG_FROM_VIEW, 
+    payload: {
+      view: view,
+      viewIndex: viewIndex+1
+    }
+  })
+  return;
+} else {
+  //do nothing, you ended up the available songs from the queue and the view.
+} 
+
 }
 function* playSong() {
   const song = yield select(getQueuedSong);
+  console.log("songToPlay", song)
+  if (song) {
   yield put({ type: PLAYER_PLAY_SONG, payload: song });
+  }
 }
 
 export function* saga() {
