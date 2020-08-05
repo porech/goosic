@@ -116,7 +116,7 @@ const playerEndedChannel = eventChannel((emitter) => {
 
 function* playSong(action) {
   const song = action.payload;
-  playerObj.src = `/song-stream/${song.id}`;
+  playerObj.src = `/api/song-stream/${song.id}`;
   try {
     yield playerObj.play();
     yield put({ type: PLAYER_PLAYBACK_STARTED });

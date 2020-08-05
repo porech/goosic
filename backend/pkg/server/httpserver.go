@@ -48,7 +48,7 @@ func (s *HttpServer) StartServer(host string, port int, corsOrigin string) error
 	}
 
 	// Create the box for the frontend page
-	box := packr.New("GreyGoosic", "../../greygoosic/build")
+	box := packr.New("GreyGoosic", "../../../greygoosic/build")
 
 	r.Use(PackrMiddleware("/", box))
 	r.GET("/api/song-list", s.songList)

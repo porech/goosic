@@ -8,7 +8,10 @@ import (
 )
 
 func main() {
-	log.Info("goosic is starting")
+    // Version is passed by the compiler
+    var Version = "dev-build"
+
+	log.Infof("goosic ver. %s is starting", Version)
 	config := getConfig()
 
 	store := storage.Storage{}
