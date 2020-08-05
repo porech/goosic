@@ -18,6 +18,8 @@ export const QUEUE_TOGGLE_REPEAT = "QUEUE_TOGGLE_REPEAT";
 
 const NEXT_SONG_INDEX = "NEXT_SONG_INDEX";
 const NEXT_QUEUE_INDEX = "NEXT_QUEUE_INDEX";
+const PREV_SONG_INDEX = "PREV_SONG_INDEX";
+const PREV_QUEUE_INDEX = "PREV_QUEUE_INDEX";
 const QUEUE_PLAY_SONG = "QUEUE_PLAY_SONG";
 const SET_VIEW_PLAYED = "SET_VIEW_PLAYED";
 const REPEAT_VIEW = "REPEAT_VIEW";
@@ -80,6 +82,21 @@ export const reducer = (state = defaultState, action) => {
         ...state,
         queueIndex: queueIndex + 1,
         songIndex: 0,
+      };
+    case PREV_SONG_INDEX:
+      return {
+        ...state,
+        songIndex: songIndex - 1,
+      };
+    case PREV_QUEUE_INDEX:
+      const prevQueue = state.queues[queueIndex - 1];
+      if (!prevQueue) {
+        return state;
+      }
+      return {
+        ...state,
+        queueIndex: queueIndex - 1,
+        songIndex: prevQueue.length - 1,
       };
     case SET_VIEW_INDEX:
       return {
@@ -202,6 +219,17 @@ function* nextSong() {
   yield put({ type: QUEUE_PLAY_SONG });
 }
 
+function* previousSong() {
+  const { queueIndex, songIndex } = yield select((state) => state.queue);
+  if (songIndex > 0) {
+    yield put({ type: PREV_SONG_INDEX });
+  }
+  if (queueIndex > 0) {
+    yield put({ type: PREV_QUEUE_INDEX });
+  }
+  yield put({ type: QUEUE_PLAY_SONG });
+}
+
 function* repeatView() {
   // If shuffle is enabled, start with a random song from the view, else with index 0
   const { view } = yield select((state) => state.queue);
@@ -239,6 +267,7 @@ function* playerEnded() {
 export function* saga() {
   yield takeEvery([QUEUE_SONG_FROM_VIEW, QUEUE_PLAY_SONG], playSong);
   yield takeEvery(QUEUE_NEXT_SONG, nextSong);
+  yield takeEvery(QUEUE_PREVIOUS_SONG, previousSong);
   yield takeEvery(PLAYER_ENDED, playerEnded);
   yield takeEvery(REPEAT_VIEW, repeatView);
 }
