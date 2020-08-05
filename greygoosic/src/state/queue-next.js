@@ -199,7 +199,6 @@ function* repeatView() {
 
 function* playSong() {
   const song = yield select(getQueuedSong);
-  console.log("songToPlay", song);
   if (song) {
     yield put({ type: PLAYER_PLAY_SONG, payload: song });
   }
@@ -208,9 +207,9 @@ function* playSong() {
 function* playerEnded() {
   const repeatStatus = yield select(getRepeatStatus);
   if (repeatStatus === REPEAT.ONE) {
-    yield put(playSong);
+    yield put({ type: QUEUE_PLAY_SONG });
   } else {
-    yield put(nextSong);
+    yield put({ type: QUEUE_NEXT_SONG });
   }
 }
 
