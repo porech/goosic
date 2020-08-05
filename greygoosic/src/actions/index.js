@@ -1,19 +1,12 @@
 import { SEARCH_SONG } from "../constants";
 import { PLAYER_PAUSE, PLAYER_RESUME, PLAYER_SEEK } from "../state/player";
-import {
-  QUEUE_ADD_SONGS,
-  QUEUE_NEXT,
-  QUEUE_PREVIOUS,
-  QUEUE_TOGGLE_REPEAT_SONG,
-  QUEUE_TOGGLE_SHUFFLE,
-} from "../state/queue";
-
+import { QUEUE_NEXT_SONG, QUEUE_SONG_FROM_VIEW } from "../state/queue";
 export const nextSong = () => {
-  return { type: QUEUE_NEXT };
+  return { type: QUEUE_NEXT_SONG };
 };
 
 export const previousSong = () => {
-  return { type: QUEUE_PREVIOUS };
+  return { type: "QUEUE_PREVIOUS_SONG" };
 };
 
 export const pauseSong = () => {
@@ -33,19 +26,18 @@ export const seekTo = (position) => ({
   payload: position,
 });
 
-export const enqueueSongs = (songs, index, playNow) => ({
-  type: QUEUE_ADD_SONGS,
+export const songFromView = (view, viewIndex) => ({
+  type: QUEUE_SONG_FROM_VIEW,
   payload: {
-    songs,
-    index,
-    playNow,
+    view,
+    viewIndex,
   },
 });
 
 export const toggleShuffle = () => {
-  return { type: QUEUE_TOGGLE_SHUFFLE };
+  return { type: "QUEUE_TOGGLE_SHUFFLE" };
 };
 
-export const toggleRepeatSong = () => {
-  return { type: QUEUE_TOGGLE_REPEAT_SONG };
+export const toggleRepeat = () => {
+  return { type: "QUEUE_TOGGLE_REPEAT" };
 };

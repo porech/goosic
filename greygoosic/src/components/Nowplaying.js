@@ -11,7 +11,7 @@ import {
   previousSong,
   nextSong,
   toggleShuffle,
-  toggleRepeatSong,
+  toggleRepeat,
 } from "../actions";
 import {
   getCurrentTitle,
@@ -21,7 +21,7 @@ import {
   getDuration,
   getIsPlaying,
 } from "../state/player";
-import { getRepeatSongEnabled, getShuffleEnabled } from "../state/queue";
+import { getRepeatStatus, getShuffleStatus, REPEAT } from "../state/queue";
 
 let buildTitleString = (title, artist, fileName) => {
   if (!title) return fileName || "";
@@ -36,8 +36,8 @@ const NowPlaying = () => {
   const position = useSelector(getCurrentPosition);
   const duration = useSelector(getDuration);
   const isPlaying = useSelector(getIsPlaying);
-  const shuffleEnabled = useSelector(getShuffleEnabled);
-  const repeatSongEnabled = useSelector(getRepeatSongEnabled);
+  const shuffleStatus = useSelector(getShuffleStatus);
+  const repeatStatus = useSelector(getRepeatStatus);
 
   const dispatch = useDispatch();
 
@@ -70,15 +70,17 @@ const NowPlaying = () => {
         <div
           //#TODO #FIXME selector to be exposed in the queue
           className={`action-icons-extra-left ${
-            repeatSongEnabled ? "toggle-enabled" : "toggle-disabled"
+            repeatStatus !== REPEAT.NONE ? "toggle-enabled" : "toggle-disabled"
           } `}
         >
           <i
             onClick={() => {
-              dispatch(toggleRepeatSong());
+              dispatch(toggleRepeat());
             }}
             className="action-icons-extra-left-icon retweet icon"
           />
+          {repeatStatus !== REPEAT.NONE &&
+            (repeatStatus === REPEAT.ALL ? "A" : "1")}
         </div>
         {duration > 0 && (
           <div className="time-info">
@@ -115,7 +117,7 @@ const NowPlaying = () => {
         <div
           //#TODO #FIXME selector to be exposed in the queue
           className={`action-icons-extra-right ${
-            shuffleEnabled ? "toggle-enabled" : "toggle-disabled"
+            shuffleStatus ? "toggle-enabled" : "toggle-disabled"
           } `}
         >
           <i
