@@ -1,6 +1,6 @@
 import { SEARCH_SONG } from "../constants";
 import { PLAYER_PAUSE, PLAYER_RESUME, PLAYER_SEEK } from "../state/player";
-import { QUEUE_NEXT_SONG, QUEUE_SONG_FROM_VIEW } from "../state/queue-next";
+import { QUEUE_NEXT_SONG, QUEUE_SONG_FROM_VIEW } from "../state/queue";
 export const nextSong = () => {
   return { type: QUEUE_NEXT_SONG };
 };

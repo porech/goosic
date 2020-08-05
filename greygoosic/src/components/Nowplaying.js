@@ -21,7 +21,7 @@ import {
   getDuration,
   getIsPlaying,
 } from "../state/player";
-import { getRepeatStatus, getShuffleStatus, REPEAT } from "../state/queue-next";
+import { getRepeatStatus, getShuffleStatus, REPEAT } from "../state/queue";
 
 let buildTitleString = (title, artist, fileName) => {
   if (!title) return fileName || "";
