@@ -8,13 +8,14 @@ export const REPEAT = {
   ONE: 0,
   ALL: 1,
 };
-export const ADD_QUEUE = "ADD_QUEUE";
-export const REMOVE_FIRST_QUEUE = "REMOVE_FIRST_QUEUE";
+
 export const QUEUE_NEXT_SONG = "QUEUE_NEXT_SONG";
 export const QUEUE_PREVIOUS_SONG = "QUEUE_PREVIOUS_SONG";
-export const PLAY_LATEST_QUEUE = "PLAY_LATEST_QUEUE";
-export const SONG_FROM_VIEW = "SONG_FROM_VIEW";
-export const ADD_TO_QUEUE = "ADD_TO_QUEUE";
+export const QUEUE_SONG_FROM_VIEW = "QUEUE_SONG_FROM_VIEW";
+export const QUEUE_ADD_SONG = "QUEUE_ADD_SONG";
+export const QUEUE_TOGGLE_SHUFFLE = "QUEUE_TOGGLE_SHUFFLE";
+export const QUEUE_TOGGLE_REPEAT = "QUEUE_TOGGLE_REPEAT";
+
 const NEXT_SONG_INDEX = "NEXT_SONG_INDEX";
 const NEXT_QUEUE_INDEX = "NEXT_QUEUE_INDEX";
 const QUEUE_PLAY_SONG = "QUEUE_PLAY_SONG";
@@ -27,8 +28,8 @@ const getQueuedSong = (state) => {
   return queues[queueIndex][songIndex];
 };
 
-const getRepeatStatus = (state) => state.repeat;
-const getShuffleStatus = (state) => state.shuffle;
+export const getRepeatStatus = (state) => state.queue.repeat;
+export const getShuffleStatus = (state) => state.queue.shuffle;
 
 let defaultState = {
   //array of queue arrays
@@ -47,7 +48,7 @@ export const reducer = (state = defaultState, action) => {
   let { queues, queueIndex, songIndex, view } = state;
 
   switch (action.type) {
-    case SONG_FROM_VIEW:
+    case QUEUE_SONG_FROM_VIEW:
       const newView = action.payload.view;
       const { viewIndex } = action.payload;
       // push a new queue with a song index in the view
@@ -100,7 +101,7 @@ export const reducer = (state = defaultState, action) => {
           return i;
         }),
       };
-    case ADD_TO_QUEUE:
+    case QUEUE_ADD_SONG:
       const currentQueue = queues[queueIndex];
       if (songIndex === currentQueue.length - 1) {
         currentQueue.push(action.payload);
@@ -111,6 +112,28 @@ export const reducer = (state = defaultState, action) => {
       return {
         ...state,
         queues,
+      };
+    case QUEUE_TOGGLE_SHUFFLE:
+      return {
+        ...state,
+        shuffle: !state.shuffle,
+      };
+    case QUEUE_TOGGLE_REPEAT:
+      let repeat;
+      switch (state.repeat) {
+        case REPEAT.NONE:
+          repeat = REPEAT.ONE;
+          break;
+        case REPEAT.ONE:
+          repeat = REPEAT.ALL;
+          break;
+        default:
+          repeat = REPEAT.NONE;
+          break;
+      }
+      return {
+        ...state,
+        repeat,
       };
     default:
       return state;
@@ -174,7 +197,7 @@ function* nextSong() {
   }
 
   yield put({ type: SET_VIEW_INDEX, payload: nextSong.viewIndex });
-  yield put({ type: ADD_TO_QUEUE, payload: nextSong });
+  yield put({ type: QUEUE_ADD_SONG, payload: nextSong });
   yield put({ type: NEXT_SONG_INDEX });
   yield put({ type: QUEUE_PLAY_SONG });
 }
@@ -189,7 +212,7 @@ function* repeatView() {
   }
 
   yield put({
-    type: SONG_FROM_VIEW,
+    type: QUEUE_SONG_FROM_VIEW,
     payload: {
       view,
       viewIndex,
@@ -214,7 +237,7 @@ function* playerEnded() {
 }
 
 export function* saga() {
-  yield takeEvery([SONG_FROM_VIEW, QUEUE_PLAY_SONG], playSong);
+  yield takeEvery([QUEUE_SONG_FROM_VIEW, QUEUE_PLAY_SONG], playSong);
   yield takeEvery(QUEUE_NEXT_SONG, nextSong);
   yield takeEvery(PLAYER_ENDED, playerEnded);
   yield takeEvery(REPEAT_VIEW, repeatView);
