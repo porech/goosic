@@ -58,7 +58,7 @@ export const reducer = (state = defaultState, action) => {
       if (queueIndex === queues.length - 1) {
         queues.push(queue);
       } else {
-        queues.splice(queueIndex, 0, queue);
+        queues.splice(queueIndex + 1, 0, queue);
       }
       queueIndex = queueIndex + 1;
       //updating songIndex to 0 to be ready to play the next song
@@ -123,7 +123,7 @@ export const reducer = (state = defaultState, action) => {
       if (songIndex === currentQueue.length - 1) {
         currentQueue.push(action.payload);
       } else {
-        currentQueue.splice(songIndex, 0, action.payload);
+        currentQueue.splice(songIndex + 1, 0, action.payload);
       }
       queues[queueIndex] = currentQueue;
       return {
