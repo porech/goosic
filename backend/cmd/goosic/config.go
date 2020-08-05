@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+import "os"
 import "github.com/spf13/viper"
 
 type GoosicConf struct {
@@ -10,10 +12,11 @@ type GoosicConf struct {
 }
 
 func setDefaults() {
+	home, _ := os.UserHomeDir()
 	viper.AutomaticEnv()
 	viper.SetDefault("HTTP_HOST", "127.0.0.1")
 	viper.SetDefault("HTTP_PORT", 8080)
-	viper.SetDefault("MUSIC_PATH", "/mnt/c/Temp/TestMusic")
+	viper.SetDefault("MUSIC_PATH", fmt.Sprintf("%s/Music", home))
 }
 
 func getConfig() *GoosicConf {

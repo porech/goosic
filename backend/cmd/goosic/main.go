@@ -16,6 +16,9 @@ func main() {
 
 	store := storage.Storage{}
 
+	log.Infof("Watching folder %s", config.MusicPath)
+	log.Info("Please set the MUSIC_PATH environment variable to change the music path.")
+
 	index.StartIndex(config.MusicPath, &store)
 
 	httpServer := server.HttpServer{&store}
