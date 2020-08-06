@@ -43,7 +43,7 @@ const NowPlaying = () => {
 
   const togglePlay = () => dispatch(isPlaying ? pauseSong() : resumeSong());
 
-  const onSliderSeek = (event) => dispatch(seekTo(event));
+  const onSliderSeek = (event) => dispatch(seekTo(event / 100));
 
   const formattedTitle = buildTitleString(title, artist, fileName);
 
@@ -52,8 +52,8 @@ const NowPlaying = () => {
       <Slider
         id="slider"
         min={0}
-        max={duration || 0}
-        value={position || 0}
+        max={duration * 100 || 0}
+        value={position * 100 || 0}
         defaultValue={0}
         onChange={onSliderSeek}
       />
