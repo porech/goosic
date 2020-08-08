@@ -4,6 +4,10 @@ import "rc-slider/assets/index.css";
 import "./Nowplaying.css";
 import Time from "./Time";
 import Slider from "rc-slider";
+import RepeatOne from '../assets/svg/RepeatOne.svg'
+import RepeatOff from '../assets/svg/RepeatOff.svg'
+import RepeatAll from '../assets/svg/RepeatAll.svg'
+
 import {
   pauseSong,
   seekTo,
@@ -46,7 +50,6 @@ const NowPlaying = () => {
   const onSliderSeek = (event) => dispatch(seekTo(event / 100));
 
   const formattedTitle = buildTitleString(title, artist, fileName);
-
   return (
     <div className="panel">
       <Slider
@@ -70,17 +73,19 @@ const NowPlaying = () => {
         <div
           //#TODO #FIXME selector to be exposed in the queue
           className={`action-icons-extra-left ${
-            repeatStatus !== REPEAT.NONE ? "toggle-enabled" : "toggle-disabled"
-          } `}
+            repeatStatus === REPEAT.NONE ? "toggle-disabled" : "toggle-enabled"
+          }`}
         >
-          <i
+          <img
+            src={repeatStatus !== REPEAT.NONE &&
+              (repeatStatus === REPEAT.ALL ? RepeatAll : RepeatOne) || RepeatOff}
+            width="30px"
             onClick={() => {
               dispatch(toggleRepeat());
             }}
-            className="action-icons-extra-left-icon retweet icon"
+            className={`action-icons-extra-left-icon`}
           />
-          {repeatStatus !== REPEAT.NONE &&
-            (repeatStatus === REPEAT.ALL ? "A" : "1")}
+
         </div>
         {duration > 0 && (
           <div className="time-info">
