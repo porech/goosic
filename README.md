@@ -70,5 +70,5 @@ something that should be working isn't, feel free to open an issue.
 
 ## License
 
-### Logo
+### Icons
 The repeat icons are based on the FontAwesome 5 "retweet" icon, licensed under Creative Commons 4, with little modifications. You can find original license in detail <a href="https://fontawesome.com/license" target="_blank">here</a>.
