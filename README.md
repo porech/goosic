@@ -67,3 +67,8 @@ It's planned to release single-file binaries with the frontend embedded in them,
 As an early-stage project, you can expect a lot of issues to occurr. Anyway, we're already using
 Goosic to listen to our own music, so what already exists should overally work. If you feel like
 something that should be working isn't, feel free to open an issue.
+
+## License
+
+### Icons
+The repeat icons are based on the FontAwesome 5 "retweet" icon, licensed under Creative Commons 4, with little modifications. You can find original license in detail <a href="https://fontawesome.com/license" target="_blank">here</a>.

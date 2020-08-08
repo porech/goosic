@@ -8,6 +8,8 @@ build-linux-amd64:
 	GOOS=linux GOARCH=amd64 ./build-scripts/build.sh
 build-linux-arm:
 	GOOS=linux GOARCH=arm ./build-scripts/build.sh
+build-linux-arm64:
+	GOOS=linux GOARCH=arm64 ./build-scripts/build.sh
 build-windows-i386:
 	GOOS=windows GOARCH=386 ./build-scripts/build.sh
 build-windows-amd64:
@@ -40,6 +42,7 @@ packr-clean:
 linux-i386: packr build-linux-i386 packr-clean
 linux-amd64: packr build-linux-amd64 packr-clean
 linux-arm: packr build-linux-arm packr-clean
+linux-arm64: packr build-linux-arm64 packr-clean
 windows-i386: packr build-windows-i386 packr-clean
 windows-amd64: packr build-windows-amd64 packr-clean
 darwin-i386: packr build-darwin-i386 packr-clean
