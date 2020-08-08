@@ -1,4 +1,3 @@
-export const SEARCH_SONG = "SEARCH_SONG";
 export const EXPAND_COLLAPSE_SEARCH_BAR = "EXPAND_COLLAPSE_SEARCH_BAR";
 export const PLAY_SONG = "PLAY_SONG";
 export const PAUSE_SONG = "PAUSE_SONG";

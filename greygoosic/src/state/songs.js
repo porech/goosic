@@ -82,5 +82,6 @@ function* getSongsFromGoosic() {
 
 export function* saga() {
   yield takeEvery(GET_SONGS, getSongsFromGoosic);
+  //fetch songs for the first time
   yield put({ type: GET_SONGS });
 }

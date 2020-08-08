@@ -1,4 +1,4 @@
-import { SEARCH_SONG } from "../constants";
+export const SEARCH_SONG = "SEARCH_SONG"
 export const getSearchedText = (state) => state.searchedText;
 export const reducer = (search = "", action) => {
   if (action.type === SEARCH_SONG) {
