@@ -1,9 +1,10 @@
 .song-list {
-  margin: 10px;
-  margin-top: 75px;
+  margin: 20px;
+  margin-top: 10vh;
   min-height: 70vh;
   border-radius: 5px;
   padding: 10px;
+  width: 97%;
   padding-bottom: 130px;
   background-color: rgba(255, 255, 255, 0.5);
 }
@@ -16,6 +17,7 @@
     font-size: 1.2em;
     margin-top: 10vh;
     min-width: 400px;
+    width: 100%;
     overflow-x: hidden;
     min-height: 160vh;
     padding-bottom: 130px;

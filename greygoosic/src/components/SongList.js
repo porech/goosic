@@ -15,7 +15,7 @@ const Warning = ({ children }) => (
   </div>
 );
 
-const SongList = () => {
+const SongList = (props) => {
   const dispatch = useDispatch();
   const nowPlaying = useSelector(getNowPlaying);
   const allSongs = useSelector(getSongs);
@@ -43,7 +43,7 @@ const SongList = () => {
   }
 
   return (
-    <div className="song-list">
+    <div className={`${props.className} song-list`}>
       {songs.map((song, index) => {
         return (
           <Song

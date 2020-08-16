@@ -3,7 +3,7 @@
 .album {
 }
 .artist {
-  margin-top:-5px;
+  margin-top: -5px;
 }
 .avatar {
   width: 50px;
@@ -34,13 +34,11 @@
 
 .container div:last-child {
   margin-left: auto;
-  
 }
 
 .container:hover {
-    transform: translateX(10px);
+  transform: translateX(10px);
 }
-
 
 .nowPlaying {
   background-color: rgba(66, 78, 241, 0.644);
@@ -48,7 +46,7 @@
 }
 
 .star-icon {
-  padding-top: 8vh;  
+  padding-top: 8vh;
   align-items: center;
 }
 .star-button {
@@ -77,10 +75,10 @@
   .container {
     height: 130px;
     padding: 0;
-    margin-left:0;
+    margin-left: 0;
   }
   .star-icon {
-    padding-top: 4vh;  
+    padding-top: 4vh;
     align-items: center;
   }
   .star-button {
@@ -110,11 +108,9 @@
     margin-top: 20px;
   }
 
-
   .title-large {
     padding-top: 15px;
     margin-right: 5px;
-
   }
 }
 
@@ -130,6 +126,6 @@
   }
 
   .container {
-    max-width: calc(100% - 1vw)
+    max-width: calc(100% - 1vw);
   }
 }

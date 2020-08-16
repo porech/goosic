@@ -1,0 +1,64 @@
+.artist-cover {
+  border-radius: 3px;
+  margin: 20px;
+}
+.artist-info {
+  display: flex;
+  flex-flow: row wrap;
+  min-width: 100%;
+}
+.artist-info-text-actions {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 15px;
+  margin: 20px;
+  margin-bottom: 0;
+  margin-left: 2vw;
+  padding: 30px;
+  padding-top: 15px;
+  height: 150px;
+  min-width: 50%;
+  flex-grow: 1;
+  overflow: hidden;
+}
+.artist-name {
+  font-size: 2.5em;
+  text-align: center;
+  margin-bottom: 50px;
+}
+.action {
+  margin-left: 10%;
+  margin-right: 15%;
+  opacity: 0.7;
+}
+
+.action:hover {
+  color: blueviolet;
+  fill: blueviolet;
+  filter: invert(50%) sepia(30%) saturate(20000%) hue-rotate(270deg)
+    brightness(80%) contrast(100%);
+  opacity: 1;
+  transition: opacity 0.5s ease-out 0.1s;
+}
+.action:active {
+  transform: rotate(360deg) scale(0.5, 0.5);
+  transition: transform 0.5s ease-out 0.1s;
+}
+.actions {
+  font-size: 2em;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.song-list-container {
+  display: flex;
+  flex-flow: row wrap;
+  min-width: 100%;
+}
+
+@media (max-width: 500px) {
+  .artist-cover {
+    border-radius: 3px;
+    margin-left: calc(100% - 350px);
+    margin-right: 33%;
+  }
+}
