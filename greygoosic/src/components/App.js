@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SearchBar from "./Searchbar";
 import SongList from "./SongList";
 import NowPlaying from "./Nowplaying";

@@ -42,7 +42,17 @@ const NowPlaying = () => {
   const isPlaying = useSelector(getIsPlaying);
   const shuffleStatus = useSelector(getShuffleStatus);
   const repeatStatus = useSelector(getRepeatStatus);
-
+  let verifyRepeat = () => {
+    if (repeatStatus === REPEAT.ALL) {
+      return RepeatAll;
+    } 
+    if (repeatStatus === REPEAT.ONE) {
+      return RepeatOne;
+    } 
+    if (repeatStatus === REPEAT.NONE) {
+      return RepeatOff;
+    }
+}
   const dispatch = useDispatch();
 
   const togglePlay = () => dispatch(isPlaying ? pauseSong() : resumeSong());
@@ -77,8 +87,9 @@ const NowPlaying = () => {
           }`}
         >
           <img
-            src={repeatStatus !== REPEAT.NONE &&
-              (repeatStatus === REPEAT.ALL ? RepeatAll : RepeatOne) || RepeatOff}
+            src={verifyRepeat()
+            }
+            alt="repeat"
             width="30px"
             onClick={() => {
               dispatch(toggleRepeat());

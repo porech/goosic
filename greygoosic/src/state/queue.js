@@ -161,6 +161,12 @@ function* nextSong() {
   const { queues, queueIndex, songIndex, view, viewIndex } = yield select(
     (state) => state.queue
   );
+  const repeatStatus = yield select(getRepeatStatus);
+  if (repeatStatus === REPEAT.ONE) {
+    yield put({ type: QUEUE_PLAY_SONG });
+    return;
+  }
+
   const currentQueue = queues[queueIndex];
   //if there are songs left in the queue
   if (currentQueue.length > songIndex + 1 && currentQueue[songIndex + 1]) {

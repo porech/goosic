@@ -27,7 +27,7 @@ const ArtistView = () => {
   return (
     <View>
       <div className="artist-info">
-        <img src={cover} height="150px" className="artist-cover" />
+        <img alt="artist-cover" src={cover} height="150px" className="artist-cover" />
         <div className="artist-info-text-actions">
           <div className="artist-name">Miyavi</div>
           <div className="actions">
