@@ -59,11 +59,11 @@ input[type="search"]::-webkit-search-cancel-button {
   transform: scale(1,1);
   color: black;
   fill: black;
-  transition: transform 0.3s ease-out 0.1s;
+  transition: transform 0.2s ease-out 0.1s;
   float: right;
 }
-.refresh-clicked {
-   transform: scale(1.3, 1.3);
+.refresh:active {
+   transform: rotateZ(200deg) scale(3, 3);
 }
 .search-icon {
   color: rgba(0, 0, 0, 0.6);
