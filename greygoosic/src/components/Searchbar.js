@@ -23,7 +23,9 @@ const SearchBar = () => {
           onChange={event => {
             dispatch(search(event.target.value));
           }}/>
-        <i aria-hidden="true" className="redo icon refresh" onClick={() => dispatch({type: GET_SONGS})}/>
+        <i aria-hidden="true" className="redo icon refresh" onClick={() => {
+          dispatch({type: GET_SONGS})
+        }}/>
       </div>
     );
   
