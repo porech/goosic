@@ -5,7 +5,8 @@ import SearchBar from "./Searchbar";
 import SongList from "./SongList";
 import NowPlaying from "./Nowplaying";
 import "./App.css";
-import ArtistView from "./views/ArtistView";
+import ArtistView from "./views/ArtistView/ArtistView";
+import AlbumView from "./views/AlbumView/AlbumView";
 
 class App extends React.Component {
   render() {
@@ -15,6 +16,9 @@ class App extends React.Component {
           <Route path="/artist">
             <ArtistView />
           </Route>
+          <Route path="/album">
+            <AlbumView />
+          </Route> 
           <Route path="/">
             <SearchBar />
             <SongList></SongList>

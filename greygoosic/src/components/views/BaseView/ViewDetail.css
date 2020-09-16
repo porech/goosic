@@ -1,0 +1,77 @@
+.viewdetail-action {
+    margin-left: 10%;
+    margin-right: 15%;
+    opacity: 0.7;
+
+  }
+  
+  .viewdetail-action:hover {
+    color: blueviolet;
+    fill: blueviolet;
+    filter: invert(50%) sepia(30%) saturate(20000%) hue-rotate(270deg)
+      brightness(80%) contrast(100%);
+    opacity: 1;
+    transition: opacity 1s ease-out 0.1s start 1s ease-out;
+  }
+  .viewdetail-star-click {
+    animation: star 1s ease-out;
+    color: blueviolet;
+    opacity: 1;
+  }
+  .viewdetail-star-unclick {
+    animation: unstar 1s ease-out;
+  }
+  .viewdetail-actions {
+    font-size: 2em;
+    display: flex;
+    flex-flow: row wrap;
+  }
+  .viewdetail-cover {
+    border-radius: 3px;
+    margin: 20px;
+  }
+  .viewdetail-name {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  .viewdetail-info-box {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    margin: 20px;
+    margin-bottom: 0;
+    margin-left: 2vw;
+    padding: 30px;
+    padding-top: 15px;
+    height: 150px;
+    min-width: 50%;
+    flex-grow: 1;
+    overflow: hidden;
+  }  
+
+  .viewdetail-container {
+    display: flex;
+    flex-flow: row wrap;
+    min-width: 100%;
+  }
+  @media (max-width: 500px) {
+    .viewdetail-cover {
+      border-radius: 3px;
+      margin-left: calc(100% - 350px);
+      margin-right: 33%;
+    }
+  }
+
+  @keyframes star {
+    0% {opacity: 0.5;}
+    15% {transform: rotate(60deg)}
+    35% {transform: scale(1.5,1.5);}
+    50% {transform: rotate(-60deg)}
+    100% {opacity: 1;}
+  }
+
+  @keyframes unstar {
+    0% {opacity: 1;}
+    50% {transform: scale(.5,.5);}
+    100% {opacity: 0.7;}
+  }

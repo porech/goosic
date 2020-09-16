@@ -9,6 +9,7 @@ import * as queue from './queue'
 import * as searchbarStatus from './searchbarStatus'
 import * as searchedText from './searchedText'
 import * as songs from './songs'
+import * as starred from './starred'
 
 import thunk from "redux-thunk"
 
@@ -21,6 +22,7 @@ const APPS = {
     searchbarStatus,
     searchedText,
     songs,
+    starred
 }
 
 // For each imported state, if it has an exported reducer, add it to the list of reducers
