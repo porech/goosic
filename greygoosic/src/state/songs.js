@@ -14,10 +14,13 @@ export const GET_SONGS_RANDOM = "GET_SONGS_RANDOM"
 
 export const getSongs = (state) => state.songs.songs;
 export const getLoadingSongs = (state) => state.loading;
+export const getSongView = (state) => {return state.queue.view};
+export const getSongFilter = (state) => {return state.queue.filter};
 
-export const getFilteredSongs = createSelector(
+export const getSearchedSongs = createSelector(
   [getSongs, getSearchedText],
   (songs, searched) => {
+    console.log(songs,searched)
     if (isEmpty(searched)) return songs;
 
     return songs.filter((s) => {
@@ -33,7 +36,24 @@ export const getFilteredSongs = createSelector(
     });
   }
 );
-
+export const getFilteredSongs = createSelector(
+  [getSongView, getSongFilter],
+  (songs, searched) => {
+    if (isEmpty(searched)) return songs;
+    if (!songs) return;
+    return songs.filter((s) => {
+      const title = get(s, "metadata.title", "").toLowerCase();
+      const artist = get(s, "metadata.artist", "").toLowerCase();
+      const filename = get(s, "file_name", "").toLowerCase();
+      const searchedLower = searched.toLowerCase();
+      return (
+        title.includes(searchedLower) ||
+        artist.includes(searchedLower) ||
+        filename.includes(searchedLower)
+      );
+    });
+  }
+);
 const defaultState = {
   songs: [],
   loading: false,

@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SearchBar from "./Searchbar";
 import SongList from "./SongList";
@@ -7,9 +7,10 @@ import NowPlaying from "./Nowplaying";
 import "./App.css";
 import ArtistView from "./views/ArtistView/ArtistView";
 import AlbumView from "./views/AlbumView/AlbumView";
+import { getSearchedSongs } from "../state/songs";
+import Spacer from "./utils/Spacer";
 
-class App extends React.Component {
-  render() {
+const App = () => {
     return (
       <Router>
         <Switch>
@@ -20,7 +21,7 @@ class App extends React.Component {
             <AlbumView />
           </Route> 
           <Route path="/">
-            <SearchBar />
+            <SearchBar></SearchBar>
             <SongList></SongList>
           </Route>
         </Switch>
@@ -28,8 +29,4 @@ class App extends React.Component {
       </Router>
     );
   }
-}
-/* const mapStateToProps = state => {
-  console.log(state);
-}; */
-export default connect()(App);
+export default App;

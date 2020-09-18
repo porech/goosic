@@ -2,6 +2,7 @@ import { put, select, takeEvery } from "redux-saga/effects";
 import { PLAYER_PLAY_SONG, PLAYER_ENDED } from "./player";
 import { GET_SONGS_RANDOM } from "./songs";
 import { sample, random } from "lodash";
+import { FILTER_SONGS } from "./searchedText";
 
 export const REPEAT = {
   NONE: -1,
@@ -14,7 +15,9 @@ export const QUEUE_PREVIOUS_SONG = "QUEUE_PREVIOUS_SONG";
 export const QUEUE_SONG_FROM_VIEW = "QUEUE_SONG_FROM_VIEW";
 export const QUEUE_ADD_SONG = "QUEUE_ADD_SONG";
 export const QUEUE_TOGGLE_SHUFFLE = "QUEUE_TOGGLE_SHUFFLE";
+export const QUEUE_SHUFFLE_ON = "QUEUE_SHUFFLE_ON";
 export const QUEUE_TOGGLE_REPEAT = "QUEUE_TOGGLE_REPEAT";
+export const UPDATE_VIEW = "UPDATE_VIEW";
 
 const NEXT_SONG_INDEX = "NEXT_SONG_INDEX";
 const NEXT_QUEUE_INDEX = "NEXT_QUEUE_INDEX";
@@ -130,6 +133,11 @@ export const reducer = (state = defaultState, action) => {
         ...state,
         queues,
       };
+    case QUEUE_SHUFFLE_ON:
+      return {
+        ...state,
+        shuffle: true,
+      };
     case QUEUE_TOGGLE_SHUFFLE:
       return {
         ...state,
@@ -152,6 +160,18 @@ export const reducer = (state = defaultState, action) => {
         ...state,
         repeat,
       };
+      case FILTER_SONGS:
+        let { filter} = action.payload;
+        return {
+          ...state,
+          view: action.payload.view,
+          filter
+        }
+      case UPDATE_VIEW:
+        return {
+          ...state,
+          view: action.payload
+        }
     default:
       return state;
   }

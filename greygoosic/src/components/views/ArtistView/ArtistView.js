@@ -8,6 +8,9 @@ import View from "../BaseView/View";
 import SongList from "../../SongList";
 import ViewDetail from "../BaseView/ViewDetail"
 import "./ArtistView.css";
+import { getSearchedSongs, getFilteredSongs } from "../../../state/songs";
+import SearchBar from "../../Searchbar";
+import Spacer from "../../utils/Spacer";
 
 const ViewSongList = styled(SongList)`
 margin-top: 0;
@@ -19,13 +22,18 @@ const ArtistView = () => {
   dispatch({ type: UPDATE_ARTIST_COVER, payload: artistCover });
   dispatch({ type: SEARCH_SONG, payload: "Miyavi" });
   let cover = useSelector(getCurrentCover);
+  let artistSongs = useSelector(getSearchedSongs);
+  let viewSongs = useSelector(getFilteredSongs);
+  if (!viewSongs || viewSongs.length === 0) {
+    viewSongs = artistSongs;
+  }
   if (!cover) {
     cover = artistCover;
   }
 
   return (
     <View>
-      <ViewDetail objectId={1} name="Miyavi" cover={artistCover}></ViewDetail>
+      <ViewDetail objectId={1} name="Miyavi" cover={artistCover} songs={viewSongs}></ViewDetail>
       <div className="song-list-container">
         <ViewSongList></ViewSongList>
       </div>

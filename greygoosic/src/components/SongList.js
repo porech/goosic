@@ -3,7 +3,7 @@ import "./SongList.css";
 import Song from "./cards/Song";
 import { useDispatch, useSelector } from "react-redux";
 import { songFromView } from "../actions";
-import { getSongs, getLoadingSongs, getFilteredSongs } from "../state/songs";
+import { getSongs, getLoadingSongs, getSearchedSongs, getFilteredSongs } from "../state/songs";
 import { getNowPlaying } from "../state/player";
 
 const Warning = ({ children }) => (
@@ -19,7 +19,11 @@ const SongList = (props) => {
   const dispatch = useDispatch();
   const nowPlaying = useSelector(getNowPlaying);
   const allSongs = useSelector(getSongs);
-  const songs = useSelector(getFilteredSongs);
+  var songs = useSelector(getSearchedSongs);
+  var viewSongs = useSelector(getFilteredSongs);
+  if(!viewSongs || viewSongs.length === 0) {
+    viewSongs = songs;
+  }
   const isLoading = useSelector(getLoadingSongs);
 
   //shows a loading message
@@ -44,7 +48,7 @@ const SongList = (props) => {
 
   return (
     <div className={`${props.className} song-list`}>
-      {songs.map((song, index) => {
+      {viewSongs.map((song, index) => {
         return (
           <Song
             nowPlaying={!!(nowPlaying && nowPlaying.id === song.id)}
