@@ -20,7 +20,6 @@ export const getSongFilter = (state) => {return state.queue.filter};
 export const getSearchedSongs = createSelector(
   [getSongs, getSearchedText],
   (songs, searched) => {
-    console.log(songs,searched)
     if (isEmpty(searched)) return songs;
 
     return songs.filter((s) => {
