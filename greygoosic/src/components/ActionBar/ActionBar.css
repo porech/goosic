@@ -1,0 +1,20 @@
+.action-bar {
+    width: 100%;
+    opacity: .97;
+    z-index: 20;
+    background-color: lightblue;
+}
+.ui.secondary.menu .item{
+    transition: all .5s ease-out;
+}
+.ui.segment {
+    position: fixed;
+    left: 0;
+    top: 0; 
+    border-radius: 0;
+}
+
+.ui.inverted.grey.ui.segment {
+    background-color: lightslategrey !important;
+}
+
