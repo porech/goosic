@@ -9,8 +9,6 @@ import SongList from "../../SongList";
 import ViewDetail from "../BaseView/ViewDetail"
 import "./ArtistView.css";
 import { getSearchedSongs, getFilteredSongs } from "../../../state/songs";
-import SearchBar from "../../Searchbar";
-import Spacer from "../../utils/Spacer";
 
 const ViewSongList = styled(SongList)`
 margin-top: 0;
