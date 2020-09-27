@@ -1,15 +1,12 @@
 import React from "react";
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import './ViewDetail.css'
-import {STAR_ITEM, getStarredItems} from '../../../state/starred';
 import {  QUEUE_SHUFFLE_ON, QUEUE_SONG_FROM_VIEW } from "../../../state/queue";
+import Star from '../../Star';
 import { random } from "lodash";
 
 const ViewDetail = ({objectId, name, cover, songs}) => {
     const dispatch = useDispatch();
-    let starred = useSelector(getStarredItems)
-    let starring = starred.length > 0 && starred.filter(s => s.id === objectId);
-    let unstarring = !starring;
     return (
         <div className="viewdetail-container">
         {cover && <img alt="cover" src={cover} height="150px" className="viewdetail-cover" />}
@@ -17,9 +14,7 @@ const ViewDetail = ({objectId, name, cover, songs}) => {
         <div className="viewdetail-name">{name}</div>
         <div className="viewdetail-actions">
           <p className="viewdetail-action">
-            <i id="viewdetail-star" className={`star icon ${starring ? "viewdetail-star-click" : ''} ${unstarring ? "viewdetail-star-unclick": ''}`} onClick={() => {
-                dispatch({type: STAR_ITEM, payload: {id: objectId}})
-              }}></i>
+            <Star id={objectId}></Star>
           </p>
           <p className="viewdetail-action">
             <i className="random icon" onClick={() => {

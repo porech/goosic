@@ -1,0 +1,30 @@
+ @keyframes star {
+    0% {opacity: 0.5;}
+    15% {transform: rotate(60deg)}
+    35% {transform: scale(1.5,1.5);}
+    50% {transform: rotate(-60deg)}
+    100% {opacity: 1;}
+  }
+
+  @keyframes unstar {
+    0% {opacity: 1;}
+    50% {transform: scale(.5,.5);}
+    100% {opacity: 0.7;}
+  }
+
+  .star:hover {
+    color: blueviolet;
+    fill: blueviolet;
+    filter: invert(50%) sepia(30%) saturate(20000%) hue-rotate(270deg)
+      brightness(80%) contrast(100%);
+    opacity: 1;
+    transition: opacity 1s ease-out 0.1s start 1s ease-out;
+  }
+  .star-click {
+    animation: star 1s ease-out;
+    color: blueviolet;
+    opacity: 1;
+  }
+  .star-unclick {
+    animation: unstar 1s ease-out;
+  }

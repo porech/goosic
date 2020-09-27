@@ -55,6 +55,7 @@
   text-align: center;
   font-size: 2em;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 1s ease-out;
 }
 .star-button:hover {
   border-radius: 120px;

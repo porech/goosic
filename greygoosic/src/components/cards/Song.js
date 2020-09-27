@@ -1,5 +1,8 @@
 import React from "react";
 import "./Song.css";
+import Star from '../Star';
+import { useDispatch, useSelector } from "react-redux";
+import { getStarredItems, STAR_ITEM, UNSTAR_ITEM } from "../../state/starred";
 let Song = ({ nowPlaying, song, onClick }) => {
   //contenitore di avatar e informazioni song: title, artist, album
   //ha uno spazio per delle actions (attualmente la stella per lo starring)
@@ -11,6 +14,12 @@ let Song = ({ nowPlaying, song, onClick }) => {
     title = song.file_name;
     noMetadata = true;
   }
+  const dispatch = useDispatch();
+  let starred = useSelector(getStarredItems);
+  let starring = starred.length > 0 && starred.filter(s => s.id === song.id).length > 0 ? true : false;
+  if (!starring || starring.length === 0) {
+      starring = false;
+  } 
   return (
     <div
       className={`${ nowPlaying === true ? "nowPlaying": ""} container`}
@@ -36,7 +45,18 @@ let Song = ({ nowPlaying, song, onClick }) => {
         )}
       </div>
       <div className="actions">
-        <div className="star-button"><div className="star-icon">☆</div></div>
+        <div className="star-button" onClick={(e) => {
+            e.stopPropagation();
+            if (starring === true) {
+                dispatch({type: UNSTAR_ITEM, payload: {id: song.id}})
+            } else {
+                dispatch({type: STAR_ITEM, payload: {id: song.id}})
+            }
+        }}><div className="star-icon">
+          <Star starring={starring} id={song.id}></Star>
+        </div>
+      </div>
+     {/*    <div className="star-button"><div className="star-icon">☆</div></div> */}
       </div>
     </div>
   );
