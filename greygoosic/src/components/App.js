@@ -11,30 +11,38 @@ import ActionBar from "./ActionBar/ActionBar";
 import Spacer from "./utils/Spacer";
 import { useDispatch } from 'react-redux';
 import { SEARCH_SONG } from '../state/searchedText';
+import Menu from './Menu/Menu';
 
 const App = () => {
   const dispatch = useDispatch();
   dispatch({type: SEARCH_SONG, payload: ""});
-  const options = [{linkTo: "/"}, {linkTo: null}]
+  const options = [{linkTo: "/menu"}, {linkTo: null}]
     return (
       <Router>
-        <ActionBar options={options}>        
-          <MenuIcon></MenuIcon>
-          <SearchBar></SearchBar>
-        </ActionBar>
-        <Spacer margin="10vh"></Spacer>
         <Switch>
-          <Route path="/artist">
-            <ArtistView />
+          <Route path="/menu">
+            <Menu></Menu>
           </Route>
-          <Route path="/album">
-            <AlbumView />
-          </Route> 
           <Route path="/">
-            <SongList></SongList>
+          <ActionBar options={options}>        
+            <MenuIcon></MenuIcon>
+            <SearchBar></SearchBar>
+          </ActionBar>
+          <Spacer margin="10vh"></Spacer>
+          <Switch>
+            <Route path="/artist">
+              <ArtistView />
+            </Route>
+            <Route path="/album">
+              <AlbumView />
+            </Route> 
+            <Route path="/">
+              <SongList></SongList>
+            </Route>
+          </Switch>
+          <NowPlaying></NowPlaying>
           </Route>
         </Switch>
-        <NowPlaying></NowPlaying>
       </Router>
     );
   }
