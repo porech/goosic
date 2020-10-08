@@ -1,16 +1,15 @@
 .searchbar,
 ::placeholder {
   color: rgba(0, 0, 0, 1);
+  background-color: rgba(0, 0, 0, 0);
   border: 0px;
   outline: none;
-  background-color: rgba(0, 0, 0, 0);
   width: 88%;
 }
 .searchpane {
-
-/*   background-color: rgba(192, 202, 211, 0.9);
- */  border-radius: 10px;
-  backdrop-filter: blur(5px);
+  /*   background-color: rgba(192, 202, 211, 0.9);
+ */
+  border-radius: 10px;
   font-size: 1.1em;
   cursor: text;
   width: 85vw;
@@ -19,19 +18,17 @@
   max-height: 20px;
 }
 
-@supports (
+/* @supports (
   (-webkit-backdrop-filter: blur(5px)) or (backdrop-filter: blur(5px))
 ) {
   .searchpane {
-/*     background-color: rgba(192, 202, 211, 0.6);
- */    backdrop-filter: blur(5px);
+     backdrop-filter: blur(5px);
   }
   .searchbar::placeholder {
-/*     color: rgba(0, 0, 0, 0.6);*/
     font-weight: 500;
     color: black;
 }
-}
+} */
 input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
   height: 22px;
@@ -60,7 +57,7 @@ input[type="search"]::-webkit-search-cancel-button {
   float: right;
 }
 .refresh:active {
-   transform: rotateZ(200deg) scale(3, 3);
+  transform: rotateZ(200deg) scale(3, 3);
 }
 .search-icon {
   color: rgba(0, 0, 0, 1);
@@ -75,11 +72,10 @@ input[type="search"]::-webkit-search-cancel-button {
     fill: blueviolet;
     filter: invert(50%) sepia(30%) saturate(20000%) hue-rotate(270deg)
       brightness(80%) contrast(100%);
-      transform: translateY(-20px);
+    transform: translateY(-20px);
   }
   .refresh:active {
     transform: translateY(-20px) rotate(200deg) scale(1.3, 1.3);
-
   }
   .searchpane {
     font-size: 1.3em;
@@ -90,7 +86,6 @@ input[type="search"]::-webkit-search-cancel-button {
     color: rgba(0, 0, 0, 0.6);
     border: 0px;
     outline: none;
-    background-color: rgba(0, 0, 0, 0);
     width: 85%;
   }
 }
