@@ -4,9 +4,9 @@ import "rc-slider/assets/index.css";
 import "./Nowplaying.css";
 import Time from "./Time";
 import Slider from "rc-slider";
-import RepeatOne from '../assets/svg/RepeatOne.svg'
-import RepeatOff from '../assets/svg/RepeatOff.svg'
-import RepeatAll from '../assets/svg/RepeatAll.svg'
+import RepeatOne from "../assets/svg/RepeatOne.svg";
+import RepeatOff from "../assets/svg/RepeatOff.svg";
+import RepeatAll from "../assets/svg/RepeatAll.svg";
 
 import {
   pauseSong,
@@ -45,14 +45,14 @@ const NowPlaying = () => {
   let verifyRepeat = () => {
     if (repeatStatus === REPEAT.ALL) {
       return RepeatAll;
-    } 
+    }
     if (repeatStatus === REPEAT.ONE) {
       return RepeatOne;
-    } 
+    }
     if (repeatStatus === REPEAT.NONE) {
       return RepeatOff;
     }
-}
+  };
   const dispatch = useDispatch();
 
   const togglePlay = () => dispatch(isPlaying ? pauseSong() : resumeSong());
@@ -87,8 +87,7 @@ const NowPlaying = () => {
           }`}
         >
           <img
-            src={verifyRepeat()
-            }
+            src={verifyRepeat()}
             alt="repeat"
             width="30px"
             onClick={() => {
@@ -96,7 +95,6 @@ const NowPlaying = () => {
             }}
             className={`action-icons-extra-left-icon`}
           />
-
         </div>
         {duration > 0 && (
           <div className="time-info">

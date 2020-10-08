@@ -3,7 +3,12 @@ import "./SongList.css";
 import Song from "./cards/Song";
 import { useDispatch, useSelector } from "react-redux";
 import { songFromView } from "../actions";
-import { getSongs, getLoadingSongs, getSearchedSongs, getFilteredSongs } from "../state/songs";
+import {
+  getSongs,
+  getLoadingSongs,
+  getSearchedSongs,
+  getFilteredSongs,
+} from "../state/songs";
 import { getNowPlaying } from "../state/player";
 
 const Warning = ({ children }) => (
@@ -21,7 +26,7 @@ const SongList = (props) => {
   const allSongs = useSelector(getSongs);
   var songs = useSelector(getSearchedSongs);
   var viewSongs = useSelector(getFilteredSongs);
-  if(!viewSongs || viewSongs.length === 0) {
+  if (!viewSongs || viewSongs.length === 0) {
     viewSongs = songs;
   }
   const isLoading = useSelector(getLoadingSongs);

@@ -1,6 +1,6 @@
 import React from "react";
 import "./Song.css";
-import Star from '../Star';
+import Star from "../Star";
 import { useDispatch, useSelector } from "react-redux";
 import { getStarredItems, STAR_ITEM, UNSTAR_ITEM } from "../../state/starred";
 let Song = ({ nowPlaying, song, onClick }) => {
@@ -16,13 +16,16 @@ let Song = ({ nowPlaying, song, onClick }) => {
   }
   const dispatch = useDispatch();
   let starred = useSelector(getStarredItems);
-  let starring = starred.length > 0 && starred.filter(s => s.id === song.id).length > 0 ? true : false;
+  let starring =
+    starred.length > 0 && starred.filter((s) => s.id === song.id).length > 0
+      ? true
+      : false;
   if (!starring || starring.length === 0) {
-      starring = false;
-  } 
+    starring = false;
+  }
   return (
     <div
-      className={`${ nowPlaying === true ? "nowPlaying": ""} container`}
+      className={`${nowPlaying === true ? "nowPlaying" : ""} container`}
       onClick={onClick}
     >
       <div className="avatar">
@@ -45,18 +48,22 @@ let Song = ({ nowPlaying, song, onClick }) => {
         )}
       </div>
       <div className="actions">
-        <div className="star-button" onClick={(e) => {
+        <div
+          className="star-button"
+          onClick={(e) => {
             e.stopPropagation();
             if (starring === true) {
-                dispatch({type: UNSTAR_ITEM, payload: {id: song.id}})
+              dispatch({ type: UNSTAR_ITEM, payload: { id: song.id } });
             } else {
-                dispatch({type: STAR_ITEM, payload: {id: song.id}})
+              dispatch({ type: STAR_ITEM, payload: { id: song.id } });
             }
-        }}><div className="star-icon">
-          <Star starring={starring} id={song.id}></Star>
+          }}
+        >
+          <div className="star-icon">
+            <Star starring={starring} id={song.id}></Star>
+          </div>
         </div>
-      </div>
-     {/*    <div className="star-button"><div className="star-icon">☆</div></div> */}
+        {/*    <div className="star-button"><div className="star-icon">☆</div></div> */}
       </div>
     </div>
   );

@@ -6,12 +6,12 @@ import { UPDATE_ARTIST_COVER } from "../../../state/artist";
 import { SEARCH_SONG } from "../../../state/searchedText";
 import View from "../BaseView/View";
 import SongList from "../../SongList";
-import ViewDetail from "../BaseView/ViewDetail"
+import ViewDetail from "../BaseView/ViewDetail";
 import "./ArtistView.css";
 import { getSearchedSongs, getFilteredSongs } from "../../../state/songs";
 
 const ViewSongList = styled(SongList)`
-margin-top: 0;
+  margin-top: 0;
 `;
 const ArtistView = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,12 @@ const ArtistView = () => {
 
   return (
     <View>
-      <ViewDetail objectId={1} name="Miyavi" cover={artistCover} songs={viewSongs}></ViewDetail>
+      <ViewDetail
+        objectId={1}
+        name="Miyavi"
+        cover={artistCover}
+        songs={viewSongs}
+      ></ViewDetail>
       <div className="song-list-container">
         <ViewSongList></ViewSongList>
       </div>

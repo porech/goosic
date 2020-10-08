@@ -10,12 +10,16 @@ export const GET_SONGS_SUCCESS = "GET_SONGS_SUCCESS";
 export const GET_SONGS_ERROR = "GET_SONGS_ERROR";
 
 // Still not used here, it's dispatched by the queue-next when it has no songs
-export const GET_SONGS_RANDOM = "GET_SONGS_RANDOM"
+export const GET_SONGS_RANDOM = "GET_SONGS_RANDOM";
 
 export const getSongs = (state) => state.songs.songs;
 export const getLoadingSongs = (state) => state.loading;
-export const getSongView = (state) => {return state.queue.view};
-export const getSongFilter = (state) => {return state.queue.filter};
+export const getSongView = (state) => {
+  return state.queue.view;
+};
+export const getSongFilter = (state) => {
+  return state.queue.filter;
+};
 
 export const getSearchedSongs = createSelector(
   [getSongs, getSearchedText],

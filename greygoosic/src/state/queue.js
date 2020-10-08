@@ -160,18 +160,18 @@ export const reducer = (state = defaultState, action) => {
         ...state,
         repeat,
       };
-      case FILTER_SONGS:
-        let { filter} = action.payload;
-        return {
-          ...state,
-          view: action.payload.view,
-          filter
-        }
-      case UPDATE_VIEW:
-        return {
-          ...state,
-          view: action.payload
-        }
+    case FILTER_SONGS:
+      let { filter } = action.payload;
+      return {
+        ...state,
+        view: action.payload.view,
+        filter,
+      };
+    case UPDATE_VIEW:
+      return {
+        ...state,
+        view: action.payload,
+      };
     default:
       return state;
   }
