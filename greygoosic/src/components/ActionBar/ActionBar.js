@@ -18,6 +18,7 @@ const ActionBar = (props) => {
             );
           } else {
             return (
+              // eslint-disable-next-line
               <a key={`actionbar-child-${i}`} className="item">
                 {child}
               </a>
