@@ -22,7 +22,7 @@ services:
       - ./greygoosic:/app
     working_dir: /app
     environment:
-      PROXY: http://backend/api
+      PROXY: http://backend:8080/
     command: npm start
     ports:
       - 3000:3000
