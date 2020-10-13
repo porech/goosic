@@ -8,19 +8,22 @@ import (
 )
 
 func main() {
-    // Version is passed by the compiler
-    var Version = "dev-build"
+	// Version is passed by the compiler
+	var Version = "dev-build"
 
 	log.Infof("goosic ver. %s is starting", Version)
 	config := getConfig()
 
-	store := storage.Storage{}
+	store, err := storage.NewStore("test.db")
+	if err != nil {
+		log.Fatalf("cannot init store: %v", err)
+	}
 
 	log.Infof("Watching folder %s", config.MusicPath)
 	log.Info("Please set the MUSIC_PATH environment variable to change the music path.")
 
-	index.StartIndex(config.MusicPath, &store)
+	index.StartIndex(config.MusicPath, store)
 
-	httpServer := server.HttpServer{&store}
+	httpServer := server.HttpServer{store}
 	log.Fatal(httpServer.StartServer(config.HttpHost, config.HttpPort, config.CorsOrigin))
 }

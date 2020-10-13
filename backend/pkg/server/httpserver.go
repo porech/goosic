@@ -13,7 +13,7 @@ import (
 )
 
 type HttpServer struct {
-	Store *storage.Storage
+	Store *storage.Store
 }
 
 func PackrMiddleware(urlPrefix string, box *packr.Box) gin.HandlerFunc {

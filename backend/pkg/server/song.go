@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/porech/goosic/v2/pkg/storage"
 	log "github.com/sirupsen/logrus"
@@ -33,9 +34,14 @@ func (s *HttpServer) songList(c *gin.Context) {
 	var list []*storage.Song
 
 	if limit == 0 && after == -1 {
-		list = s.Store.GetAllSongs()
+		list, err = s.Store.GetAllSongs()
 	} else {
-		list = s.Store.GetSongs(after, limit)
+		list, err = s.Store.GetSongs(after, limit)
+	}
+	if err != nil {
+		log.Errorf("cannot get songs: %v", err)
+		c.AbortWithStatus(500)
+		return
 	}
 
 	c.JSON(http.StatusOK, list)
@@ -65,7 +71,14 @@ func (s *HttpServer) songSearch(c *gin.Context) {
 		}
 	}
 
-	c.JSON(http.StatusOK, s.Store.SearchSongs(query, after, limit))
+	songs, err := s.Store.SearchSongs(query, after, limit)
+	if err != nil {
+		log.Errorf("cannot get songs from db: %v", err)
+		c.AbortWithStatus(500)
+		return
+	}
+
+	c.JSON(http.StatusOK, songs)
 }
 
 func (s *HttpServer) song(c *gin.Context) {
@@ -76,9 +89,15 @@ func (s *HttpServer) song(c *gin.Context) {
 		return
 	}
 
-	song := s.Store.GetSongById(songId)
+	song, err := s.Store.GetSongById(songId)
+	if err != nil {
+		fmt.Errorf("cannot get song from db: %v", err)
+		c.AbortWithStatus(500)
+		return
+	}
 	if song == nil {
 		c.String(http.StatusNotFound, "song not found")
+		return
 	}
 
 	c.JSON(http.StatusOK, song)
@@ -92,9 +111,15 @@ func (s *HttpServer) streamSong(c *gin.Context) {
 		return
 	}
 
-	song := s.Store.GetSongById(songId)
+	song, err := s.Store.GetSongById(songId)
+	if err != nil {
+		fmt.Errorf("cannot get song from db: %v", err)
+		c.AbortWithStatus(500)
+		return
+	}
 	if song == nil {
 		c.String(http.StatusNotFound, "song not found")
+		return
 	}
 
 	c.File(song.File)

@@ -9,10 +9,19 @@ import (
 	"path/filepath"
 )
 
-func ScanFile(path string, store *storage.Storage) error {
-	_, err := os.Stat(path)
+func ScanFile(path string, store *storage.Store) error {
+	exists, err := store.SongExists(path)
+	if err != nil {
+		return fmt.Errorf("cannot check if song exists: %v", err)
+	}
+	if exists {
+		return fmt.Errorf("song %s already exists", path)
+	}
+
+	_, err = os.Stat(path)
 	if os.IsNotExist(err) {
-		return store.RemoveSong(path)
+		// TODO: mark the song as not-existing?
+		return fmt.Errorf("file %s was removed", path)
 	}
 
 	f, err := os.Open(path)
@@ -27,23 +36,28 @@ func ScanFile(path string, store *storage.Storage) error {
 		return fmt.Errorf("File %s was not recognized: %v", path, err)
 	}
 
-	existingSong := store.GetSongByFile(path)
-	if existingSong == nil {
-		store.AddSong(&storage.Song{
-			File:     path,
-			Metadata: *metadata,
-		})
-	} else {
-		err = store.UpdateSongMetadata(existingSong.Id, *metadata)
-		if err != nil {
-			log.Warnf("Cannot update song metadata: %v", err)
-		}
-	}
-
-	return nil
+	return store.AddSong(&storage.Song{
+		File:     path,
+		FileName: filepath.Base(path),
+		FileType: metadata.FileType,
+		Title:    metadata.Title,
+		Album: storage.Album{
+			Title: metadata.Album,
+		},
+		Artist: storage.Artist{
+			Name: metadata.Artist,
+		},
+		Genre:      metadata.Genre,
+		Year:       metadata.Year,
+		Track:      metadata.Track,
+		Length:     metadata.Length,
+		Bitrate:    metadata.Bitrate,
+		Channels:   metadata.Channels,
+		SampleRate: metadata.SampleRate,
+	})
 }
 
-func ScanDirectory(basePath string, store *storage.Storage) {
+func ScanDirectory(basePath string, store *storage.Store) {
 	err := filepath.Walk(basePath, func(path string, info os.FileInfo, err error) error {
 		if path == basePath {
 			return nil
@@ -63,7 +77,7 @@ func ScanDirectory(basePath string, store *storage.Storage) {
 	}
 }
 
-func StartWatcher(path string, store *storage.Storage) {
+func StartWatcher(path string, store *storage.Store) {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		log.Error(err)
@@ -98,7 +112,7 @@ func StartWatcher(path string, store *storage.Storage) {
 	<-done
 }
 
-func StartIndex(path string, store *storage.Storage) {
+func StartIndex(path string, store *storage.Store) {
 	log.Info("Starting index")
 	go ScanDirectory(path, store)
 	go StartWatcher(path, store)
