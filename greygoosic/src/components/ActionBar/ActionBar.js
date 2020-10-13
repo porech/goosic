@@ -6,7 +6,7 @@ const ActionBar = (props) => {
     <div id="action-bar" className="action-bar ui grey inverted segment">
       <div className="ui inverted secondary menu">
         {props.children.map((child, i) => {
-          if (props.options[i].linkTo) {
+          if (props.options[i] && props.options[i].linkTo) {
             return (
               <Link
                 to={props.options[i].linkTo}
