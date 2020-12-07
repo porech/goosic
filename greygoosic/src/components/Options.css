@@ -1,2 +1,5 @@
 .options {
+  z-index: 20;
+  position: absolute;
+  top: 100px;
 }

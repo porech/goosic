@@ -14,14 +14,17 @@ import { SEARCH_SONG } from "../state/searchedText";
 import Menu from "./Menu/Menu";
 import { getAnimationStatus } from "../state/options";
 import Options from "./Options";
+import { GET_SONGS } from "../state/songs";
 
 const App = () => {
   const dispatch = useDispatch();
   dispatch({ type: SEARCH_SONG, payload: "" });
   const options = [
-    { linkTo: "/menu" },
-    { linkTo: null },
-    { linkTo: "/options" },
+    { optionId: "menu-button", linkTo: "/menu" },
+    { optionId: "search-bar", linkTo: null },
+    { optionId: "refresh-button", linkTo: null, disposable: "true" },
+    { optionId: "spacer", linkTo: null, disposable: "true" },
+    { optionId: "settings", linkTo: "/options", disposable: "true" },
   ];
   const animationStatus = useSelector(getAnimationStatus);
   return (
@@ -35,7 +38,18 @@ const App = () => {
             <ActionBar options={options}>
               <MenuIcon></MenuIcon>
               <SearchBar></SearchBar>
-              <i className="icon settings black large" />
+              <i
+                id="refreshSongs"
+                className={`redo icon refresh fixed-side`}
+                style={{ right: "80px" }}
+                onClick={() => {
+                  dispatch({ type: GET_SONGS });
+                }}
+              />
+              <i
+                className="icon settings black large fixed-side"
+                style={{ right: "10px" }}
+              />
             </ActionBar>
             <Switch>
               <Route path="/artist">
@@ -48,7 +62,7 @@ const App = () => {
                 <Options></Options>
               </Route>
               <Route path="/">
-                <SongList></SongList>
+                <SongList className="song-list"></SongList>
               </Route>
             </Switch>
             <NowPlaying></NowPlaying>

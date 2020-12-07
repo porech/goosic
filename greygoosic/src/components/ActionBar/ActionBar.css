@@ -1,4 +1,5 @@
 .action-bar {
+  padding: 10px;
   width: 100%;
   opacity: 0.97;
   z-index: 20;
@@ -7,6 +8,9 @@
 
 .ui.secondary.menu .item {
   transition: all 0.5s ease-out;
+}
+.item {
+  margin: 10px;
 }
 .ui.segment {
   position: fixed;

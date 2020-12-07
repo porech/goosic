@@ -24,6 +24,7 @@ export const getSongFilter = (state) => {
 export const getSearchedSongs = createSelector(
   [getSongs, getSearchedText],
   (songs, searched) => {
+    if (!songs || songs.length === 0) return "";
     if (isEmpty(searched)) return songs;
 
     return songs.filter((s) => {

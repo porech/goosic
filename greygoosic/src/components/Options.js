@@ -5,7 +5,7 @@ const Options = () => {
   var opts = useSelector(getOptions);
   opts = [{ label: "option1", type: "select" }];
   return (
-    <div style={{ zIndex: 20, position: "absolute", top: "100px" }}>
+    <div className="options">
       <ul>
         {opts.map((opt) => {
           return (

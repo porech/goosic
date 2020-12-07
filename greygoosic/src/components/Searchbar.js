@@ -32,14 +32,6 @@ const SearchBar = () => {
           }
         }}
       />
-      <i
-        aria-hidden="true"
-        id="refreshSongs"
-        className={`redo icon refresh`}
-        onClick={() => {
-          dispatch({ type: GET_SONGS });
-        }}
-      />
     </div>
   );
 };
