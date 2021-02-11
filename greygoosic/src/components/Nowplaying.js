@@ -17,15 +17,8 @@ import {
   toggleShuffle,
   toggleRepeat,
 } from "../actions";
-import {
-  getCurrentTitle,
-  getCurrentArtist,
-  getCurrentFileName,
-  getCurrentPosition,
-  getDuration,
-  getIsPlaying,
-} from "../state/player";
-import { getRepeatStatus, getShuffleStatus, REPEAT } from "../state/queue";
+import { getCurrentPlayingData } from "../state/player";
+import { REPEAT } from "../state/queue";
 
 let buildTitleString = (title, artist, fileName) => {
   if (!title) return fileName || "";
@@ -34,14 +27,16 @@ let buildTitleString = (title, artist, fileName) => {
 };
 
 const NowPlaying = () => {
-  const title = useSelector(getCurrentTitle);
-  const artist = useSelector(getCurrentArtist);
-  const fileName = useSelector(getCurrentFileName);
-  const position = useSelector(getCurrentPosition);
-  const duration = useSelector(getDuration);
-  const isPlaying = useSelector(getIsPlaying);
-  const shuffleStatus = useSelector(getShuffleStatus);
-  const repeatStatus = useSelector(getRepeatStatus);
+  const {
+    title,
+    artist,
+    fileName,
+    position,
+    duration,
+    isPlaying,
+    shuffleStatus,
+    repeatStatus,
+  } = useSelector(getCurrentPlayingData);
   let verifyRepeat = () => {
     if (repeatStatus === REPEAT.ALL) {
       return RepeatAll;

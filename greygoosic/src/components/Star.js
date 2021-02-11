@@ -22,9 +22,9 @@ const Star = ({ id, starring }) => {
         onClick={(e) => {
           e.stopPropagation();
           if (starring === true) {
-            dispatch({ type: UNSTAR_ITEM, payload: { id: id } });
+            dispatch({ type: UNSTAR_ITEM, payload: { id } });
           } else {
-            dispatch({ type: STAR_ITEM, payload: { id: id } });
+            dispatch({ type: STAR_ITEM, payload: { id } });
           }
         }}
       />

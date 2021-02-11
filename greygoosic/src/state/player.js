@@ -1,6 +1,8 @@
 import { eventChannel } from "redux-saga";
 import { put, takeEvery } from "redux-saga/effects";
 import { get } from "lodash";
+import { createSelector } from "reselect";
+import { getRepeatStatus, getShuffleStatus } from "./queue";
 
 export const PLAYER_PLAY_SONG = "PLAYER_PLAY_SONG";
 export const PLAYER_PLAYBACK_STARTED = "PLAYER_PLAYBACK_STARTED";
@@ -30,6 +32,38 @@ export const getIsPlaying = (state) => state.player.isPlaying;
 export const getNowPlaying = (state) => state.player.nowPlaying;
 
 export const getDuration = (state) => state.player.duration;
+
+export const getCurrentPlayingData = createSelector(
+  getCurrentTitle,
+  getCurrentArtist,
+  getCurrentFileName,
+  getCurrentPosition,
+  getDuration,
+  getIsPlaying,
+  getShuffleStatus,
+  getRepeatStatus,
+  (
+    title,
+    artist,
+    fileName,
+    position,
+    duration,
+    isPlaying,
+    shuffleStatus,
+    repeatStatus
+  ) => {
+    return {
+      title,
+      artist,
+      fileName,
+      position,
+      duration,
+      isPlaying,
+      shuffleStatus,
+      repeatStatus,
+    };
+  }
+);
 
 export const reducer = (state = defaultState, action) => {
   switch (action.type) {

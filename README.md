@@ -41,6 +41,8 @@ the near future, the first ones being the ones mentioned hereabove.
 
 There are no built binaries at the moment, so you'll need Golang installed to run the project.
 
+Also, right now the backend depends on libtagc, please see <a href="https://github.com/wtolson/go-taglib" target="_blank">go-taglib</a> repository if seeking for install instructions.
+
 First of all, start the Goosic backend from the root of the project:
 
 ```sh
@@ -71,4 +73,5 @@ something that should be working isn't, feel free to open an issue.
 ## License
 
 ### Icons
+
 The repeat icons are based on the FontAwesome 5 "retweet" icon, licensed under Creative Commons 4, with little modifications. You can find original license in detail <a href="https://fontawesome.com/license" target="_blank">here</a>.
